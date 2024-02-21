@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 16:55:30 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:06:17 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,20 @@
 # define RESET "\033[0m"
 
 //STRUCTS
-//struct to store the command line input
-typedef struct s_cmd
+
+// Lexer list to store the command line input:
+// index of the arg
+// str for words
+// tok for symbols
+typedef struct s_lexer
 {
-	char	*arg;
-	char	*type;
-}	t_cmd;
+	int				index;
+	char			*str;
+	char			*tok;
+	struct s_lexer	*next;
+	struct s_lexer	*prev;
+}	t_lexer;
+
 
 //types of commands:
 //	- cmd
@@ -73,8 +81,17 @@ typedef struct s_cmd
 int		main(void);
 void	ft_print_banner(void);
 
-//parcer.c
+//check.c
 int		ft_check_quotes(char *input);
+
+//utils
+char	**ft_split(char const *s, char c);
+size_t	ft_strlen(const char *str);
+
+//lexer.c
+t_lexer	*ft_lexer(char **argv);
+void	ft_init_lexer(t_lexer *lexer, int i);
+void	ft_tokenizer(t_lexer *lexer);
 
 #endif
 

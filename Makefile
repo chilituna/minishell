@@ -6,7 +6,7 @@
 #    By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/02/21 16:08:22 by aarpo e          ###   ########.fr        #
+#    Updated: 2024/02/21 19:04:42 by aarpo e          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCLUDES = -I includes
 LIBS = -lreadline
 
 SRC_DIR = src
-SRC_FILES = main.c parcer.c
+SRC_FILES = main.c check.c lexer.c ft_split.c utils.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 17:11:38 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:03:55 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,38 @@
 // EVALUATE
 // PRINT
 // LOOP
+// show prompt
+// read input from user (readline)
+// add input to history (add_history)
+// check for unclosed quotes
+// split input into an array of strings
+// lexer to create a linked list of the input and check for tokens
+// parser to create a tree of the input and check for syntax errors
+// execute the commands
+// free memory
 int	main(void)
 {
 	char	*prompt;
-	//int		argc;
-	//char	**argv;
+	char	**argv;
+	t_lexer	*lexer;
 
 	ft_print_banner();
 	while (1)
 	{
-		// read input from user
 		prompt = readline(">>> ");
 		if (prompt == NULL)
 			printf(RED "ERROR: readline\n" RESET);
-		// add input to history
 		if (prompt[0] != '\0')
 			add_history(prompt);
 		if (!ft_check_quotes(prompt))
 		{
-			// parse and tokenize input
-			// execute command
+			argv = ft_split(prompt, ' ');
+			lexer = ft_lexer(argv);
+			// ft_parser();
+			// ft_execute();
 			printf("You typed %s\n", prompt);
 		}
-		// free memory
+		// ft_freeall(argv);
 		free (prompt);
 	}
 	return (0);
@@ -49,12 +58,12 @@ int	main(void)
 
 void	ft_print_banner(void)
 {
-	printf(BLUE1 "\n    ._____.___ .___ .______  .___\n");
-	printf("    :         |: __|:      \\ : __|\n");
-	printf("    |   \\  /  || : ||       || : |\n");
-	printf("    |   |\\/   ||   ||   |   ||   |\n");
-	printf("    |___| |   ||   ||___|   ||   |\n");
-	printf("          |___||___|    |___||___|\n\n" RESET);
+	ft_print_banner_1();
+	ft_print_banner_2();
+}
+
+void	ft_print_banner_2(void)
+{
 	printf(BLUE3"             *               ***   ***\n");
 	printf("           **                 ***   ***\n");
 	printf("           **                  **    **\n");
@@ -75,4 +84,14 @@ void	ft_print_banner(void)
 	printf("                * " RESET);
 	printf(BLUE1 "     by Alise & Luis\n" RESET);
 	printf(BLUE3"               *\n\n" RESET);
+}
+
+void	ft_print_banner_2(void)
+{
+	printf(BLUE1 "\n    ._____.___ .___ .______  .___\n");
+	printf("    :         |: __|:      \\ : __|\n");
+	printf("    |   \\  /  || : ||       || : |\n");
+	printf("    |   |\\/   ||   ||   |   ||   |\n");
+	printf("    |___| |   ||   ||___|   ||   |\n");
+	printf("          |___||___|    |___||___|\n\n" RESET);
 }
