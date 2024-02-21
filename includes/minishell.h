@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 19:17:24 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:53:37 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,25 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
+// Command list to store command groups from parser:
+typedef struct s_cmd
+{
+	char			*cmd;
+	char			**flags;
+	char			*in;
+	char			*out;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}	t_cmd;
 
-//types of commands:
-//	- cmd
-//	- flags
-//	- in
-//	- out
+// Redirection list to store redirections from parser:
+typedef struct s_redir
+{
+	char			*tok;
+	char			*filename;
+	struct s_redir	*next;
+	struct s_redir	*prev;
+}	t_redir;
 
 //	- executable (absolute path or in $PATH)
 //	- built-in (echo, cd, pwd, export, unset, env, exit)
