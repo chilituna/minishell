@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/18 18:16:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/21 16:55:30 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,48 @@
 # include <termios.h> //tcsetattr, tcgetattr
 # include <termcap.h> //tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
+# define RED "\033[1;31m"
+# define GREEN "\033[1;32m"
+# define YELLOW "\033[1;33m"
+# define BLUE1 "\033[1;34m"
+# define BLUE2 "\033[0;34m"
+# define BLUE3 "\033[0;36m"
+# define RESET "\033[0m"
+
+//STRUCTS
+//struct to store the command line input
+typedef struct s_cmd
+{
+	char	*arg;
+	char	*type;
+}	t_cmd;
+
+//types of commands:
+//	- cmd
+//	- flags
+//	- in
+//	- out
+
+//	- executable (absolute path or in $PATH)
+//	- built-in (echo, cd, pwd, export, unset, env, exit)
+//	- env variable ($)
+//	- tokens:
+//	- single quotes '
+//	- double quotes "
+//	- redirecing output >
+//	- redirecing input <
+//	- redirecing output in append mode >>
+// 	- heredoc <<
+//	- pipe |
+
+
 //FUNCTIONS
 //main.c --> start program, show prompt, loop (TLDR)
 int		main(void);
 void	ft_print_banner(void);
+
+//parcer.c
+int		ft_check_quotes(char *input);
 
 #endif
 

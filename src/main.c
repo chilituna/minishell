@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/18 17:25:17 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:11:38 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,16 @@ int	main(void)
 		// read input from user
 		prompt = readline(">>> ");
 		if (prompt == NULL)
-			break ;
+			printf(RED "ERROR: readline\n" RESET);
 		// add input to history
 		if (prompt[0] != '\0')
 			add_history(prompt);
-		// parse and tokenize input
-		// execute command
-		printf("You typed %s\n", prompt);
+		if (!ft_check_quotes(prompt))
+		{
+			// parse and tokenize input
+			// execute command
+			printf("You typed %s\n", prompt);
+		}
 		// free memory
 		free (prompt);
 	}
@@ -46,13 +49,13 @@ int	main(void)
 
 void	ft_print_banner(void)
 {
-	printf("\n    ._____.___ .___ .______  .___\n");
+	printf(BLUE1 "\n    ._____.___ .___ .______  .___\n");
 	printf("    :         |: __|:      \\ : __|\n");
 	printf("    |   \\  /  || : ||       || : |\n");
 	printf("    |   |\\/   ||   ||   |   ||   |\n");
 	printf("    |___| |   ||   ||___|   ||   |\n");
-	printf("          |___||___|    |___||___|\n\n");
-	printf("             *               ***   ***\n");
+	printf("          |___||___|    |___||___|\n\n" RESET);
+	printf(BLUE3"             *               ***   ***\n");
 	printf("           **                 ***   ***\n");
 	printf("           **                  **    **\n");
 	printf("           **                  **    **\n");
@@ -69,6 +72,7 @@ void	ft_print_banner(void)
 	printf("            **    **   *****    ***   ***\n");
 	printf("                 *\n");
 	printf("                 *\n");
-	printf("                *        by Alise & Luis\n");
-	printf("               *\n\n");
+	printf("                * " RESET);
+	printf(BLUE1 "     by Alise & Luis\n" RESET);
+	printf(BLUE3"               *\n\n" RESET);
 }
