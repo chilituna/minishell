@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/21 19:06:44 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:18:16 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_lexer	*ft_lexer(char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		ft_init_lexer(new, i);
+		new = ft_init_lexer(new, i);
 		new->str = argv[i];
 		ft_tokenizer(new);
 		if (i == 0)
@@ -38,11 +38,11 @@ t_lexer	*ft_lexer(char **argv)
 		}
 		tmp = new;
 		i++;
-		return (head);
 	}
+	return (head);
 }
 
-void	ft_init_lexer(t_lexer *lexer, int i)
+t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
 {
 	lexer = malloc(sizeof(t_lexer));
 	if (!lexer)
@@ -51,11 +51,12 @@ void	ft_init_lexer(t_lexer *lexer, int i)
 	lexer->str = NULL;
 	lexer->next = NULL;
 	lexer->prev = NULL;
+	return (lexer);
 }
 
 
 //check for special characters and create tokens
 void	ft_tokenizer(t_lexer *lexer)
 {
-
+	(void)lexer;
 }

@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 19:06:17 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:17:24 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ size_t	ft_strlen(const char *str);
 
 //lexer.c
 t_lexer	*ft_lexer(char **argv);
-void	ft_init_lexer(t_lexer *lexer, int i);
+t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
 
 #endif

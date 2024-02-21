@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 19:03:55 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/21 19:13:31 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	main(void)
 			lexer = ft_lexer(argv);
 			// ft_parser();
 			// ft_execute();
-			printf("You typed %s\n", prompt);
+			printf("Input as lexer:\n");
+			while (lexer)
+			{
+				printf("%s\n", lexer->str);
+				lexer = lexer->next;
+			}
 		}
 		// ft_freeall(argv);
 		free (prompt);
@@ -55,12 +60,6 @@ int	main(void)
 }
 
 //print minishell banner when strting the program
-
-void	ft_print_banner(void)
-{
-	ft_print_banner_1();
-	ft_print_banner_2();
-}
 
 void	ft_print_banner_2(void)
 {
@@ -86,7 +85,7 @@ void	ft_print_banner_2(void)
 	printf(BLUE3"               *\n\n" RESET);
 }
 
-void	ft_print_banner_2(void)
+void	ft_print_banner_1(void)
 {
 	printf(BLUE1 "\n    ._____.___ .___ .______  .___\n");
 	printf("    :         |: __|:      \\ : __|\n");
@@ -94,4 +93,10 @@ void	ft_print_banner_2(void)
 	printf("    |   |\\/   ||   ||   |   ||   |\n");
 	printf("    |___| |   ||   ||___|   ||   |\n");
 	printf("          |___||___|    |___||___|\n\n" RESET);
+}
+
+void	ft_print_banner(void)
+{
+	ft_print_banner_1();
+	ft_print_banner_2();
 }
