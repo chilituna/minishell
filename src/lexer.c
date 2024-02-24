@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/21 19:18:16 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:17:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,32 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
 		exit(1); // malloc_error function to free memory and exit
 	lexer->index = i;
 	lexer->str = NULL;
+	lexer->token = NULL;
 	lexer->next = NULL;
 	lexer->prev = NULL;
 	return (lexer);
 }
 
 
-//check for special characters and create tokens
+//check for special characters and create tokens:
+// - pipes
+// - redirections
+
 void	ft_tokenizer(t_lexer *lexer)
 {
-	(void)lexer;
+	if (!ft_strncmp(lexer->str, "|", 1) && ft_strlen(lexer->str) == 1)
+		lexer->token = ft_strdup("PIPE");
+	else if (!ft_strncmp(lexer->str, ">", 1) && ft_strlen(lexer->str) == 1)
+		lexer->token = ft_strdup("REDIR_OUT");
+	else if (!ft_strncmp(lexer->str, ">>", 2) && ft_strlen(lexer->str) == 2)
+		lexer->token = ft_strdup("REDIR_APPEND");
+	else if (!ft_strncmp(lexer->str, "<", 1) && ft_strlen(lexer->str) == 1)
+		lexer->token = ft_strdup("REDIR_IN");
+	else if (!ft_strncmp(lexer->str, "<<", 2) && ft_strlen(lexer->str) == 2)
+		lexer->token = ft_strdup("HEREDOC");
+	if (lexer->token)
+	{
+		free(lexer->str);
+		lexer->str = NULL;
+	}
 }
