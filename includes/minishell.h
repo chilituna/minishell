@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 17:13:29 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:08:43 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,16 @@ char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str);
 t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
+char	*ft_pick_string(char *str, t_lexer *lexer);
 
 //builtin
-int	ft_echo(t_cmd *cmds, t_redir *redir);
+int		ft_echo(t_cmd *cmds, t_redir *redir);
 
 #endif
 
