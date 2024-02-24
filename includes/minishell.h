@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 19:53:37 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/24 17:17:43 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct s_lexer
 typedef struct s_cmd
 {
 	char			*cmd;
-	char			**flags;
+	char			**flags;//kind of argv
 	char			*in;
 	char			*out;
 	struct s_cmd	*next;
@@ -105,6 +105,9 @@ size_t	ft_strlen(const char *str);
 t_lexer	*ft_lexer(char **argv);
 t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
+
+//builtin
+int	ft_echo(t_cmd *cmds, t_redir *redir);
 
 #endif
 
