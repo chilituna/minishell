@@ -6,17 +6,45 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/24 16:17:42 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:28:38 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+t_lexer	*ft_pick_string(char *str, int i, t_lexer *lexer)
+{
+	int		start;
+	int		end;
+
+	start = i;
+	if (str[i] == '\'')
+	{
+		while (str[i] != '\'')
+			i++;
+		end = i;
+	}
+	else if (str[i] == '\"')
+	{
+		while (str[i] != '\"')
+			i++;
+		end = i;
+	}
+	else
+	{
+		while (str[i] != ' ' && str[i] != '\0')
+			i++;
+		end = i;
+	}
+	lexer->str = ft_copysub(str, start, end);
+	return (lexer);
+}
+
 //split input into an array of strings
 //create a linked list lexer that stores the words from the input
 //send to function to check for special characters and create tokens
 //return the linked list
-t_lexer	*ft_lexer(char **argv)
+t_lexer	*ft_lexer(char *str)
 {
 	int		i;
 	t_lexer	*head;
@@ -24,10 +52,10 @@ t_lexer	*ft_lexer(char **argv)
 	t_lexer	*new;
 
 	i = 0;
-	while (argv[i])
+	while (str[i])
 	{
 		new = ft_init_lexer(new, i);
-		new->str = argv[i];
+		ft_pick_string(str, i, new);
 		ft_tokenizer(new);
 		if (i == 0)
 			head = new;
@@ -59,7 +87,7 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
 //check for special characters and create tokens:
 // - pipes
 // - redirections
-
+// - heredoc
 void	ft_tokenizer(t_lexer *lexer)
 {
 	if (!ft_strncmp(lexer->str, "|", 1) && ft_strlen(lexer->str) == 1)
