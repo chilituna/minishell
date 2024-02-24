@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 17:17:43 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/02/24 15:56:47 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_lexer
 {
 	int				index;
 	char			*str;
-	char			*tok;
+	char			*token;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
 }	t_lexer;
@@ -79,15 +79,8 @@ typedef struct s_redir
 //	- executable (absolute path or in $PATH)
 //	- built-in (echo, cd, pwd, export, unset, env, exit)
 //	- env variable ($)
-//	- tokens:
 //	- single quotes '
 //	- double quotes "
-//	- redirecing output >
-//	- redirecing input <
-//	- redirecing output in append mode >>
-// 	- heredoc <<
-//	- pipe |
-
 
 //FUNCTIONS
 //main.c --> start program, show prompt, loop (TLDR)
@@ -100,6 +93,8 @@ int		ft_check_quotes(char *input);
 //utils
 char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *str);
+int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
+char	*ft_strdup(const char *s);
 
 //lexer.c
 t_lexer	*ft_lexer(char **argv);
