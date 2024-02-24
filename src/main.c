@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/21 19:13:31 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/02/24 16:12:15 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int	main(void)
 			printf("Input as lexer:\n");
 			while (lexer)
 			{
-				printf("%s\n", lexer->str);
+				if (lexer->token)
+					printf("%s\n", lexer->token);
+				else
+					printf("%s\n", lexer->str);
 				lexer = lexer->next;
 			}
 		}
