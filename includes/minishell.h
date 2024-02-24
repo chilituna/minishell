@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 15:56:47 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/24 17:13:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 
 //lexer.c
-t_lexer	*ft_lexer(char **argv);
+t_lexer	*ft_lexer(char *str);
 t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
 
