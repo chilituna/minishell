@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 17:13:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:18:53 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@
 int	main(void)
 {
 	char	*prompt;
-	// char	**argv;
 	t_lexer	*lexer;
 
 	ft_print_banner();
@@ -41,8 +40,7 @@ int	main(void)
 			add_history(prompt);
 		if (!ft_check_quotes(prompt))
 		{
-			// argv = ft_split(prompt, ' ');
-			lexer = ft_lexer(&prompt);
+			lexer = ft_lexer(prompt);
 			// ft_parser();
 			// ft_execute();
 			printf("Input as lexer:\n");

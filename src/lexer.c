@@ -6,29 +6,44 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/24 17:28:38 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:18:25 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_lexer	*ft_pick_string(char *str, int i, t_lexer *lexer)
+// break the input into strings:
+// skip whitespace
+// put quoted text into a single string
+// otherwise, split by space
+// create a string and store in a linked list
+// return the remaining input
+char	*ft_pick_string(char *str, t_lexer *lexer)
 {
 	int		start;
 	int		end;
+	int		i;
 
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
+		|| str[i] == '\f' || str[i] == '\r')
+		i++;
 	start = i;
 	if (str[i] == '\'')
 	{
+		i++;
 		while (str[i] != '\'')
 			i++;
-		end = i;
+		end = i + 1;
+		i++;
 	}
 	else if (str[i] == '\"')
 	{
+		i++;
 		while (str[i] != '\"')
 			i++;
-		end = i;
+		end = i + 1;
+		i++;
 	}
 	else
 	{
@@ -36,15 +51,15 @@ t_lexer	*ft_pick_string(char *str, int i, t_lexer *lexer)
 			i++;
 		end = i;
 	}
-	lexer->str = ft_copysub(str, start, end);
-	return (lexer);
+	lexer->str = ft_substr(str, start, end - start);
+	return (str + i);
 }
 
 //split input into an array of strings
 //create a linked list lexer that stores the words from the input
 //send to function to check for special characters and create tokens
 //return the linked list
-t_lexer	*ft_lexer(char *str)
+t_lexer	*ft_lexer(char *input)
 {
 	int		i;
 	t_lexer	*head;
@@ -52,10 +67,10 @@ t_lexer	*ft_lexer(char *str)
 	t_lexer	*new;
 
 	i = 0;
-	while (str[i])
+	while (input[0] && input[0] != '\n')
 	{
 		new = ft_init_lexer(new, i);
-		ft_pick_string(str, i, new);
+		input = ft_pick_string(input, new);
 		ft_tokenizer(new);
 		if (i == 0)
 			head = new;
