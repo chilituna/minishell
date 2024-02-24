@@ -60,7 +60,7 @@ typedef struct s_lexer
 typedef struct s_cmd
 {
 	char			*cmd;
-	char			**flags;
+	char			**flags;//kind of argv
 	char			*in;
 	char			*out;
 	struct s_cmd	*next;
@@ -100,6 +100,9 @@ char	*ft_strdup(const char *s);
 t_lexer	*ft_lexer(char **argv);
 t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
+
+//builtin
+int	ft_echo(t_cmd *cmds, t_redir *redir);
 
 #endif
 

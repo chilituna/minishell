@@ -22,6 +22,20 @@ size_t	ft_strlen(const char *str)
 	return (x);
 }
 
+
+void	ft_putchar_fd(char c, int fd)
+{
+	write(1, &c, 1);
+}
+
+void	ft_putstr_fd(char *str, int fd)
+{
+	while (*str)
+	{
+		ft_putcchar_fd(*str, fd);
+		str++;
+	}
+  
 int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 {
 	unsigned int	c;
