@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 14:55:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:51:08 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	ft_check_quotes(char *input)
 	if (single_q % 2 != 0 || double_q % 2 != 0)
 	{
 		printf(RED "ERROR: unclosed quotes\n" RESET);
+		printf("single quotes: %d\n", single_q);
+		printf("double quotes: %d\n", double_q);
 		return (1);
 	}
 	return (0);
@@ -40,16 +42,14 @@ int	ft_check_doublequotes(char *input)
 			input = ft_strchr(input + 1, '\'');
 			if (input == NULL)
 				return (1);
-			input++;
 		}
 		if (*input == '\"')
 		{
-			input++;
 			double_q++;
-			while (*input != '\"' && *input != '\0')
-				input++;
-			if (*input == '\"')
-				double_q++;
+			input = ft_strchr(input + 1, '\"');
+			if (input == NULL)
+				return (1);
+			double_q++;
 		}
 		input++;
 	}
@@ -68,16 +68,14 @@ int	ft_check_singlequotes(char *input)
 			input = ft_strchr(input + 1, '\"');
 			if (input == NULL)
 				return (1);
-			input++;
 		}
 		if (*input == '\'')
 		{
-			input++;
 			single_q++;
-			while (*input != '\'' && *input != '\0')
-				input++;
-			if (*input == '\'')
-				single_q++;
+			input = ft_strchr(input + 1, '\'');
+			if (input == NULL)
+				return (1);
+			single_q++;
 		}
 		input++;
 	}
