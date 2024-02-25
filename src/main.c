@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 23:18:32 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:14:34 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void	ft_print_cmd(t_cmd *cmd)
 {
-	int	i = 0;
+	int	i;
 
-	printf("COMMAND: %d\n", cmd->index);
+	i = 0;
+	printf(BLUE2 "COMMAND: %d\n" RESET, cmd->index + 1);
 
 	while (cmd->tokens[i])
 	{
@@ -42,23 +43,27 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
 
+	data = NULL;
 	if (argc != 1 || argv[1])
-		ft_error_and_exit("usage: ./minishell");
-	data = ft_calloc(1, sizeof(t_data));
+		ft_error_and_exit("usage: ./minishell", data);
+	data = ft_malloc(sizeof(t_data), data);
 	if (!data)
-		ft_error_and_exit("calloc error");
+		ft_error_and_exit("malloc error", data);
 	ft_print_banner();
 	while (1)
 	{
-		data->prompt = readline(">>> ");
+		data->prompt = readline(YELLOW ">>> " RESET);
 		if (!data->prompt)
-			ft_error_and_exit("readline error");
+			ft_error_and_exit("readline error", data);
 		if (data->prompt[0] != '\0')
 			add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
-			data->lexer = ft_lexer(data->prompt);
-			data->cmd = ft_parser(data->lexer);
+			printf(GREEN "Quotes checked\n" RESET);
+			data->lexer = ft_lexer(data->prompt, data);
+			printf(GREEN "Lexer done\n" RESET);
+			data->cmd = ft_parser(data->lexer, data);
+			printf(GREEN "Commands grouped\n"RESET);
 			//print cmds:
 			while (data->cmd)
 			{

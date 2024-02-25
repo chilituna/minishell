@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 23:28:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:55:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
 	return ((unsigned char)s1[c] - (unsigned char)s2[c]);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(const char *s, t_data *data)
 {
 	char		*new_s;
 	size_t		len;
 	size_t		i;
 
 	len = ft_strlen(s);
-	new_s = malloc((len +1) * sizeof(char));
+	new_s = ft_malloc((len +1) * sizeof(char), data);
 	if (new_s == NULL)
 		return (NULL);
 	i = 0;

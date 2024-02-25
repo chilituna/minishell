@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:54:43 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 14:56:41 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:57:28 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_isspace(int c)
 }
 
 // take a string and return a substring of len length from start
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data)
 {
 	char	*subs;
 	size_t	i;
@@ -30,10 +30,10 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	if (!s)
 		return (NULL);
 	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
+		return (ft_strdup("", data));
 	if (len > ft_strlen(s + start))
 		len = ft_strlen(s + start);
-	subs = malloc(sizeof(char) * (len + 1));
+	subs = ft_malloc(sizeof(char) * (len + 1), data);
 	if (subs == NULL)
 		return (NULL);
 	i = 0;
@@ -65,27 +65,13 @@ char	*ft_strchr(const char *s, int c)
 	return (NULL);
 }
 
-void	ft_bzero(void *s, size_t n)
+// malloc with error check
+void	*ft_malloc(size_t size, t_data *data)
 {
-	size_t	i;
-	char	*p;
+	void	*ptr;
 
-	i = 0;
-	p = (char *)s;
-	while (i < n)
-	{
-		p[i] = '\0';
-		i++;
-	}
-}
-
-void	*ft_calloc(size_t nmeb, size_t size)
-{
-	void	*p;
-
-	p = malloc(nmeb * size);
-	if (p == NULL)
-		return (NULL);
-	ft_bzero(p, nmeb * size);
-	return (p);
+	ptr = malloc(size);
+	if (ptr == NULL)
+		ft_error_and_exit("malloc failed", data);
+	return (ptr);
 }
