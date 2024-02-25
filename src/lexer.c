@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 15:56:44 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:26:56 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ t_lexer	*ft_lexer(char *input)
 	t_lexer	*new;
 
 	i = 0;
-	while (input[0] && input[0] != '\n')
+	while (input[0])
 	{
 		new = ft_init_lexer(new, i);
 		input = ft_pick_string(input, new);
@@ -81,6 +81,7 @@ t_lexer	*ft_lexer(char *input)
 		tmp = new;
 		i++;
 	}
+	tmp = NULL;
 	return (head);
 }
 

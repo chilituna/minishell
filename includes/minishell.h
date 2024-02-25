@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 15:51:07 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:24:50 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ typedef struct s_redir
 // Command list to store command groups from parser:
 typedef struct s_cmd
 {
+	int				index;
+	char			**tokens;
 	char			*cmd;
 	char			**flags;//kind of argv
 	char			*in;
@@ -79,9 +81,11 @@ typedef struct s_cmd
 // Data structure to store everything
 typedef struct s_data
 {
-	t_lexer	*lexer;
-	char	**env;
 	char	*prompt;
+	t_lexer	*lexer;
+	t_cmd	*cmd;
+	char	**env;
+
 }	t_data;
 
 //	- executable (absolute path or in $PATH)
@@ -114,6 +118,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
 void	*ft_calloc(size_t nmeb, size_t size);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *str, int fd);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str);
@@ -121,6 +127,13 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
 char	*ft_pick_string(char *str, t_lexer *lexer);
 int		ft_quoted_string(char *str, char c);
+
+//parser.c
+int		ft_check_pipes(t_lexer *lexer);
+t_cmd	*ft_parser(t_lexer *lexer);
+t_cmd	*ft_init_cmd(t_cmd *cmd, int i);
+t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd);
+int		ft_count_tokens(t_lexer *lexer);
 
 //builtins
 int		ft_echo(t_cmd *cmds, t_redir *redir);

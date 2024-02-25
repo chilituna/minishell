@@ -6,11 +6,24 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 15:10:48 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:18:32 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_print_cmd(t_cmd *cmd)
+{
+	int	i = 0;
+
+	printf("COMMAND: %d\n", cmd->index);
+
+	while (cmd->tokens[i])
+	{
+		printf("%s\n", cmd->tokens[i]);
+		i++;
+	}
+}
 
 // READ
 // EVALUATE
@@ -42,21 +55,18 @@ int	main(int argc, char **argv, char **envp)
 			ft_error_and_exit("readline error");
 		if (data->prompt[0] != '\0')
 			add_history(data->prompt);
-		if (!ft_check_quotes(data->prompt))
+		if (ft_check_quotes(data->prompt))
 		{
 			data->lexer = ft_lexer(data->prompt);
-			// ft_parser();
+			data->cmd = ft_parser(data->lexer);
+			//print cmds:
+			while (data->cmd)
+			{
+				ft_print_cmd(data->cmd);
+				data->cmd = data->cmd->next;
+			}
 			// ft_execute();
 			(void)envp;
-			printf("Input as lexer:\n");
-			while (data->lexer)
-			{
-				if (data->lexer->token)
-					printf("%s\n", data->lexer->token);
-				else
-					printf("%s\n", data->lexer->str);
-				data->lexer = data->lexer->next;
-			}
 		}
 		ft_free_data(data);
 	}

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 16:51:08 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 23:20:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,9 @@ int	ft_check_quotes(char *input)
 	if (single_q % 2 != 0 || double_q % 2 != 0)
 	{
 		printf(RED "ERROR: unclosed quotes\n" RESET);
-		printf("single quotes: %d\n", single_q);
-		printf("double quotes: %d\n", double_q);
-		return (1);
+		return (0);
 	}
-	return (0);
-
+	return (1);
 }
 
 int	ft_check_doublequotes(char *input)
