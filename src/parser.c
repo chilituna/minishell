@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 23:16:44 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:16:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	ft_check_pipes(t_lexer *lexer)
 // initialize each command node
 // create an array of tokens for each command node
 // return the head of the command linked list
-t_cmd	*ft_parser(t_lexer *lexer)
+t_cmd	*ft_parser(t_lexer *lexer, t_data *data)
 {
 	int		i;
 	int		pipes;
@@ -66,7 +66,7 @@ t_cmd	*ft_parser(t_lexer *lexer)
 	pipes = ft_check_pipes(lexer);
 	while (i < pipes)
 	{
-		new = ft_init_cmd(new, i);
+		new = ft_init_cmd(new, i, data);
 		lexer = ft_create_cmd(lexer, new);
 		if (i == 0)
 			head = new;
@@ -82,11 +82,9 @@ t_cmd	*ft_parser(t_lexer *lexer)
 	return (head);
 }
 
-t_cmd	*ft_init_cmd(t_cmd *cmd, int i)
+t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 {
-	cmd = malloc(sizeof(t_cmd));
-	if (!cmd)
-		ft_error_and_exit("malloc error");
+	cmd = ft_malloc(sizeof(t_cmd), data);
 	cmd->index = i;
 	cmd->tokens = NULL;
 	cmd->flags = NULL;
@@ -94,6 +92,7 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i)
 	cmd->out = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
+	cmd->data = data;
 	return (cmd);
 }
 
@@ -109,7 +108,8 @@ t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd)
 
 	i = 0;
 	temp = lexer;
-	cmd->tokens = malloc(sizeof(char *) * (ft_count_tokens(lexer) + 1));
+	cmd->tokens = ft_malloc(sizeof(char *) * (ft_count_tokens(lexer) + 1),
+			cmd->data);
 	while (temp)
 	{
 		if (temp->token)
@@ -119,10 +119,10 @@ t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd)
 				lexer = temp->next;
 				break ;
 			}
-			cmd->tokens[i] = ft_strdup(temp->token);
+			cmd->tokens[i] = ft_strdup(temp->token, cmd->data);
 		}
 		else
-			cmd->tokens[i] = ft_strdup(temp->str);
+			cmd->tokens[i] = ft_strdup(temp->str, cmd->data);
 		i++;
 		temp = temp->next;
 	}

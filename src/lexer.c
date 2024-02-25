@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 22:26:56 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:17:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		while (!ft_isspace(str[i]) && str[i] != '\0')
 			i++;
 	}
-	lexer->str = ft_substr(str, start, i - start);
+	lexer->str = ft_substr(str, start, i - start, lexer->data);
 	while (ft_isspace(str[i]))
 		i++;
 	return (str + i);
@@ -58,7 +58,7 @@ int	ft_quoted_string(char *str, char c)
 //create a linked list lexer that stores the words from the input
 //send to function to check for special characters and create tokens
 //return the linked list
-t_lexer	*ft_lexer(char *input)
+t_lexer	*ft_lexer(char *input, t_data *data)
 {
 	int		i;
 	t_lexer	*head;
@@ -68,7 +68,7 @@ t_lexer	*ft_lexer(char *input)
 	i = 0;
 	while (input[0])
 	{
-		new = ft_init_lexer(new, i);
+		new = ft_init_lexer(new, i, data);
 		input = ft_pick_string(input, new);
 		ft_tokenizer(new);
 		if (i == 0)
@@ -85,16 +85,15 @@ t_lexer	*ft_lexer(char *input)
 	return (head);
 }
 
-t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
+t_lexer	*ft_init_lexer(t_lexer *lexer, int i, t_data *data)
 {
-	lexer = malloc(sizeof(t_lexer));
-	if (!lexer)
-		ft_error_and_exit("malloc error");
+	lexer = ft_malloc(sizeof(t_lexer), data);
 	lexer->index = i;
 	lexer->str = NULL;
 	lexer->token = NULL;
 	lexer->next = NULL;
 	lexer->prev = NULL;
+	lexer->data = data;
 	return (lexer);
 }
 
@@ -105,15 +104,15 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
 void	ft_tokenizer(t_lexer *lexer)
 {
 	if (!ft_strncmp(lexer->str, "|", 1) && ft_strlen(lexer->str) == 1)
-		lexer->token = ft_strdup("PIPE");
+		lexer->token = ft_strdup("PIPE", lexer->data);
 	else if (!ft_strncmp(lexer->str, ">", 1) && ft_strlen(lexer->str) == 1)
-		lexer->token = ft_strdup("REDIR_OUT");
+		lexer->token = ft_strdup("REDIR_OUT", lexer->data);
 	else if (!ft_strncmp(lexer->str, ">>", 2) && ft_strlen(lexer->str) == 2)
-		lexer->token = ft_strdup("REDIR_APPEND");
+		lexer->token = ft_strdup("REDIR_APPEND", lexer->data);
 	else if (!ft_strncmp(lexer->str, "<", 1) && ft_strlen(lexer->str) == 1)
-		lexer->token = ft_strdup("REDIR_IN");
+		lexer->token = ft_strdup("REDIR_IN", lexer->data);
 	else if (!ft_strncmp(lexer->str, "<<", 2) && ft_strlen(lexer->str) == 2)
-		lexer->token = ft_strdup("HEREDOC");
+		lexer->token = ft_strdup("HEREDOC", lexer->data);
 	if (lexer->token)
 	{
 		free(lexer->str);

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 23:24:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:15:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,13 @@
 
 //STRUCTS
 
+// Prototype for the main data
+typedef struct s_data	t_data;
+
 // Lexer list to store the command line input:
 // index of the arg
 // str for words
-// tok for symbols
+// token for symbols
 typedef struct s_lexer
 {
 	int				index;
@@ -54,6 +57,7 @@ typedef struct s_lexer
 	char			*token;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
+	t_data			*data;
 }	t_lexer;
 
 // Redirection list to store redirections from parser:
@@ -63,6 +67,7 @@ typedef struct s_redir
 	char			*filename;
 	struct s_redir	*next;
 	struct s_redir	*prev;
+	t_data			*data;
 }	t_redir;
 
 // Command list to store command groups from parser:
@@ -76,9 +81,10 @@ typedef struct s_cmd
 	char			*out;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
+	t_data			*data;
 }	t_cmd;
 
-// Data structure to store everything
+// Data structure to store the pointers to the lexer, parser and env:
 typedef struct s_data
 {
 	char	*prompt;
@@ -99,11 +105,12 @@ int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 
 //error handling
-void	ft_error_and_exit(char *str);
+void	ft_error_and_exit(char *str, t_data *data);
 
 //clean_up.c
 void	ft_free_data(t_data *data);
 void	ft_free_lexer(t_lexer *lexer);
+void	ft_free_parser(t_cmd *cmd);
 
 //check.c
 int		ft_check_quotes(char *input);
@@ -113,25 +120,25 @@ int		ft_check_singlequotes(char *input);
 //utils
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
-char	*ft_strdup(const char *s);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strdup(const char *s, t_data *data);
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data);
 int		ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
-void	*ft_calloc(size_t nmeb, size_t size);
+void	*ft_malloc(size_t size, t_data *data);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
 
 //lexer.c
-t_lexer	*ft_lexer(char *str);
-t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
+t_lexer	*ft_lexer(char *str, t_data *data);
+t_lexer	*ft_init_lexer(t_lexer *lexer, int i, t_data *data);
 void	ft_tokenizer(t_lexer *lexer);
 char	*ft_pick_string(char *str, t_lexer *lexer);
 int		ft_quoted_string(char *str, char c);
 
 //parser.c
 int		ft_check_pipes(t_lexer *lexer);
-t_cmd	*ft_parser(t_lexer *lexer);
-t_cmd	*ft_init_cmd(t_cmd *cmd, int i);
+t_cmd	*ft_parser(t_lexer *lexer, t_data *data);
+t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data);
 t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd);
 int		ft_count_tokens(t_lexer *lexer);
 
