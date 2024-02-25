@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 19:08:43 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:03:26 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ void	ft_print_banner(void);
 
 //check.c
 int		ft_check_quotes(char *input);
+int		ft_check_doublequotes(char *input);
+int		ft_check_singlequotes(char *input);
 
 //utils
 char	**ft_split(char const *s, char c);
@@ -96,6 +98,8 @@ size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+int		ft_isspace(int c);
+char	*ft_strchr(const char *s, int c);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str);

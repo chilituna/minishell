@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/24 20:18:25 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 11:14:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@
 char	*ft_pick_string(char *str, t_lexer *lexer)
 {
 	int		start;
-	int		end;
 	int		i;
 
 	i = 0;
-	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' || str[i] == '\v'
-		|| str[i] == '\f' || str[i] == '\r')
+	while (ft_isspace(str[i]))
 		i++;
 	start = i;
 	if (str[i] == '\'')
@@ -34,7 +32,6 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i++;
 		while (str[i] != '\'')
 			i++;
-		end = i + 1;
 		i++;
 	}
 	else if (str[i] == '\"')
@@ -42,16 +39,14 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i++;
 		while (str[i] != '\"')
 			i++;
-		end = i + 1;
 		i++;
 	}
 	else
 	{
-		while (str[i] != ' ' && str[i] != '\0')
+		while (!ft_isspace(str[i]) && str[i] != '\0')
 			i++;
-		end = i;
 	}
-	lexer->str = ft_substr(str, start, end - start);
+	lexer->str = ft_substr(str, start, i - start);
 	return (str + i);
 }
 
