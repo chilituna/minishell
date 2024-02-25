@@ -6,17 +6,11 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 15:05:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:10:48 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_init_data(t_data *data)
-{
-	data->prompt = NULL;
-	data->lexer = NULL;
-}
 
 // READ
 // EVALUATE

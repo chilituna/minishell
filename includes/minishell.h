@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 14:54:38 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:12:44 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,13 +87,11 @@ typedef struct s_data
 //	- executable (absolute path or in $PATH)
 //	- built-in (echo, cd, pwd, export, unset, env, exit)
 //	- env variable ($)
-//	- single quotes '
-//	- double quotes "
 
 //FUNCTIONS
+
 //main.c --> start program, show prompt, loop (TLDR)
 int		main(int argc, char **argv, char **envp);
-void	ft_init_data(t_data *data);
 void	ft_print_banner(void);
 
 //error handling
@@ -123,7 +121,7 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
 char	*ft_pick_string(char *str, t_lexer *lexer);
 
-//builtin
+//builtins
 int		ft_echo(t_cmd *cmds, t_redir *redir);
 
 #endif
