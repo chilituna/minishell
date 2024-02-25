@@ -6,13 +6,22 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:54:43 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/24 18:54:48 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 12:03:03 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// check for whitespace
+int	ft_isspace(int c)
+{
+	if (c == ' ' || c == '\t' || c == '\n' || c == '\v'
+		|| c == '\f' || c == '\r')
+		return (1);
+	return (0);
+}
 
+// take a string and return a substring of len length from start
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*subs;
@@ -35,4 +44,23 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	}
 	subs[i] = '\0';
 	return (subs);
+}
+
+// locates the first occurrence of c in the string pointed to by s
+// returns a pointer to the located character, or NULL if no match was found.
+// the terminating null byte is considered part of the string:
+// if c is '\0', the function locates the terminating '\0'.
+char	*ft_strchr(const char *s, int c)
+{
+	if (!s)
+		return (NULL);
+	while (*s)
+	{
+		if (*s == (char)c)
+			return ((char *)s);
+		s++;
+	}
+	if (*s == (char)c)
+		return ((char *)s);
+	return (NULL);
 }
