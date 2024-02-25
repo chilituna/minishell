@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 15:12:44 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:51:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ t_lexer	*ft_lexer(char *str);
 t_lexer	*ft_init_lexer(t_lexer *lexer, int i);
 void	ft_tokenizer(t_lexer *lexer);
 char	*ft_pick_string(char *str, t_lexer *lexer);
+int		ft_quoted_string(char *str, char c);
 
 //builtins
 int		ft_echo(t_cmd *cmds, t_redir *redir);
