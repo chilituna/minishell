@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:54:43 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 12:03:03 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:56:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,29 @@ char	*ft_strchr(const char *s, int c)
 	if (*s == (char)c)
 		return ((char *)s);
 	return (NULL);
+}
+
+void	ft_bzero(void *s, size_t n)
+{
+	size_t	i;
+	char	*p;
+
+	i = 0;
+	p = (char *)s;
+	while (i < n)
+	{
+		p[i] = '\0';
+		i++;
+	}
+}
+
+void	*ft_calloc(size_t nmeb, size_t size)
+{
+	void	*p;
+
+	p = malloc(nmeb * size);
+	if (p == NULL)
+		return (NULL);
+	ft_bzero(p, nmeb * size);
+	return (p);
 }

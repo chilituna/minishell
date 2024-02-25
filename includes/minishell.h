@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 12:03:26 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:54:38 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,15 @@ typedef struct s_lexer
 	struct s_lexer	*prev;
 }	t_lexer;
 
+// Redirection list to store redirections from parser:
+typedef struct s_redir
+{
+	char			*tok;
+	char			*filename;
+	struct s_redir	*next;
+	struct s_redir	*prev;
+}	t_redir;
+
 // Command list to store command groups from parser:
 typedef struct s_cmd
 {
@@ -67,14 +76,13 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 }	t_cmd;
 
-// Redirection list to store redirections from parser:
-typedef struct s_redir
+// Data structure to store everything
+typedef struct s_data
 {
-	char			*tok;
-	char			*filename;
-	struct s_redir	*next;
-	struct s_redir	*prev;
-}	t_redir;
+	t_lexer	*lexer;
+	char	**env;
+	char	*prompt;
+}	t_data;
 
 //	- executable (absolute path or in $PATH)
 //	- built-in (echo, cd, pwd, export, unset, env, exit)
@@ -84,8 +92,16 @@ typedef struct s_redir
 
 //FUNCTIONS
 //main.c --> start program, show prompt, loop (TLDR)
-int		main(void);
+int		main(int argc, char **argv, char **envp);
+void	ft_init_data(t_data *data);
 void	ft_print_banner(void);
+
+//error handling
+void	ft_error_and_exit(char *str);
+
+//clean_up.c
+void	ft_free_data(t_data *data);
+void	ft_free_lexer(t_lexer *lexer);
 
 //check.c
 int		ft_check_quotes(char *input);
@@ -93,13 +109,13 @@ int		ft_check_doublequotes(char *input);
 int		ft_check_singlequotes(char *input);
 
 //utils
-char	**ft_split(char const *s, char c);
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
+void	*ft_calloc(size_t nmeb, size_t size);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str);

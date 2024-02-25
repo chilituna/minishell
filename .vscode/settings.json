@@ -1,5 +1,7 @@
 {
     "files.associations": {
         "minishell.h": "c"
-    }
+	},
+	"42header.email": "aarponen@student.42berlin.de",
+	"42header.username": "aarponen"
 }

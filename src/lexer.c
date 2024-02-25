@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/21 17:25:16 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/02/25 11:14:33 by aarponen         ###   ########.fr       */
+/*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
+/*   Updated: 2024/02/25 14:56:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ t_lexer	*ft_init_lexer(t_lexer *lexer, int i)
 {
 	lexer = malloc(sizeof(t_lexer));
 	if (!lexer)
-		exit(1); // malloc_error function to free memory and exit
+		ft_error_and_exit("malloc error");
 	lexer->index = i;
 	lexer->str = NULL;
 	lexer->token = NULL;
