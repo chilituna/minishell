@@ -13,13 +13,13 @@
 #include "minishell.h"
 
 //-echo -n
-static void	ft_put_line(int n, char **str, int out)
+void	ft_put_line(int n, char **str, int out)
 {
-	while (str[n])
+	while (str[n])//while there is a string it will print it
 	{
-		ft_putstr_fd(str[n++], out);
-		
-		
+		ft_putstr_fd(str[n++], out);//print the string
+		if(str[i])//if there is a new string, print space and keep printing the new one
+			ft_putchar_fd(' ', out);
 	}
 }
 
@@ -29,18 +29,23 @@ int	ft_echo(t_cmd *cmds, t_redir *redir)
 	int	j;
 	int	flag;
 
-	i = 1;
-	flag = 1;//false
-	while (cmds->flags[i] && cmds->flags[i][0] == '-' && cmds->flags[i][1] == 'n')
+	i = 1;//init at 1 to skip program name
+	flag = 1;//init as false
+	while ((cmds->flags[i] != '\0') && (cmds->flags[i][0] == '-') && (cmds->flags[i][1] == 'n'))//check for flag -n
 	{
 		j = 1;
-		while (cmds->flags[i][j] == 'n')
+		while (cmds->flags[i][j] == 'n')//avoid -nnnn since stay with 1st n found
 			j++;
-		if (cmds->flags[i][j] == '\0')
-			flag = 0;//true
+		if (cmds->flags[i][j] == '\0')//
+			flag = 0;//true -n found
 		else
-			break ;
+			break ;//break if there are more chars after -n
+		i++;
 	}
+	ft_put_line(i, cmds->flags, STDOUT_FILENO);
+	if (flag == 1)//if n is not found put \n 
+		ft_putchar_fd('\n', STDOUT_FILENO);
+	return (EXIT_SUCCESS);
 }
 
 //-cd ->only relative or absolute path

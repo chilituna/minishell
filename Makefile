@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/02/25 23:32:19 by aarponen         ###   ########.fr        #
+#    Updated: 2024/02/26 23:16:04 by luifer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCLUDES = -I includes
 LIBS = -lreadline
 
 SRC_DIR = src
-SRC_FILES = main.c utils.c utils_2.c check_quotes.c lexer.c parser.c clean_up.c error_and_exit.c
+SRC_FILES = main.c utils.c utils_2.c check_quotes.c lexer.c parser.c clean_up.c error_and_exit.c ft_echo.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
