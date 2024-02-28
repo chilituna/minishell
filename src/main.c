@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 16:46:47 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:33:10 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,16 @@ void	ft_print_cmd(t_cmd *cmd)
 	int	i;
 
 	i = 0;
-	printf(BLUE2 "COMMAND: %d\n" RESET, cmd->index + 1);
-
-	while (cmd->tokens[i])
+	printf(BLUE1 "COMMAND: %d\n" RESET, cmd->index + 1);
+	while (cmd->cmd_arg[i])
 	{
-		printf("%s\n", cmd->tokens[i]);
+		printf("%s\n", cmd->cmd_arg[i]);
 		i++;
 	}
+	if (cmd->in)
+		printf(BLUE3 "IN: %s\n" RESET, cmd->in);
+	if (cmd->out)
+		printf(BLUE3 "OUT: %s\n" RESET, cmd->out);
 }
 
 //store environment variables in data
@@ -67,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 
 	data = NULL;
 	if (argc != 1 || argv[1])
-		ft_error_and_exit("usage: ./minishell", data);
+		ft_error_minishell("usage: ./minishell");
 	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_error_and_exit("malloc error", data);
@@ -87,7 +90,8 @@ int	main(int argc, char **argv, char **envp)
 			printf(GREEN "...Lexer done...\n" RESET);
 			data->cmd = ft_parser(data->lexer, data);
 			printf(GREEN "...Commands grouped...\n"RESET);
-			ft_check_cmds(data->cmd);
+			if (!ft_check_cmds(data->cmd))
+				continue ;
 			printf(GREEN "...Commands checked...\n" RESET);
 			//print commands
 			t_cmd *tmp = data->cmd;
@@ -99,14 +103,13 @@ int	main(int argc, char **argv, char **envp)
 			printf(GREEN "...Ready to execute...\n" RESET);
 			printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);
+			printf(GREEN "...Commands executed...\n" RESET);
 		}
-		printf(GREEN "...Commands executed...\n" RESET);
 		ft_free_data(data);
 		printf(GREEN "...Memory freed...\n" RESET);
 	}
 	free(data);
 	return (0);
-
 }
 
 //print minishell banner when strting the program

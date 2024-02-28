@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 16:48:33 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:28:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,12 @@ void	ft_error_and_exit(char *str, t_data *data)
 	if (data->env)
 		ft_free_env(data->env);
 	free(data);
+	exit(1);
+}
+
+// error for incorrect number of arguments
+void	ft_error_minishell(char *str)
+{
+	printf(RED "ERROR: %s\n" RESET, str);
 	exit(1);
 }

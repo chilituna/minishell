@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 16:50:21 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:29:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void	ft_init_data(char **envp, t_data *data);
 
 //error handling
 void	ft_error_and_exit(char *str, t_data *data);
+void	ft_error_minishell(char *str);
 
 //clean_up.c
 void	ft_free_data(t_data *data);
@@ -153,8 +154,9 @@ t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd);
 int		ft_count_tokens(t_lexer *lexer);
 
 //check commands
-void	ft_check_cmds(t_cmd *cmd);
+int		ft_check_cmds(t_cmd *cmd);
 char	**ft_check_redirections(t_cmd *cmd);
+int		ft_store_redirection(t_cmd *cmd, int i);
 int		ft_is_builtin(char *cmd);
 int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 

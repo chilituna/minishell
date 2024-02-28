@@ -6,39 +6,11 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 15:33:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 21:23:25 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//check for redirections and store in the cmd
-//save anything else in cmd_arg for execve and return it
-
-char	**ft_check_redirections(t_cmd *cmd)
-{
-	int		i;
-	char	*cmd_str;
-
-	cmd_str = ft_strdup("", cmd->data);
-	i = 0;
-	while (cmd->tokens[i])
-	{
-		if (ft_strncmp(cmd->tokens[i], "REDIR", 5) == 0)
-		{
-			printf("Redir found and will be stored");
-			// TO DO
-		}
-		else
-		{
-			cmd_str = ft_strjoin(cmd_str, cmd->tokens[i]);
-			cmd_str = ft_strjoin(cmd_str, " ");
-		}
-		i++;
-	}
-	return (ft_split(cmd_str, ' '));
-}
-
 
 // for each command, check for redirections
 // create a redirection node for each:
@@ -49,12 +21,81 @@ char	**ft_check_redirections(t_cmd *cmd)
 // to the corresponding function
 
 
-void	ft_check_cmds(t_cmd *cmd)
+
+//check for input and output redirections and store them in the cmd
+int	ft_store_redirection(t_cmd *cmd, int i)
+{
+	if (ft_strncmp(cmd->tokens[i], "REDIR_IN", 8) == 0)
+	{
+		if (i == 0)
+			return (0);
+		cmd->in = ft_strdup(cmd->tokens[i - 1], cmd->data);
+		cmd->tokens[i - 1] = ft_strdup("", cmd->data);
+		cmd->tokens[i] = ft_strdup("", cmd->data);
+	}
+	if (ft_strncmp(cmd->tokens[i], "REDIR_OUT", 9) == 0)
+	{
+		if (!cmd->tokens[i + 1])
+			return (0);
+		cmd->out = ft_strdup(cmd->tokens[i + 1], cmd->data);
+		cmd->tokens[i + 1] = ft_strdup("", cmd->data);
+		cmd->tokens[i] = ft_strdup("", cmd->data);
+	}
+	return (1);
+}
+
+//check for redirections and store in the cmd:
+//save anything else in cmd_arg for execution and return it
+char	**ft_check_redirections(t_cmd *cmd)
+{
+	int		i;
+	int		j;
+	int		cmd_count;
+	char	**cmd_arg;
+
+	i = 0;
+	cmd_count = 0;
+	while (cmd->tokens[i])
+	{
+		if (ft_strncmp(cmd->tokens[i], "REDIR", 5) == 0)
+		{
+			printf("Redir found and will be stored\n");
+			if (!ft_store_redirection(cmd, i))
+				return (NULL);
+			cmd_count -= 2;
+		}
+		i++;
+	}
+	cmd_arg = ft_malloc((i - cmd_count) * sizeof(char *), cmd->data);
+	i = 0;
+	j = 0;
+	while (cmd->tokens[i])
+	{
+		if (cmd->tokens[i][0] != '\0')
+		{
+			cmd_arg[j] = ft_strdup(cmd->tokens[i], cmd->data);
+			j++;
+		}
+		i++;
+	}
+	cmd_arg[j] = NULL;
+	return (cmd_arg);
+}
+
+
+
+
+int	ft_check_cmds(t_cmd *cmd)
 {
 
 	while (cmd)
 	{
 		cmd->cmd_arg = ft_check_redirections(cmd);
+		if (!cmd->cmd_arg)
+		{
+			printf(RED "Error: Incorrect redirections\n" RESET);
+			return (0);
+		}
 		if (ft_is_builtin(cmd->cmd_arg[0]))
 		{
 			cmd->builtin = ft_get_builtin(cmd->cmd_arg[0]);
@@ -62,6 +103,7 @@ void	ft_check_cmds(t_cmd *cmd)
 		}
 		cmd = cmd->next;
 	}
+	return (1);
 }
 
 
