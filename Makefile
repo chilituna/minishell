@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
+#    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/02/28 14:25:42 by aarponen         ###   ########.fr        #
+#    Updated: 2024/02/28 14:55:29 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ LIBS = -lreadline
 SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c \
 	parsing/parser.c parsing/lexer.c parsing/check_quotes.c parsing/check_cmds.c \
-	utils/utils.c utils/utils_2.c utils/ft_split.c
+	utils/utils.c utils/utils_2.c utils/ft_split.c \
+	builtin/ft_echo.c builtin/ft_pwd.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
@@ -32,6 +33,7 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/parsing
 	mkdir -p $(OBJ_DIR)/utils
+	mkdir -p $(OBJ_DIR)/builtin
 
 $(NAME): $(OBJ_FILES)
 	$(CC) $(CFLAGS) $(INCLUDES) $(OBJ_FILES) -o $(NAME) $(LIBS)
