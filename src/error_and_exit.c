@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/25 23:41:26 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:48:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,8 @@ void	ft_error_and_exit(char *str, t_data *data)
 		rl_clear_history();
 	if (data)
 		ft_free_data(data);
+	if (data->env)
+		ft_free_env(data->env);
+	free(data);
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 16:31:01 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:46:47 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_print_cmd(t_cmd *cmd)
 }
 
 //store environment variables in data
-void	ft_add_env(char **envp, t_data *data)
+void	ft_init_data(char **envp, t_data *data)
 {
 	int	i;
 
@@ -41,6 +41,10 @@ void	ft_add_env(char **envp, t_data *data)
 		data->env[i] = ft_strdup(envp[i], data);
 		i++;
 	}
+	data->lexer = NULL;
+	data->cmd = NULL;
+	data->prompt = NULL;
+
 
 }
 
@@ -68,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!data)
 		ft_error_and_exit("malloc error", data);
 	ft_print_banner();
-	ft_add_env(envp, data);
+	ft_init_data(envp, data);
 	while (1)
 	{
 		data->prompt = readline(YELLOW ">>> " RESET);

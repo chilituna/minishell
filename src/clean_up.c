@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 16:30:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:50:11 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,21 @@
 void	ft_free_data(t_data *data)
 {
 	if (data->prompt)
+	{
 		free(data->prompt);
+		data->prompt = NULL;
+	}
 	if (data->lexer)
+	{
 		ft_free_lexer(data->lexer);
+		data->lexer = NULL;
+	}
 	if (data->cmd)
+	{
 		ft_free_parser(data->cmd);
+		data->cmd = NULL;
+	}
+
 }
 
 void	ft_free_lexer(t_lexer *lexer)
@@ -36,6 +46,7 @@ void	ft_free_lexer(t_lexer *lexer)
 			free(tmp->token);
 		free(tmp);
 	}
+
 	printf("lexer freed\n");
 }
 
@@ -64,5 +75,16 @@ void	ft_free_parser(t_cmd *cmd)
 	printf("parser freed\n");
 }
 
+//should only be used in case of exit or error
+void	ft_free_env(char **env)
+{
+	int	i;
 
-
+	i = 0;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
+}
