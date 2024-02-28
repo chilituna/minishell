@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/26 00:15:29 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:33:30 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,19 @@ typedef struct s_redir
 }	t_redir;
 
 // Command list to store command groups from parser:
+// index / total number of commands
+// list of tokens from lexer
+// command name and flags in cmd_arg
+// input and output redirections
+// function pointer to the corresponding builtin
 typedef struct s_cmd
 {
 	int				index;
 	char			**tokens;
-	char			*cmd;
-	char			**flags;//kind of argv
+	char			**cmd_arg;
 	char			*in;
 	char			*out;
+	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 	t_data			*data;
@@ -112,7 +117,7 @@ void	ft_free_data(t_data *data);
 void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
 
-//check.c
+//check quotes
 int		ft_check_quotes(char *input);
 int		ft_check_doublequotes(char *input);
 int		ft_check_singlequotes(char *input);
@@ -127,6 +132,8 @@ char	*ft_strchr(const char *s, int c);
 void	*ft_malloc(size_t size, t_data *data);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
+char	*ft_strjoin(const char *s1, const char *s2);
+char	**ft_split(char const *s, char c);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -141,6 +148,13 @@ t_cmd	*ft_parser(t_lexer *lexer, t_data *data);
 t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data);
 t_lexer	*ft_create_cmd(t_lexer *lexer, t_cmd *cmd);
 int		ft_count_tokens(t_lexer *lexer);
+
+//check commands
+void	ft_check_cmds(t_cmd *cmd);
+char	**ft_check_redirections(t_cmd *cmd);
+int		ft_is_builtin(char *cmd);
+int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
+
 
 //builtins
 int		ft_echo(t_cmd *cmds, t_redir *redir);

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/26 00:16:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:25:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,6 @@
 // first loop through lexer until a pipe is found
 // take all nodes before pipe and group them together in a cmd node
 // if no (further) pipes are found, take all nodes until the end of the list
-// for each command, check for redirections
-// create a redirection node for each:
-// (token and filename or delimeter if heredoc)
-// remove the redirection nodes from lexer
-// check if command is a builtin and store a function pointer
-// to the corresponding function
-// combine remaining words into **char for execve
 
 
 // calculate how many pipes are in the input
@@ -87,7 +80,8 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 	cmd = ft_malloc(sizeof(t_cmd), data);
 	cmd->index = i;
 	cmd->tokens = NULL;
-	cmd->flags = NULL;
+	cmd->cmd_arg = NULL;
+	cmd->builtin = NULL;
 	cmd->in = NULL;
 	cmd->out = NULL;
 	cmd->next = NULL;
