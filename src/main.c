@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/26 00:14:34 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 10:51:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,10 @@ int	main(int argc, char **argv, char **envp)
 			while (data->cmd)
 			{
 				ft_print_cmd(data->cmd);
-				data->cmd = data->cmd->next;
+				data->cmd =
+				data->cmd->next;
 			}
+			ft_check_cmds(data->cmd);
 			// ft_execute();
 			(void)envp;
 		}

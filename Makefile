@@ -6,7 +6,7 @@
 #    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/02/28 10:34:03 by aarponen         ###   ########.fr        #
+#    Updated: 2024/02/28 14:25:42 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ LIBS = -lreadline
 
 SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c \
-	parsing/parser.c parsing/lexer.c parsing/check_quotes.c \
-	utils/utils.c utils/utils_2.c
+	parsing/parser.c parsing/lexer.c parsing/check_quotes.c parsing/check_cmds.c \
+	utils/utils.c utils/utils_2.c utils/ft_split.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
