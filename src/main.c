@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 10:51:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:57:55 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,23 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
-			printf(GREEN "Quotes checked\n" RESET);
+			printf(GREEN "...Quotes checked...\n" RESET);
 			data->lexer = ft_lexer(data->prompt, data);
-			printf(GREEN "Lexer done\n" RESET);
+			printf(GREEN "...Lexer done...\n" RESET);
 			data->cmd = ft_parser(data->lexer, data);
-			printf(GREEN "Commands grouped\n"RESET);
-			//print cmds:
-			while (data->cmd)
-			{
-				ft_print_cmd(data->cmd);
-				data->cmd =
-				data->cmd->next;
-			}
+			printf(GREEN "...Commands grouped...\n"RESET);
 			ft_check_cmds(data->cmd);
-			// ft_execute();
-			(void)envp;
+			printf(GREEN "...Commands checked...\n" RESET);
+			//print commands
+			t_cmd *tmp = data->cmd;
+			while (tmp)
+			{
+				ft_print_cmd(tmp);
+				tmp = tmp->next;
+			}
+			printf(GREEN "...Ready to execute...\n" RESET);
+			printf("OUTCOME:\n");
+			ft_execute_cmds(data->cmd, envp);
 		}
 		ft_free_data(data);
 	}

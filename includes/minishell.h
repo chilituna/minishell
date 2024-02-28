@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 14:33:30 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:44:05 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_lexer
 	char			*token;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
-	struct t_data	*data;
+	t_data			*data;
 }	t_lexer;
 
 // Redirection list to store redirections from parser:
@@ -158,9 +158,12 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 
 
 //builtins
-int		ft_echo(t_cmd *cmds, t_redir *redir);
+int		ft_echo(t_cmd *cmds);
 void	ft_put_line(int n, char **str, int out);
-int		ft_pwd(t_cmd *cmds, t_redir *redir);
+int		ft_pwd(t_cmd *cmds);
+
+//execute
+void	ft_execute_cmds(t_cmd *cmd, char **envp);
 
 #endif
 

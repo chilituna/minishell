@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 23:09:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/02/28 15:22:17 by aarponen         ###   ########.fr       */
+/*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
+/*   Updated: 2024/02/28 15:45:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(t_cmd *cmds)
+//store environment variables in data
+//execute the command
+//if it is a builtin, execute the builtin
+//if it is not a builtin, execute the command
+void	ft_execute_cmds(t_cmd *cmd, char **envp)
 {
-	int		i;
-	char	*buf[PATH_MAX];//path_max is a the limit of path len
+	cmd->data->env = envp;
 
-	getcwd(buf, sizeof(buf));
-	ft_putstr_fd(buf, STDOUT_FILENO);//print the buffer with the path
-	free(buf);//read about the free when calling getcwd but not 100% sure
+	while (cmd)
+	{
+		if (cmd->builtin)
+			cmd->builtin(cmd);
+		else
+		{
+			printf("execve will be called\n");
+			// TO DO: ft_execve(cmd);
+		}
+		cmd = cmd->next;
+	}
 }

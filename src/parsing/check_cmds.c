@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 14:32:57 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:33:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 char	**ft_check_redirections(t_cmd *cmd)
 {
 	int		i;
-	int		arg_count;
 	char	*cmd_str;
 
+	cmd_str = ft_strdup("", cmd->data);
 	i = 0;
 	while (cmd->tokens[i])
 	{
@@ -33,7 +33,6 @@ char	**ft_check_redirections(t_cmd *cmd)
 		{
 			cmd_str = ft_strjoin(cmd_str, cmd->tokens[i]);
 			cmd_str = ft_strjoin(cmd_str, " ");
-			arg_count++;
 		}
 		i++;
 	}
@@ -56,13 +55,6 @@ void	ft_check_cmds(t_cmd *cmd)
 	while (cmd)
 	{
 		cmd->cmd_arg = ft_check_redirections(cmd);
-		//print cmd arg:
-		int i = 0;
-		while (cmd->cmd_arg[i])
-		{
-			printf("%s\n", cmd->cmd_arg[i]);
-			i++;
-		}
 		if (ft_is_builtin(cmd->cmd_arg[0]))
 		{
 			cmd->builtin = ft_get_builtin(cmd->cmd_arg[0]);
