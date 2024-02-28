@@ -3,7 +3,7 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
 #    Updated: 2024/02/28 14:25:42 by aarponen         ###   ########.fr        #

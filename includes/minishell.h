@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
 /*   Updated: 2024/02/28 14:33:30 by aarponen         ###   ########.fr       */
@@ -32,6 +32,7 @@
 # include <sys/ioctl.h> //ioctl
 # include <termios.h> //tcsetattr, tcgetattr
 # include <termcap.h> //tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
+# include <limits.h>//to handle PATH_MAX in pwd builtin
 
 # define RED "\033[1;31m"
 # define GREEN "\033[1;32m"
@@ -57,7 +58,7 @@ typedef struct s_lexer
 	char			*token;
 	struct s_lexer	*next;
 	struct s_lexer	*prev;
-	t_data			*data;
+	struct t_data	*data;
 }	t_lexer;
 
 // Redirection list to store redirections from parser:
@@ -158,6 +159,8 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 
 //builtins
 int		ft_echo(t_cmd *cmds, t_redir *redir);
+void	ft_put_line(int n, char **str, int out);
+int		ft_pwd(t_cmd *cmds, t_redir *redir);
 
 #endif
 
