@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 15:44:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:25:28 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_data
 //main.c --> start program, show prompt, loop (TLDR)
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
+void	ft_add_env(char **envp, t_data *data);
 
 //error handling
 void	ft_error_and_exit(char *str, t_data *data);
@@ -163,7 +164,7 @@ void	ft_put_line(int n, char **str, int out);
 int		ft_pwd(t_cmd *cmds);
 
 //execute
-void	ft_execute_cmds(t_cmd *cmd, char **envp);
+void	ft_execute_cmds(t_cmd *cmd);
 
 #endif
 
