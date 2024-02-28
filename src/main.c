@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 15:57:55 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:31:01 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,24 @@ void	ft_print_cmd(t_cmd *cmd)
 		printf("%s\n", cmd->tokens[i]);
 		i++;
 	}
+}
+
+//store environment variables in data
+void	ft_add_env(char **envp, t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		i++;
+	data->env = ft_malloc((i + 1) * sizeof(char *), data);
+	i = 0;
+	while (envp[i])
+	{
+		data->env[i] = ft_strdup(envp[i], data);
+		i++;
+	}
+
 }
 
 // READ
@@ -46,10 +64,11 @@ int	main(int argc, char **argv, char **envp)
 	data = NULL;
 	if (argc != 1 || argv[1])
 		ft_error_and_exit("usage: ./minishell", data);
-	data = ft_malloc(sizeof(t_data), data);
+	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_error_and_exit("malloc error", data);
 	ft_print_banner();
+	ft_add_env(envp, data);
 	while (1)
 	{
 		data->prompt = readline(YELLOW ">>> " RESET);
@@ -75,10 +94,13 @@ int	main(int argc, char **argv, char **envp)
 			}
 			printf(GREEN "...Ready to execute...\n" RESET);
 			printf("OUTCOME:\n");
-			ft_execute_cmds(data->cmd, envp);
+			ft_execute_cmds(data->cmd);
 		}
+		printf(GREEN "...Commands executed...\n" RESET);
 		ft_free_data(data);
+		printf(GREEN "...Memory freed...\n" RESET);
 	}
+	free(data);
 	return (0);
 
 }

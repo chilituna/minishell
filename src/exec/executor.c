@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 15:45:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:19:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@
 //execute the command
 //if it is a builtin, execute the builtin
 //if it is not a builtin, execute the command
-void	ft_execute_cmds(t_cmd *cmd, char **envp)
+void	ft_execute_cmds(t_cmd *cmd)
 {
-	cmd->data->env = envp;
-
 	while (cmd)
 	{
 		if (cmd->builtin)
