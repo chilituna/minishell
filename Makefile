@@ -6,7 +6,7 @@
 #    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/02/28 15:38:40 by aarponen         ###   ########.fr        #
+#    Updated: 2024/03/03 12:05:11 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS = -lreadline
 
 SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c \
-	parsing/parser.c parsing/lexer.c parsing/check_quotes.c parsing/check_cmds.c \
+	parsing/parser.c parsing/lexer.c parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c \
 	utils/utils.c utils/utils_2.c utils/ft_split.c \
 	builtin/ft_echo.c \
 	exec/executor.c

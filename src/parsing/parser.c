@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 14:25:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:33:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 	cmd->builtin = NULL;
 	cmd->in = NULL;
 	cmd->out = NULL;
+	cmd->append = 0;
+	cmd->heredoc = 0;
+	cmd->heredoc_delim = NULL;
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	cmd->data = data;

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/26 00:17:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:57:08 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // break the input into strings:
 // skip whitespace
 // put quoted text into a single string
+// split by redirections
 // otherwise, split by space
 // create a string and store in a linked list
 // return the remaining input
@@ -31,6 +32,17 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i += ft_quoted_string(str + i, '\'');
 	else if (str[i] == '\"')
 		i += ft_quoted_string(str + i, '\"');
+	if (str[i] == '>' || str[i] == '<')
+	{
+		if (str[i + 1] == str[i])
+		{
+			lexer->str = ft_substr(str, start, 2, lexer->data);
+			i++;
+		}
+		else
+			lexer->str = ft_substr(str, start, 1, lexer->data);
+		i++;
+	}
 	else
 	{
 		while (!ft_isspace(str[i]) && str[i] != '\0')
@@ -112,7 +124,7 @@ void	ft_tokenizer(t_lexer *lexer)
 	else if (!ft_strncmp(lexer->str, "<", 1) && ft_strlen(lexer->str) == 1)
 		lexer->token = ft_strdup("REDIR_IN", lexer->data);
 	else if (!ft_strncmp(lexer->str, "<<", 2) && ft_strlen(lexer->str) == 2)
-		lexer->token = ft_strdup("HEREDOC", lexer->data);
+		lexer->token = ft_strdup("REDIR_HEREDOC", lexer->data);
 	if (lexer->token)
 	{
 		free(lexer->str);
