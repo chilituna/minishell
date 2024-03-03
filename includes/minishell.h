@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 12:05:53 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 17:23:55 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_cmd
 	int				append;
 	int				heredoc;
 	char			*heredoc_delim;
+	int				env_len;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -142,8 +143,9 @@ char	*ft_strchr(const char *s, int c);
 void	*ft_malloc(size_t size, t_data *data);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
-char	*ft_strjoin(const char *s1, const char *s2);
+char	*ft_strjoin(const char *s1, const char *s2, t_data *data);
 char	**ft_split(char const *s, char c);
+int		ft_isalnum(int c);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -161,12 +163,18 @@ int		ft_count_tokens(t_lexer *lexer);
 
 //check commands
 int		ft_check_cmds(t_cmd *cmd);
+//check redirections
 char	**ft_check_redirections(t_cmd *cmd);
 int		ft_store_redirection(t_cmd *cmd, int i);
 char	**ft_create_cmd_arg(char **cmd_arg, t_cmd *cmd);
+//check builtins
 int		ft_is_builtin(char *cmd);
 int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 
+//expander
+void	ft_expand_env(t_cmd *cmd, t_data *data);
+void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
+char	*ft_get_env_var(char *var, t_data *data);
 
 //builtins
 int		ft_echo(t_cmd *cmds);
