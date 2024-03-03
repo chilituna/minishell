@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 21:33:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:09:23 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->lexer = NULL;
 	data->cmd = NULL;
 	data->prompt = NULL;
-
-
+	ft_print_banner();
 }
 
 // READ
@@ -74,7 +73,6 @@ int	main(int argc, char **argv, char **envp)
 	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_error_and_exit("malloc error", data);
-	ft_print_banner();
 	ft_init_data(envp, data);
 	while (1)
 	{
@@ -92,8 +90,7 @@ int	main(int argc, char **argv, char **envp)
 			printf(GREEN "...Commands grouped...\n"RESET);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
-			printf(GREEN "...Commands checked...\n" RESET);
-			//print commands
+			//print commands:
 			t_cmd *tmp = data->cmd;
 			while (tmp)
 			{

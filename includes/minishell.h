@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 21:29:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 12:05:53 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,23 @@ typedef struct s_lexer
 }	t_lexer;
 
 // Redirection list to store redirections from parser:
-typedef struct s_redir
-{
-	char			*tok;
-	char			*filename;
-	struct s_redir	*next;
-	struct s_redir	*prev;
-	t_data			*data;
-}	t_redir;
+// typedef struct s_redir
+// {
+// 	char			*tok;
+// 	char			*filename;
+// 	struct s_redir	*next;
+// 	struct s_redir	*prev;
+// 	t_data			*data;
+// }	t_redir;
 
 // Command list to store command groups from parser:
 // index / total number of commands
 // list of tokens from lexer
 // command name and flags in cmd_arg
 // input and output redirections
+// append flag
+// heredoc flag
+// heredoc delimiter
 // function pointer to the corresponding builtin
 typedef struct s_cmd
 {
@@ -84,6 +87,9 @@ typedef struct s_cmd
 	char			**cmd_arg;
 	char			*in;
 	char			*out;
+	int				append;
+	int				heredoc;
+	char			*heredoc_delim;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -157,6 +163,7 @@ int		ft_count_tokens(t_lexer *lexer);
 int		ft_check_cmds(t_cmd *cmd);
 char	**ft_check_redirections(t_cmd *cmd);
 int		ft_store_redirection(t_cmd *cmd, int i);
+char	**ft_create_cmd_arg(char **cmd_arg, t_cmd *cmd);
 int		ft_is_builtin(char *cmd);
 int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 
