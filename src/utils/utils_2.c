@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 18:54:43 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 14:13:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/03 16:15:02 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	*ft_malloc(size_t size, t_data *data)
 	return (ptr);
 }
 
-char	*ft_strjoin(const char *s1, const char *s2)
+char	*ft_strjoin(const char *s1, const char *s2, t_data *data)
 {
 	char	*str;
 	size_t	len;
@@ -84,9 +84,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 	int		j;
 
 	len = ft_strlen(s1) + ft_strlen(s2);
-	str = malloc(sizeof(char) * (len + 1));
-	if (str == NULL)
-		return (NULL);
+	str = ft_malloc(sizeof(char) * (len + 1), data);
 	i = 0;
 	while (s1[i])
 	{
