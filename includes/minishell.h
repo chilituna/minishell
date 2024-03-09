@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 17:23:55 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:00:47 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_data
 	t_lexer	*lexer;
 	t_cmd	*cmd;
 	char	**env;
+	int		exit_status;
 
 }	t_data;
 

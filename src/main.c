@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 13:09:23 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:00:39 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->lexer = NULL;
 	data->cmd = NULL;
 	data->prompt = NULL;
+	data->exit_status = 0;
 	ft_print_banner();
 }
 
