@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:04:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 12:04:40 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:32:46 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@
 // return 1 if it is, 0 if not
 int	ft_is_builtin(char *cmd)
 {
-	if (ft_strncmp(cmd, "echo", 4) == 0)
+	if (ft_strncmp(cmd, "echo", 4) == 0 && cmd[4] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "cd", 2) == 0)
+	else if (ft_strncmp(cmd, "cd", 2) == 0 && cmd[2] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "pwd", 3) == 0)
+	else if (ft_strncmp(cmd, "pwd", 3) == 0 && cmd[3] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "export", 6) == 0)
+	else if (ft_strncmp(cmd, "export", 6) == 0 && cmd[6] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "unset", 5) == 0)
+	else if (ft_strncmp(cmd, "unset", 5) == 0 && cmd[5] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "env", 3) == 0)
+	else if (ft_strncmp(cmd, "env", 3) == 0 && cmd[3] == '\0')
 		return (1);
-	else if (ft_strncmp(cmd, "exit", 4) == 0)
+	else if (ft_strncmp(cmd, "exit", 4) == 0 && cmd[4] == '\0')
 		return (1);
 	else
 		return (0);

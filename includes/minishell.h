@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 15:00:47 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 16:06:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	ft_putstr_fd(char *str, int fd);
 char	*ft_strjoin(const char *s1, const char *s2, t_data *data);
 char	**ft_split(char const *s, char c);
 int		ft_isalnum(int c);
+char	*ft_itoa(int n);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
