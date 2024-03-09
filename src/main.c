@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 15:00:39 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:48:13 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,34 +77,34 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_data(envp, data);
 	while (1)
 	{
-		data->prompt = readline(YELLOW ">>> " RESET);
+		data->prompt = readline(YELLOW "minishell $ " RESET);
 		if (!data->prompt)
 			ft_error_and_exit("readline error", data);
 		if (data->prompt[0] != '\0')
 			add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
-			printf(GREEN "...Quotes checked...\n" RESET);
+			// printf(GREEN "...Quotes checked...\n" RESET);
 			data->lexer = ft_lexer(data->prompt, data);
-			printf(GREEN "...Lexer done...\n" RESET);
+			// printf(GREEN "...Lexer done...\n" RESET);
 			data->cmd = ft_parser(data->lexer, data);
-			printf(GREEN "...Commands grouped...\n"RESET);
+			// printf(GREEN "...Commands grouped...\n"RESET);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
 			//print commands:
-			t_cmd *tmp = data->cmd;
-			while (tmp)
-			{
-				ft_print_cmd(tmp);
-				tmp = tmp->next;
-			}
-			printf(GREEN "...Ready to execute...\n" RESET);
-			printf("OUTCOME:\n");
+			// t_cmd *tmp = data->cmd;
+			// while (tmp)
+			// {
+			// 	ft_print_cmd(tmp);
+			// 	tmp = tmp->next;
+			// }
+			// printf(GREEN "...Ready to execute...\n" RESET);
+			// printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);
-			printf(GREEN "...Commands executed...\n" RESET);
+			// printf(GREEN "...Commands executed...\n" RESET);
 		}
 		ft_free_data(data);
-		printf(GREEN "...Memory freed...\n" RESET);
+		// printf(GREEN "...Memory freed...\n" RESET);
 	}
 	free(data);
 	return (0);

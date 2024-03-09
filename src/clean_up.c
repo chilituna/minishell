@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 18:11:40 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:30:49 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_free_lexer(t_lexer *lexer)
 		free(tmp);
 	}
 
-	printf("lexer freed\n");
+	// printf("lexer freed\n");
 }
 
 void	ft_free_parser(t_cmd *cmd)
@@ -83,7 +83,7 @@ void	ft_free_parser(t_cmd *cmd)
 		free(cmd);
 		cmd = tmp;
 	}
-	printf("parser freed\n");
+	// printf("parser freed\n");
 }
 
 //should only be used in case of exit or error

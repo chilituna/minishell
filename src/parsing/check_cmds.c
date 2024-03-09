@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 16:56:49 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 15:31:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_check_cmds(t_cmd *cmd)
 		}
 		if (ft_is_builtin(cmd->cmd_arg[0]))
 		{
-			printf("builtin found\n");
+			// printf("builtin found\n");
 			cmd->builtin = ft_get_builtin(cmd->cmd_arg[0]);
 		}
 		if (cmd->cmd_arg[0])
