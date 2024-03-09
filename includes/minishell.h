@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 16:06:51 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 23:25:30 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ char	*ft_strjoin(const char *s1, const char *s2, t_data *data);
 char	**ft_split(char const *s, char c);
 int		ft_isalnum(int c);
 char	*ft_itoa(int n);
+void	ft_update_env_var(char *var, char *new_value, t_data *data);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -182,6 +183,9 @@ char	*ft_get_env_var(char *var, t_data *data);
 int		ft_echo(t_cmd *cmds);
 void	ft_put_line(int n, char **str, int out);
 int		ft_pwd(t_cmd *cmds);
+void	ft_cd(t_cmd *cmds);
+int		ft_change_dir(char *path, t_data *data);
+int		ft_update_pwd(char *var, t_data *data);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);

@@ -6,73 +6,69 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/09 19:47:38 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/09 23:25:05 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_update_pwd(t_cmd *cmds)
+//update the variable pwd or oldpwd as required
+int	ft_update_pwd(char *var, t_data *data)
 {
 	char	buffer[PATH_MAX];
-	char	*tmp_1;
-	char	*tmp_2;
-	char	*var;
 	
 	if(getcwd(buffer, sizeof(buffer)) != NULL)//check if the current working dir is copied into buffer
+		ft_update_env_var(var, buffer, data);//update the content of the variable passed
+	return(1);
+}
+
+//update oldpwd with the current directory before change directory
+//change directory to path and update pwd env variable
+//if change directory fails check error type
+int	ft_change_dir(char *path, t_data *data)
+{
+	ft_update_pwd("OLDPWD", data);//update oldpwd before changing directory (keep track of previous working directory)
+	if(!chdir(path) && ft_update_pwd("PWD", data)) //if change path and update pwd update status successfully changed directory
+		data->exit_status = 0;
+	else
 	{
-		//cmds->data->env;// I still need to search for the env variable in the array to get the env variable name
-		 cd ../
-		var = ft_get_env_var("PWD", cmds->data);//get the env variable name
-		cmds->data->env = ft_strjoin(var, cmds->cmd_arg[1]);//copy the variable name = path stored in buffer
+		if(access(path, F_OK) == -1)
+			write(2, RED"minishell: cd: no such file or directory\n"RESET, 42);
+		else if(access(path, R_OK || W_OK || X_OK) == -1)
+			write(2, RED"minishell: cd: permission denied\n"RESET, 34);
+		data->exit_status = 1;
 	}
 	return(1);
 }
 
-int	ft_change_dir(t_cmd *cmds)
-{
-	ft_update_pwd("OLDPWD");//update oldpwd before changing directory (keep track of previous working directory)
-	if(!chdir(cmds->cmd_arg) && ft_update_pwd("PWD"))//succesfully changed directory
-		//return(0)? ->how do I save the succesfull status of the change of directory? 
-	else
-	{
-		if(access(cmds->cmd_arg, F_OK) == -1)
-			write(2, RED"minishell: cd: no such file or directory\n"RESET, 42);
-		else if(access(cmds->cmd_arg, R_OK || W_OK || X_OK) == -1)
-			write(2, RED"minishell: cd: permission denied\n"RESET, 34);
-		write(2, cmds->cmd_arg[1], ft_strlen(cmds->cmd_arg[1]));
-		write(2, "\n", 1);
-		cmds->data->exit_status = 1;
-	}
-}
-
-void	execute_cd(t_cmd *cmds)
+int	ft_cd(t_cmd *cmds)
 {
 	char	*path_home;
 	char	*abs_path;
-	char	*env_var;
 
-	if(cmds->cmd_arg[2])//how to check if there are more than 1 argument? 
+	if(cmds->cmd_arg[2])//if there are more than 1 argument? 
 	{
 		write (1, "minishell: cd: too many arguments\n", 35);
 		cmds->data->exit_status = 1;//update status to 1 (error)
-		return(EXIT_FAILURE);
+		return(1);
 	}
-	env_var = ft_get_env_var(cmds->cmd_arg, cmds->data);//save env var
+	//env_var = ft_get_env_var(cmds->cmd_arg, cmds->data);//save env var
 	if(cmds->cmd_arg[1][0] == '/')
 		abs_path = cmds->cmd_arg[1];
-	path_home = ft_get_env_var("HOME", cmds->data->env);//search for the HOME env variable
-	if(!(cmds->cmd_arg[1]) && ft_change_dir(path_home))//if there are no arguments just cd and the change of directory is success
-		return(0);//sucess?
+	path_home = ft_get_env_var("HOME", cmds->data);//search for the HOME env variable
+	if(!(cmds->cmd_arg[1]) && ft_change_dir(path_home, cmds->data))//if there are no arguments just cd and the change of directory is success
+		cmds->data->exit_status = 0;
 	else
 	{
-		if(!ft_strncmp(cmds->cmd_arg[1], "--", 2) && ft_change_dir(path_home))//check in the case that is cd -- and move to home
-			return(0);//success?
-		ft_change_dir(cmds->cmd_arg[1]);//change to specified path by user in arguments
+		if(!ft_strncmp(cmds->cmd_arg[1], "--", 2) && ft_change_dir(path_home, cmds->data))//check in the case that is cd -- and move to home
+		{
+			cmds->data->exit_status = 0;
+			return(0);
+		}
+		ft_change_dir(cmds->cmd_arg[1], cmds->data);//change to specified path by user in arguments
 	}
-	return(EXIT_SUCCESS);//give prompt back to user
+	return(0) ;//give prompt back to user
 }
-
 
 /*
 1) update enviroment variables 
