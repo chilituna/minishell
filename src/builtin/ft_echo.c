@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/02/28 15:26:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:59:50 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	ft_echo(t_cmd *cmds)
 
 	i = 1;//init at 1 to skip program name
 	flag = 1;//init as false
+	if(!(cmds->cmd_arg))//if there are no arguments to cd print a new line and return prompt to user
+	{
+		write(1, "\n", 1);
+		return (0);
+	}
 	while ((cmds->cmd_arg[i][0] != '\0') && (cmds->cmd_arg[i][0] == '-') && (cmds->cmd_arg[i][1] == 'n'))//check for flag -n
 	{
 		j = 1;
