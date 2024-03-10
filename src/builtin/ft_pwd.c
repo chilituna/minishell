@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 23:09:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/09 23:25:02 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:40:26 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	ft_pwd(t_cmd *cmds)
 {
-	int		i;
-	char	*buf[PATH_MAX];//path_max is a the limit of path len
+	char	buf[PATH_MAX];//path_max is a the limit of path len
 
+	(void)cmds;
 	getcwd(buf, sizeof(buf));
 	ft_putstr_fd(buf, STDOUT_FILENO);//print the buffer with the path
-	free(buf);//read about the free when calling getcwd but not 100% sure
+	return (0);
+	//free(buf);//read about the free when calling getcwd but not 100% sure
 }
