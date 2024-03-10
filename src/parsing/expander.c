@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 16:24:01 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:01:48 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,24 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 	char	*beginnig_tmp;
 	char	*env_var;
 	char	*end_tmp;
+	int		k;
 
-	while (cmd->cmd_arg[i][j] && cmd->cmd_arg[i][j + 1])
+	while (cmd->cmd_arg[i][j])
 	{
-		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] != ' ')
+		if (cmd->cmd_arg[i][j] == '\'')
+		{
+			j++;
+			while (cmd->cmd_arg[i][j] && cmd->cmd_arg[i][j] != '\'')
+				j++;
+		}
+		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] != '\0')
 		{
 			beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
-			env_var = ft_get_env_var(cmd->cmd_arg[i] + j + 1, data);
-			while (cmd->cmd_arg[i][j] && !ft_isspace(cmd->cmd_arg[i][j]))
-				j++;
-			end_tmp = ft_substr(cmd->cmd_arg[i], j, ft_strlen(cmd->cmd_arg[i]) - j, data);
+			k = j + 1;
+			while (isalnum(cmd->cmd_arg[i][k]) || cmd->cmd_arg[i][k] == '_' || cmd->cmd_arg[i][k] == '?')
+				k++;
+			env_var = ft_get_env_var(ft_substr(cmd->cmd_arg[i], j + 1, k - j - 1, data), data);
+			end_tmp = ft_substr(cmd->cmd_arg[i], k, ft_strlen(cmd->cmd_arg[i]) - k, data);
 			free(cmd->cmd_arg[i]);
 			cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, env_var, data);
 			free(beginnig_tmp);
@@ -58,6 +66,7 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 			cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end_tmp, data);
 			free(beginnig_tmp);
 			free(end_tmp);
+			j = k - 1;
 		}
 		j++;
 	}
@@ -65,6 +74,7 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 
 // get environment variable from data->env
 // for $?, give exit_status from data node
+// if the environment variable is not found, return empty string
 char	*ft_get_env_var(char *var, t_data *data)
 {
 	int		i;
