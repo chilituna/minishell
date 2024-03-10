@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 23:25:30 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/10 08:48:48 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,11 @@ void	ft_free_env(char **env);
 int		ft_check_quotes(char *input);
 int		ft_check_doublequotes(char *input);
 int		ft_check_singlequotes(char *input);
+//remove quotes
+void	ft_remove_quotes(t_cmd *cmd);
+char	*ft_update_str(char	*arg, int start, int len, t_data *data);
+void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd);
+void	ft_process_quotes(char **arg, t_cmd *cmd);
 
 //utils
 size_t	ft_strlen(const char *str);

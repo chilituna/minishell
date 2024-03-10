@@ -6,7 +6,7 @@
 #    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/09 23:25:34 by luifer           ###   ########.fr        #
+#    Updated: 2024/03/10 08:49:18 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c \
 	parsing/parser.c parsing/lexer.c parsing/expander.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c parsing/check_redirs.c \
+	parsing/remove_quotes.c \
 	utils/utils.c utils/utils_2.c utils/ft_split.c  utils/utils_3.c utils/ft_itoa.c \
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c \
 	exec/executor.c
