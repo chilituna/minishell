@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/09 23:25:05 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/10 12:29:28 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	ft_change_dir(char *path, t_data *data)
 	else
 	{
 		if(access(path, F_OK) == -1)
-			write(2, RED"minishell: cd: no such file or directory\n"RESET, 42);
+			ft_putstr_fd(RED"minishell: cd: no such file or directory\n"RESET, STDERR_FILENO);
 		else if(access(path, R_OK || W_OK || X_OK) == -1)
-			write(2, RED"minishell: cd: permission denied\n"RESET, 34);
+			ft_putstr_fd(RED"minishell: cd: permission denied\n"RESET, STDERR_FILENO);
 		data->exit_status = 1;
 	}
 	return(1);
@@ -44,17 +44,17 @@ int	ft_change_dir(char *path, t_data *data)
 int	ft_cd(t_cmd *cmds)
 {
 	char	*path_home;
-	char	*abs_path;
+	//char	*abs_path;
 
 	if(cmds->cmd_arg[2])//if there are more than 1 argument? 
 	{
-		write (1, "minishell: cd: too many arguments\n", 35);
+		ft_putstr_fd(RED"minishell: cd: too many arguments\n"RESET, STDERR_FILENO);
 		cmds->data->exit_status = 1;//update status to 1 (error)
 		return(1);
 	}
 	//env_var = ft_get_env_var(cmds->cmd_arg, cmds->data);//save env var
-	if(cmds->cmd_arg[1][0] == '/')
-		abs_path = cmds->cmd_arg[1];
+	//if(cmds->cmd_arg[1][0] == '/')
+	//	abs_path = cmds->cmd_arg[1];
 	path_home = ft_get_env_var("HOME", cmds->data);//search for the HOME env variable
 	if(!(cmds->cmd_arg[1]) && ft_change_dir(path_home, cmds->data))//if there are no arguments just cd and the change of directory is success
 		cmds->data->exit_status = 0;
@@ -69,24 +69,3 @@ int	ft_cd(t_cmd *cmds)
 	}
 	return(0) ;//give prompt back to user
 }
-
-/*
-1) update enviroment variables 
-
-curr_directory = pwd;
-t_cmd->data->env (envir)
-str1 = current path
-str2 = future path
-
-search for env variables 
-!!!use ft_get_env_variable in expander.c!!!!
-
-once found -> update content of enviroment variable
-			-> save the current directory (str1)
-			-> concatenate (variable name = current work directory)
-*/
-
-/*
-change directory 
-OLDPWD 
-*/

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 09:32:34 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/10 12:11:35 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,30 +66,4 @@ char	*ft_strdup(const char *s, t_data *data)
 	}
 	new_s[i] = '\0';
 	return (new_s);
-}
-
-//function to search a variable by its name and
-//update their value with a new value providen
-void	ft_update_env_var(char *var, char *new_value, t_data *data)
-{
-	int	i;
-	int	j;
-	int	k;
-
-	i = 0;
-	k = 0;
-	(void)var;
-	while(data->env[i])
-	{
-		j = 0;
-		while (data->env[i][j] && data->env[i][j] != '=')
-			j++;
-		while(data->env[i][j] && new_value[k])
-		{
-			data->env[i][j] = new_value[k];
-			j++;
-			k++;
-		}
-		i++;
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 12:58:30 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/10 18:29:02 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ char	**ft_split(char const *s, char c);
 int		ft_isalnum(int c);
 char	*ft_itoa(int n);
 void	ft_update_env_var(char *var, char *new_value, t_data *data);
+int		ft_atoi(char *str);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -194,9 +195,12 @@ char	*ft_get_env_var(char *var, t_data *data);
 int		ft_echo(t_cmd *cmds);
 void	ft_put_line(int n, char **str, int out);
 int		ft_pwd(t_cmd *cmds);
-void	ft_cd(t_cmd *cmds);
+int		ft_cd(t_cmd *cmds);
 int		ft_change_dir(char *path, t_data *data);
 int		ft_update_pwd(char *var, t_data *data);
+int		ft_is_num(const char *str);
+int		ft_exit_code(char *str);
+int		ft_exit(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);
