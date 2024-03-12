@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 18:29:02 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:16:43 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	ft_interrupt(int sig);
 //error handling
 void	ft_error_and_exit(char *str, t_data *data);
 void	ft_error_minishell(char *str);
+void	ft_exit_minishell(t_data *data);
 
 //clean_up.c
 void	ft_free_data(t_data *data);

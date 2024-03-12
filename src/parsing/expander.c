@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 22:01:48 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:32:36 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 		if (cmd->cmd_arg[i][j] == '\'')
 		{
 			j++;
-			while (cmd->cmd_arg[i][j] && cmd->cmd_arg[i][j] != '\'')
+			while (cmd->cmd_arg[i][j] && j + 1 < (int)ft_strlen(cmd->cmd_arg[i]) && cmd->cmd_arg[i][j] != '\'')
 				j++;
 		}
-		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] != '\0')
+		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1])
 		{
 			beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
 			k = j + 1;
@@ -67,6 +67,8 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 			free(beginnig_tmp);
 			free(end_tmp);
 			j = k - 1;
+			if (j >= (int)ft_strlen(cmd->cmd_arg[i]))
+				break ;
 		}
 		j++;
 	}
@@ -84,7 +86,10 @@ char	*ft_get_env_var(char *var, t_data *data)
 	i = 0;
 
 	if (var[0] == '?')
+	{
+		free(var);
 		return (ft_itoa(data->exit_status));
+	}
 	while (data->env[i])
 	{
 		j = 0;
@@ -93,9 +98,11 @@ char	*ft_get_env_var(char *var, t_data *data)
 		if (ft_strncmp(data->env[i], var, j) == 0 && var[j] == '\0')
 		{
 			env_var = ft_strdup(data->env[i] + j + 1, data);
+			free(var);
 			return (env_var);
 		}
 		i++;
 	}
+	free(var);
 	return (ft_strdup("", data));
 }

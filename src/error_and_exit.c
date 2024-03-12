@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/02/28 21:28:51 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:32:55 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,17 @@ void	ft_error_minishell(char *str)
 {
 	printf(RED "ERROR: %s\n" RESET, str);
 	exit(1);
+}
+
+// exit minishell
+void	ft_exit_minishell(t_data *data)
+{
+	if (history_length > 0)
+		rl_clear_history();
+	if (data)
+		ft_free_data(data);
+	if (data->env)
+		ft_free_env(data->env);
+	free(data);
+	exit(0);
 }
