@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:33:46 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:37:05 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->cmd = NULL;
 	data->prompt = NULL;
 	data->exit_status = 0;
-	ft_print_banner();
+	// ft_print_banner();
 }
 
 // READ
@@ -79,7 +79,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		ft_signals_interactive();
-		data->prompt = readline(YELLOW "minishell $ " RESET);
+		data->prompt = readline("minishell $ ");
 		if (!data->prompt)
 			ft_error_and_exit("readline error", data);
 		ft_signals_running();
@@ -95,6 +95,8 @@ int	main(int argc, char **argv, char **envp)
 			// printf(GREEN "...Commands grouped...\n"RESET);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
+			//print commands:
+			// ft_print_cmd(data->cmd);
 			// printf(GREEN "...Ready to execute...\n" RESET);
 			// printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);

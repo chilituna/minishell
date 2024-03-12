@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 17:32:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 18:32:21 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 			while (cmd->cmd_arg[i][j] && j + 1 < (int)ft_strlen(cmd->cmd_arg[i]) && cmd->cmd_arg[i][j] != '\'')
 				j++;
 		}
-		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1])
+		if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] && cmd->cmd_arg[i][j + 1] != '\"' && cmd->cmd_arg[i][j + 1] != '\0' && cmd->cmd_arg[i][j + 1] != ' ')
 		{
 			beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
 			k = j + 1;
-			while (isalnum(cmd->cmd_arg[i][k]) || cmd->cmd_arg[i][k] == '_' || cmd->cmd_arg[i][k] == '?')
+			if (cmd->cmd_arg[i][k] == '?')
 				k++;
+			else
+			{
+				while (isalnum(cmd->cmd_arg[i][k]) || cmd->cmd_arg[i][k] == '_' )
+					k++;
+			}
 			env_var = ft_get_env_var(ft_substr(cmd->cmd_arg[i], j + 1, k - j - 1, data), data);
 			end_tmp = ft_substr(cmd->cmd_arg[i], k, ft_strlen(cmd->cmd_arg[i]) - k, data);
 			free(cmd->cmd_arg[i]);
