@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 08:48:48 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/10 12:58:30 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct s_data
 
 //	- executable (absolute path or in $PATH)
 //	- built-in (echo, cd, pwd, export, unset, env, exit)
-//	- env variable ($)
 
 //FUNCTIONS
 
@@ -118,6 +117,13 @@ typedef struct s_data
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 void	ft_init_data(char **envp, t_data *data);
+
+//signals
+void	ft_signals_interactive(void);
+void	ft_signals_running(void);
+void	ft_new_prompt(int sig);
+void	ft_interrupt(int sig);
+
 
 //error handling
 void	ft_error_and_exit(char *str, t_data *data);

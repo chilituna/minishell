@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 09:01:17 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/10 13:12:37 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,16 @@ int	main(int argc, char **argv, char **envp)
 	ft_init_data(envp, data);
 	while (1)
 	{
+		ft_signals_interactive();
 		data->prompt = readline(YELLOW "minishell $ " RESET);
 		if (!data->prompt)
 			ft_error_and_exit("readline error", data);
+		ft_signals_running();
 		if (data->prompt[0] != '\0')
 			add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
+
 			// printf(GREEN "...Quotes checked...\n" RESET);
 			data->lexer = ft_lexer(data->prompt, data);
 			// printf(GREEN "...Lexer done...\n" RESET);
@@ -92,12 +95,12 @@ int	main(int argc, char **argv, char **envp)
 			if (!ft_check_cmds(data->cmd))
 				continue ;
 			//print commands:
-			// t_cmd *tmp = data->cmd;
-			// while (tmp)
-			// {
-			// 	ft_print_cmd(tmp);
-			// 	tmp = tmp->next;
-			// }
+			t_cmd *tmp = data->cmd;
+			while (tmp)
+			{
+				ft_print_cmd(tmp);
+				sleep(1);
+			}
 			// printf(GREEN "...Ready to execute...\n" RESET);
 			// printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);

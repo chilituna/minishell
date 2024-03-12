@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 21:53:12 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/10 09:32:34 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_strdup(const char *s, t_data *data)
 	return (new_s);
 }
 
-//function to search a variable by its name and 
+//function to search a variable by its name and
 //update their value with a new value providen
 void	ft_update_env_var(char *var, char *new_value, t_data *data)
 {
@@ -78,6 +78,7 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data)
 
 	i = 0;
 	k = 0;
+	(void)var;
 	while(data->env[i])
 	{
 		j = 0;
