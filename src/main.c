@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 13:12:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 15:26:05 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,6 @@ int	main(int argc, char **argv, char **envp)
 			// printf(GREEN "...Commands grouped...\n"RESET);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
-			//print commands:
-			t_cmd *tmp = data->cmd;
-			while (tmp)
-			{
-				ft_print_cmd(tmp);
-				sleep(1);
-			}
 			// printf(GREEN "...Ready to execute...\n" RESET);
 			// printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);
