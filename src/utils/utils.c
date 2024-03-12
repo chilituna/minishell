@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
 /*   Updated: 2024/03/10 12:11:35 by luifer           ###   ########.fr       */
