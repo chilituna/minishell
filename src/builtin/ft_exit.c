@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/10 18:29:18 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/12 16:16:15 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int	ft_exit(t_cmd *cmds)
 {
 	int	nbr;
 
-	nbr = ft_exit_code(cmds->cmd_arg[1]);
+	nbr = 0;
+	if (cmds->cmd_arg[1])
+		nbr = ft_exit_code(cmds->cmd_arg[1]);
 	if(nbr >= 256)//check if exit value is greater than 255
 		cmds->data->exit_status = 2;// a value greater than 255 should be truncated by the shell and unavailable even for parent process
 	else if(cmds->cmd_arg[1] && cmds->cmd_arg[2])//check for more than 1 argument
@@ -60,5 +62,6 @@ int	ft_exit(t_cmd *cmds)
 		ft_putstr_fd("please provide numeric argument", STDERR_FILENO);
 	}
 	cmds->data->exit_status = nbr;
+	ft_exit_minishell(cmds->data);
 	exit(nbr);
 }

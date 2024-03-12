@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 15:26:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/12 17:33:46 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	ft_init_data(char **envp, t_data *data)
 		data->env[i] = ft_strdup(envp[i], data);
 		i++;
 	}
+	data->env[i] = NULL;
 	data->lexer = NULL;
 	data->cmd = NULL;
 	data->prompt = NULL;
