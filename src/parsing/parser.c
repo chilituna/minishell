@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 17:02:07 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:38:32 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 	cmd->index = i;
 	cmd->tokens = NULL;
 	cmd->cmd_arg = NULL;
+	cmd->path = NULL;
 	cmd->builtin = NULL;
 	cmd->in = NULL;
 	cmd->out = NULL;

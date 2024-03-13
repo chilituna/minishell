@@ -1,0 +1,4 @@
+# Ignore all files in a directory:
+/mpanic-main
+/minishell_tester
+/mpanic

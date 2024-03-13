@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
+#    By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/12 00:28:18 by luifer           ###   ########.fr        #
+#    Updated: 2024/03/13 13:02:21 by aarpo e          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ INCLUDES = -I includes
 LIBS = -lreadline
 
 SRC_DIR = src
-SRC_FILES = main.c clean_up.c error_and_exit.c \
+SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	parsing/parser.c parsing/lexer.c parsing/expander.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c parsing/check_redirs.c \
 	parsing/remove_quotes.c \
