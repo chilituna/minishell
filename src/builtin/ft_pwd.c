@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 23:09:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/10 12:40:26 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/13 22:18:11 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	ft_pwd(t_cmd *cmds)
 	(void)cmds;
 	getcwd(buf, sizeof(buf));
 	ft_putstr_fd(buf, STDOUT_FILENO);//print the buffer with the path
+	ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);
 	//free(buf);//read about the free when calling getcwd but not 100% sure
 }
