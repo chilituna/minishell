@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/10 12:29:28 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/13 11:48:53 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ft_update_pwd(char *var, t_data *data)
 {
 	char	buffer[PATH_MAX];
-	
+
 	if(getcwd(buffer, sizeof(buffer)) != NULL)//check if the current working dir is copied into buffer
 		ft_update_env_var(var, buffer, data);//update the content of the variable passed
 	return(1);
@@ -34,7 +34,7 @@ int	ft_change_dir(char *path, t_data *data)
 	{
 		if(access(path, F_OK) == -1)
 			ft_putstr_fd(RED"minishell: cd: no such file or directory\n"RESET, STDERR_FILENO);
-		else if(access(path, R_OK || W_OK || X_OK) == -1)
+		else if(access(path, R_OK | W_OK | X_OK) == -1)
 			ft_putstr_fd(RED"minishell: cd: permission denied\n"RESET, STDERR_FILENO);
 		data->exit_status = 1;
 	}
@@ -46,7 +46,7 @@ int	ft_cd(t_cmd *cmds)
 	char	*path_home;
 	//char	*abs_path;
 
-	if(cmds->cmd_arg[2])//if there are more than 1 argument? 
+	if(cmds->cmd_arg[2])//if there are more than 1 argument?
 	{
 		ft_putstr_fd(RED"minishell: cd: too many arguments\n"RESET, STDERR_FILENO);
 		cmds->data->exit_status = 1;//update status to 1 (error)

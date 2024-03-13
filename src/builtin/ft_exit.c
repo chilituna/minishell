@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/12 16:16:15 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:19:35 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_exit_code(char *str)
 		code = 0;
 	else if(ft_is_num(str))
 		code = ft_atoi(str);
+	else
+		code = -1;
 	return(code);
 }
 
