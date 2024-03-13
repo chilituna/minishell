@@ -202,6 +202,8 @@ int		ft_update_pwd(char *var, t_data *data);
 int		ft_is_num(const char *str);
 int		ft_exit_code(char *str);
 int		ft_exit(t_cmd *cmds);
+int		ft_env(t_cmd *cmds);
+int		ft_export(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);

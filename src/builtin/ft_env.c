@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/26 23:09:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/13 22:18:11 by luifer           ###   ########.fr       */
+/*   Created: 2024/03/11 22:06:01 by luifer            #+#    #+#             */
+/*   Updated: 2024/03/12 00:32:46 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+# include "minishell.h"
 
-int	ft_pwd(t_cmd *cmds)
+int	ft_env(t_cmd *cmds)
 {
-	char	buf[PATH_MAX];//path_max is a the limit of path len
-
-	(void)cmds;
-	getcwd(buf, sizeof(buf));
-	ft_putstr_fd(buf, STDOUT_FILENO);//print the buffer with the path
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	return (0);
-	//free(buf);//read about the free when calling getcwd but not 100% sure
+	int	i;
+	while(cmds->data->env[i] != NULL)
+	{
+		ft_putstr_fd(cmds->data->env[i], STDOUT_FILENO);
+		write(STDOUT_FILENO, "\n", 1);
+		i++;
+	}
+	cmds->data->exit_status = 0;
+	return(0);
 }
