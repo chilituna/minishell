@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 18:29:02 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/12 12:26:19 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,15 @@ typedef struct s_cmd
 	struct s_cmd	*prev;
 	t_data			*data;
 }	t_cmd;
+
+//Data structure to store the content of env variable. 
+//This help to increase / decrease the list of environment variables necesary for export + unset
+typedef struct s_env
+{
+	char			*var_name;
+	struct s_env	*next;
+	struct s_env	*prev;
+}	t_env;
 
 // Data structure to store the pointers to the lexer, parser and env:
 typedef struct s_data
@@ -195,6 +204,8 @@ int		ft_update_pwd(char *var, t_data *data);
 int		ft_is_num(const char *str);
 int		ft_exit_code(char *str);
 int		ft_exit(t_cmd *cmds);
+int		ft_env(t_cmd *cmds);
+int		ft_export(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);

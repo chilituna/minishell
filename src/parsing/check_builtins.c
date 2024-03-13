@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:04:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 23:16:20 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/12 00:35:04 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,19 +39,18 @@ int	(*ft_get_builtin(char *cmd))(t_cmd *cmd)
 {
 	if (ft_strncmp(cmd, "echo", 4) == 0)
 		return (ft_echo);
-	//else if (ft_strncmp(cmd, "cd", 2) == 0)
-	//	return (ft_cd);
-		//return (int (*)(t_cmd *))ft_cd;
+	else if (ft_strncmp(cmd, "cd", 2) == 0)
+		return (ft_cd);
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)
 		return (ft_pwd);
-	// else if (ft_strncmp(cmd, "export", 6) == 0)
-	// 	return (ft_export);
+	else if (ft_strncmp(cmd, "export", 6) == 0)
+		return (ft_export);
 	// else if (ft_strncmp(cmd, "unset", 5) == 0)
 	// 	return (ft_unset);
-	// else if (ft_strncmp(cmd, "env", 3) == 0)
-	// 	return (ft_env);
-	// else if (ft_strncmp(cmd, "exit", 4) == 0)
-	// 	return (ft_exit);
+	else if (ft_strncmp(cmd, "env", 3) == 0)
+		return (ft_env);
+	else if (ft_strncmp(cmd, "exit", 4) == 0)
+		return (ft_exit);
 	else
 		return (NULL);
 }
