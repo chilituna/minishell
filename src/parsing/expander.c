@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 18:32:21 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:31:43 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,29 +84,29 @@ void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data)
 // if the environment variable is not found, return empty string
 char	*ft_get_env_var(char *var, t_data *data)
 {
-	int		i;
 	int		j;
 	char	*env_var;
+	t_env	*tmp;
 
-	i = 0;
+	tmp = data->env;
 
 	if (var[0] == '?')
 	{
 		free(var);
 		return (ft_itoa(data->exit_status));
 	}
-	while (data->env[i])
+	while (tmp)
 	{
 		j = 0;
-		while (data->env[i][j] && data->env[i][j] != '=')
+		while (tmp->env[j] && tmp->env[j] != '=')
 			j++;
-		if (ft_strncmp(data->env[i], var, j) == 0 && var[j] == '\0')
+		if (ft_strncmp(tmp->env, var, j) == 0 && var[j] == '\0')
 		{
-			env_var = ft_strdup(data->env[i] + j + 1, data);
+			env_var = ft_strdup(tmp->env + j + 1, data);
 			free(var);
 			return (env_var);
 		}
-		i++;
+		tmp = tmp->next;
 	}
 	free(var);
 	return (ft_strdup("", data));

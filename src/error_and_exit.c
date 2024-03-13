@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 16:32:55 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:29:27 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 void	ft_error_and_exit(char *str, t_data *data)
 {
 	if (isatty(STDIN_FILENO))
-		printf(RED "ERROR: %s\n" RESET, str);
+		printf(BLUE1 "%s\n" RESET, str);
 	if (history_length > 0)
 		rl_clear_history();
 	if (data)

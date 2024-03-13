@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 15:30:49 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:10:26 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,15 @@ void	ft_free_parser(t_cmd *cmd)
 }
 
 //should only be used in case of exit or error
-void	ft_free_env(char **env)
+void	ft_free_env(t_env *env)
 {
-	int	i;
+	t_env	*tmp;
 
-	i = 0;
-	while (env[i])
+	while (env)
 	{
-		free(env[i]);
-		i++;
+		tmp = env->next;
+		free(env->env);
+		free(env);
+		env = tmp;
 	}
-	free(env);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/12 18:37:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:29:49 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,27 +29,51 @@ void	ft_print_cmd(t_cmd *cmd)
 		printf(BLUE3 "OUT: %s\n" RESET, cmd->out);
 }
 
-//store environment variables in data
+void	ft_print_env(t_env *env)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		printf("%s\n", tmp->env);
+		tmp = tmp->next;
+	}
+}
+
+//initialize data struct
 void	ft_init_data(char **envp, t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		i++;
-	data->env = ft_malloc((i + 1) * sizeof(char *), data);
-	i = 0;
-	while (envp[i])
-	{
-		data->env[i] = ft_strdup(envp[i], data);
-		i++;
-	}
-	data->env[i] = NULL;
+	data->env = NULL;
 	data->lexer = NULL;
 	data->cmd = NULL;
 	data->prompt = NULL;
 	data->exit_status = 0;
+	data->env = ft_env(envp, data);
 	// ft_print_banner();
+}
+
+//create a linked list to store env variables
+t_env	*ft_env(char **envp, t_data *data)
+{
+	t_env	*env;
+	t_env	*tmp;
+	int		i;
+
+	i = 0;
+	env = NULL;
+	while (envp[i])
+	{
+		tmp = malloc(sizeof(t_env));
+		if (!tmp)
+			ft_error_and_exit("malloc error", NULL);
+		tmp->env = ft_strdup(envp[i], data);
+		tmp->next = env;
+		env = tmp;
+		i++;
+	}
+	// ft_print_env(env);
+	return (env);
 }
 
 // READ
@@ -81,72 +105,20 @@ int	main(int argc, char **argv, char **envp)
 		ft_signals_interactive();
 		data->prompt = readline("minishell $ ");
 		if (!data->prompt)
-			ft_error_and_exit("readline error", data);
+			ft_error_and_exit("Exiting minishell", data);
 		ft_signals_running();
 		if (data->prompt[0] != '\0')
 			add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
-
-			// printf(GREEN "...Quotes checked...\n" RESET);
 			data->lexer = ft_lexer(data->prompt, data);
-			// printf(GREEN "...Lexer done...\n" RESET);
 			data->cmd = ft_parser(data->lexer, data);
-			// printf(GREEN "...Commands grouped...\n"RESET);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
-			//print commands:
-			// ft_print_cmd(data->cmd);
-			// printf(GREEN "...Ready to execute...\n" RESET);
-			// printf("OUTCOME:\n");
 			ft_execute_cmds(data->cmd);
-			// printf(GREEN "...Commands executed...\n" RESET);
 		}
 		ft_free_data(data);
-		// printf(GREEN "...Memory freed...\n" RESET);
 	}
 	free(data);
 	return (0);
-}
-
-//print minishell banner when strting the program
-
-void	ft_print_banner_2(void)
-{
-	printf(BLUE3"             *               ***   ***\n");
-	printf("           **                 ***   ***\n");
-	printf("           **                  **    **\n");
-	printf("           **                  **    **\n");
-	printf("   ****    **                  **    **\n");
-	printf("  * **** * **  ***      ***    **    **\n");
-	printf(" **  ****  ** * ***    * ***   **    **\n");
-	printf("****       ***   ***  *   ***  **    **\n");
-	printf("  ***      **     ** **    *** **    **\n");
-	printf("    ***    **     ** ********  **    **\n");
-	printf("      ***  **     ** *******   **    **\n");
-	printf(" ****  **  **     ** **        **    **\n");
-	printf("* **** *   **     ** ****    * **    **\n");
-	printf("   ****    **     **  *******  *** * *** *\n");
-	printf("            **    **   *****    ***   ***\n");
-	printf("                 *\n");
-	printf("                 *\n");
-	printf("                * " RESET);
-	printf(BLUE1 "     by Alise & Luis\n" RESET);
-	printf(BLUE3"               *\n\n" RESET);
-}
-
-void	ft_print_banner_1(void)
-{
-	printf(BLUE1 "\n    ._____.___ .___ .______  .___\n");
-	printf("    :         |: __|:      \\ : __|\n");
-	printf("    |   \\  /  || : ||       || : |\n");
-	printf("    |   |\\/   ||   ||   |   ||   |\n");
-	printf("    |___| |   ||   ||___|   ||   |\n");
-	printf("          |___||___|    |___||___|\n\n" RESET);
-}
-
-void	ft_print_banner(void)
-{
-	ft_print_banner_1();
-	ft_print_banner_2();
 }

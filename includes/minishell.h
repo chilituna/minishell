@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 12:29:25 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:23:17 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,20 +61,11 @@ typedef struct s_lexer
 	t_data			*data;
 }	t_lexer;
 
-// Redirection list to store redirections from parser:
-// typedef struct s_redir
-// {
-// 	char			*tok;
-// 	char			*filename;
-// 	struct s_redir	*next;
-// 	struct s_redir	*prev;
-// 	t_data			*data;
-// }	t_redir;
-
 // Command list to store command groups from parser:
 // index / total number of commands
 // list of tokens from lexer
 // command name and flags in cmd_arg
+// path to the command
 // input and output redirections
 // append flag
 // heredoc flag
@@ -98,33 +89,41 @@ typedef struct s_cmd
 	t_data			*data;
 }	t_cmd;
 
+// Linked list for environment variables:
+typedef struct s_env
+{
+	char			*env;
+	struct s_env	*next;
+}	t_env;
+
 // Data structure to store the pointers to the lexer, parser and env:
 typedef struct s_data
 {
 	char	*prompt;
 	t_lexer	*lexer;
 	t_cmd	*cmd;
-	char	**env;
+	t_env	*env;
 	int		exit_status;
 
 }	t_data;
 
-//	- executable (absolute path or in $PATH)
-//	- built-in (echo, cd, pwd, export, unset, env, exit)
 
 //FUNCTIONS
+
+//just for testing
+void	ft_print_env(t_env *env);
 
 //main.c --> start program, show prompt, loop (TLDR)
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 void	ft_init_data(char **envp, t_data *data);
+t_env	*ft_env(char **envp, t_data *data);
 
 //signals
 void	ft_signals_interactive(void);
 void	ft_signals_running(void);
 void	ft_new_prompt(int sig);
 void	ft_interrupt(int sig);
-
 
 //error handling
 void	ft_error_and_exit(char *str, t_data *data);
@@ -135,7 +134,7 @@ void	ft_exit_minishell(t_data *data);
 void	ft_free_data(t_data *data);
 void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
-void	ft_free_env(char **env);
+void	ft_free_env(t_env *env);
 
 //check quotes
 int		ft_check_quotes(char *input);
