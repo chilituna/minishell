@@ -3,40 +3,60 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/13 21:25:12 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/14 15:49:39 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
-int	ft_export(t_cmd *cmds)
+//function to print the environment variables present at the moment of execution. Simple export without arguments. 
+int	ft_print_export(t_cmd *cmds)
 {
-	extern char	**environ;//special variable with all the variable enviroment 
-	int			i;
-
-	while(environ[i] != NULL)//iterate throug the array and print the variables and their content 
+	while (cmds->data->env->next != NULL)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
-		ft_putstr_fd(environ[i], STDOUT_FILENO);
+		ft_putstr_fd(cmds->data->env->env, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		i++;
+		cmds->data->env = cmds->data->env->next;
 	}
 	cmds->data->exit_status = 0;
-	return(0);
+	return (0);
+}
+
+//Function to find the node that contains the specified name of the enviroment variable
+t_env	*ft_find_env_var(t_env *env, char *name)
+{
+	t_env	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = env;
+	while (tmp->next != NULL)
+	{
+		if (ft_strncmp(tmp->env, name, ft_strlen(name)) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
 }
 
 /*
-creation of new variables and assign of values
-void	ft_export(t_cmd *cmds)
+//creation of new variables and assign of values
+int	ft_export(t_cmd *cmds)
 {
-	int	i;
+	int		i;
+	char	*tmp;
 
-	if(!(cmds->cmd_arg[1]))//if export is passed without arguments
+	if (!(cmds->cmd_arg[1]))
 		ft_print_export(cmds);
-	i = 1;
+	else if (cmds->cmd_arg[1])
+	{
+		if (ft_find_env_var(cmds->data->env, cmds->cmd_arg[1]))//still need to divide the arg in name of the variable and content of the variable
+		
+	}
 	while(cmds->cmd_arg[i])
 	{
 		

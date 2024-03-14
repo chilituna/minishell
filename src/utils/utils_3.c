@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:16:58 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 13:20:11 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:51:51 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ int	ft_atoi(char *str)
 
 	res = 0;
 	sign = 1;
-	while(*str == 32 || (*str >= 9 && *str <= 13))
+	while (*str == 32 || (*str >= 9 && *str <= 13))
 		str++;
-	if(*str == 43 || *str == 45)
+	if (*str == 43 || *str == 45)
 	{
-		if(*str == 45)
+		if (*str == 45)
 			sign = -1;
 		str++;
 	}
-	while(*str >= 48 && *str <= 57)
+	while (*str >= 48 && *str <= 57)
 	{
 		res = ((res * 10) + (*str - 48));
 		str++;
@@ -58,10 +58,10 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data)
 		j = 0;
 		while (tmp->env[j] && tmp->env[j] != '=')//search the name of variable until = sign
 			j++;
-		if(ft_strncmp(tmp->env, var, j) == 0 && (var[j] == '\0'))//if found var name
+		if (ft_strncmp(tmp->env, var, j) == 0 && (var[j] == '\0'))//if found var name
 		{
 			j++;//skip the = sign
-			while(tmp->env[j] && new_value[k])//copy the new content into the variable, updating it
+			while (tmp->env[j] && new_value[k])//copy the new content into the variable, updating it
 			{
 				tmp->env[j] = new_value[k];
 				j++;
@@ -70,4 +70,28 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data)
 		}
 		tmp = tmp->next;
 	}
+}
+
+t_env	*ft_create_env(char *str)
+{
+	t_env	*node;
+
+	node = (t_env *)malloc(sizeof(t_env));
+	if (!node)
+		return (NULL);
+	node->env = str;
+	node->next = NULL;
+	return (node);
+}
+
+void	ft_add_var_back(t_env *env, t_env *new_env)
+{
+	t_env	*tmp;
+
+	if (env == NULL && new_env == NULL)
+		return ;
+	tmp = env;
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = new_env;
 }

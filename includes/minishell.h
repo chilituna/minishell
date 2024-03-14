@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 13:23:17 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:57:29 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	ft_print_env(t_env *env);
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 void	ft_init_data(char **envp, t_data *data);
-t_env	*ft_env(char **envp, t_data *data);
+t_env	*ft_get_env(char **envp, t_data *data);
 
 //signals
 void	ft_signals_interactive(void);
