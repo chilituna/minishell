@@ -3,24 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:06:01 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/12 00:32:46 by luifer           ###   ########.fr       */
+/*   Updated: 2024/03/14 11:32:36 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 int	ft_env(t_cmd *cmds)
 {
-	int	i;
-	while(cmds->data->env[i] != NULL)
+	while (cmds->data->env->next != NULL)
 	{
-		ft_putstr_fd(cmds->data->env[i], STDOUT_FILENO);
+		ft_putstr_fd(cmds->data->env->env, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		i++;
+		cmds->data->env = cmds->data->env->next;
 	}
 	cmds->data->exit_status = 0;
-	return(0);
+	return (0);
 }
