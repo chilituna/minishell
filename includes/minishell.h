@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:33:04 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:07:19 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,26 @@ typedef struct s_lexer
 	t_data			*data;
 }	t_lexer;
 
+// Linked list for redirs:
+// index of the redirection
+// type of redirection
+// name of the file
+typedef struct s_redir
+{
+	char			*in;
+	char			*out;
+	int				append;
+	int				heredoc;
+	char			*heredoc_delim;
+	struct s_redir	*next;
+}	t_redir;
+
 // Command list to store command groups from parser:
 // index / total number of commands
 // list of tokens from lexer
 // command name and flags in cmd_arg
 // path to the command
-// input and output redirections
-// append flag
-// heredoc flag
-// heredoc delimiter
+// pointer to redir list
 // function pointer to the corresponding builtin
 typedef struct s_cmd
 {
@@ -77,11 +88,7 @@ typedef struct s_cmd
 	char			**tokens;
 	char			**cmd_arg;
 	char			*path;
-	char			*in;
-	char			*out;
-	int				append;
-	int				heredoc;
-	char			*heredoc_delim;
+	t_redir			*redir;
 	int				env_len;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
@@ -136,6 +143,7 @@ void	ft_free_data(t_data *data);
 void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
 void	ft_free_env(t_env *env);
+void	ft_free_redir(t_redir *redir);
 
 //check quotes
 int		ft_check_quotes(char *input);
