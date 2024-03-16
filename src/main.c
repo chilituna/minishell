@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:52:29 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:09:28 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,20 @@ void	ft_print_cmd(t_cmd *cmd)
 		printf("%s\n", cmd->cmd_arg[i]);
 		i++;
 	}
-	if (cmd->in)
-		printf(BLUE3 "IN: %s\n" RESET, cmd->in);
-	if (cmd->out)
-		printf(BLUE3 "OUT: %s\n" RESET, cmd->out);
+	while (cmd->redir)
+	{
+		if (cmd->redir->in)
+			printf("redir_in: %s\n", cmd->redir->in);
+		if (cmd->redir->out)
+			printf("redir_out: %s\n", cmd->redir->out);
+		if (cmd->redir->append)
+			printf("redir will be appended\n");
+		if (cmd->redir->heredoc)
+			printf("heredoc\n");
+		if (cmd->redir->heredoc_delim)
+			printf("heredoc_delim: %s\n", cmd->redir->heredoc_delim);
+		cmd->redir = cmd->redir->next;
+	}
 }
 
 void	ft_print_env(t_env *env)
@@ -52,7 +62,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	data->env = ft_get_env(envp, data);
 	// ft_print_banner();
-	ft_print_env(data->env);
+	// ft_print_env(data->env);
 }
 
 //create a linked list to store env variables:
@@ -124,6 +134,12 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
+			// t_cmd	*tmp = data->cmd;
+			// while (tmp)
+			// {
+			// 	ft_print_cmd(tmp);
+			// 	tmp = tmp->next;
+			// }
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);
