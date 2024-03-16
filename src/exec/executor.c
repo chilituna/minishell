@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/09 15:31:20 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/16 18:57:24 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	ft_execute_cmds(t_cmd *cmd)
 {
 	while (cmd)
 	{
+		ft_check_here_doc(cmd);
 		if (cmd->builtin)
 			cmd->builtin(cmd);
 		else
 		{
+			// TO DO: find the path of the command
 			printf("execve will be called\n");
 			// TO DO: ft_execve(cmd);
 		}

@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 15:47:13 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:05:19 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_free_data(t_data *data)
 		ft_free_parser(data->cmd);
 		data->cmd = NULL;
 	}
+	ft_delete_here_doc(data);
 
 }
 
@@ -109,3 +110,11 @@ void	ft_free_env(t_env *env)
 		env = tmp;
 	}
 }
+
+// check if heredocs were used and delete the temporary files
+void	ft_delete_here_doc(t_data *data)
+{
+	printf("deleting heredocs\n");
+	(void)data;
+}
+
