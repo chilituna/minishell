@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 13:31:43 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 14:53:38 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,10 @@ char	*ft_get_env_var(char *var, t_data *data)
 	}
 	while (tmp)
 	{
-		j = 0;
-		while (tmp->env[j] && tmp->env[j] != '=')
-			j++;
-		if (ft_strncmp(tmp->env, var, j) == 0 && var[j] == '\0')
+		j = ft_strlen(tmp->var);
+		if (ft_strncmp(tmp->var, var, j) == 0 && var[j] == '\0')
 		{
-			env_var = ft_strdup(tmp->env + j + 1, data);
+			env_var = ft_strdup(tmp->value, data);
 			free(var);
 			return (env_var);
 		}

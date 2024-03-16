@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 13:10:26 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 14:38:57 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,8 @@ void	ft_free_env(t_env *env)
 	while (env)
 	{
 		tmp = env->next;
-		free(env->env);
+		free(env->var);
+		free(env->value);
 		free(env);
 		env = tmp;
 	}

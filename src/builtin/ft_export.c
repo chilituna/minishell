@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/14 15:49:39 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:49:04 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//function to print the environment variables present at the moment of execution. Simple export without arguments. 
+//function to print the environment variables present at the moment of execution. Simple export without arguments.
 int	ft_print_export(t_cmd *cmds)
 {
 	while (cmds->data->env->next != NULL)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
-		ft_putstr_fd(cmds->data->env->env, STDOUT_FILENO);
+		ft_putstr_fd(cmds->data->env->var, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
 		cmds->data->env = cmds->data->env->next;
 	}
@@ -36,7 +36,7 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	tmp = env;
 	while (tmp->next != NULL)
 	{
-		if (ft_strncmp(tmp->env, name, ft_strlen(name)) == 0)
+		if (ft_strncmp(tmp->var, name, ft_strlen(name)) == 0)
 			return (tmp);
 		tmp = tmp->next;
 	}
@@ -55,12 +55,12 @@ int	ft_export(t_cmd *cmds)
 	else if (cmds->cmd_arg[1])
 	{
 		if (ft_find_env_var(cmds->data->env, cmds->cmd_arg[1]))//still need to divide the arg in name of the variable and content of the variable
-		
+
 	}
 	while(cmds->cmd_arg[i])
 	{
-		
+
 	}
-	
+
 }
 */

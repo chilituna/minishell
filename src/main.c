@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/14 10:57:39 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/16 14:52:29 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ void	ft_print_env(t_env *env)
 	tmp = env;
 	while (tmp)
 	{
-		printf("%s\n", tmp->env);
+		printf("%s=", tmp->var);
+		printf("%s\n", tmp->value);
 		tmp = tmp->next;
 	}
 }
@@ -51,13 +52,16 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	data->env = ft_get_env(envp, data);
 	// ft_print_banner();
+	ft_print_env(data->env);
 }
 
-//create a linked list to store env variables
+//create a linked list to store env variables:
+
 t_env	*ft_get_env(char **envp, t_data *data)
 {
 	t_env	*env;
 	t_env	*tmp;
+	char	**env_var;
 	int		i;
 
 	i = 0;
@@ -67,8 +71,13 @@ t_env	*ft_get_env(char **envp, t_data *data)
 		tmp = malloc(sizeof(t_env));
 		if (!tmp)
 			ft_error_and_exit("malloc error", NULL);
-		tmp->env = ft_strdup(envp[i], data);
+		env_var = ft_split(envp[i], '=');
+		tmp->var = ft_strdup(env_var[0], data);
+		tmp->value = ft_strdup(env_var[1], data);
 		tmp->next = env;
+		free(env_var[0]);
+		free(env_var[1]);
+		free(env_var);
 		env = tmp;
 		i++;
 	}
