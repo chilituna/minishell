@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 16:07:19 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:04:58 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@
 # define BLUE2 "\033[0;34m"
 # define BLUE3 "\033[0;36m"
 # define RESET "\033[0m"
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 50
+# endif
 
 //STRUCTS
 
@@ -144,6 +148,7 @@ void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
 void	ft_free_env(t_env *env);
 void	ft_free_redir(t_redir *redir);
+void	ft_delete_here_doc(t_data *data);
 
 //check quotes
 int		ft_check_quotes(char *input);
@@ -171,6 +176,7 @@ int		ft_isalnum(int c);
 char	*ft_itoa(int n);
 void	ft_update_env_var(char *var, char *new_value, t_data *data);
 int		ft_atoi(char *str);
+char	*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -200,6 +206,10 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 void	ft_expand_env(t_cmd *cmd, t_data *data);
 void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
 char	*ft_get_env_var(char *var, t_data *data);
+
+//here_doc
+void	ft_check_here_doc(t_cmd *cmd);
+void	ft_heredoc(t_redir *redir, t_data *data);
 
 //builtins
 int		ft_echo(t_cmd *cmds);

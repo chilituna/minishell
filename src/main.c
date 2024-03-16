@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 16:09:28 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 16:59:25 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
+				// return (1);
 			// t_cmd	*tmp = data->cmd;
 			// while (tmp)
 			// {

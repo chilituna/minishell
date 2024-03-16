@@ -6,7 +6,7 @@
 #    By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/13 13:02:21 by aarpo e          ###   ########.fr        #
+#    Updated: 2024/03/16 17:43:58 by aarpo e          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c parsing/check_redirs.c \
 	parsing/remove_quotes.c \
 	utils/utils.c utils/utils_2.c utils/ft_split.c  utils/utils_3.c utils/ft_itoa.c \
+	utils/get_next_line.c \
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c builtin/ft_export.c\
-	exec/executor.c
+	exec/executor.c exec/heredoc.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
