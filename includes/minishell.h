@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:33:04 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 23:32:24 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,11 @@ int		ft_isalnum(int c);
 char	*ft_itoa(int n);
 void	ft_update_env_var(char *var, char *new_value, t_data *data);
 int		ft_atoi(char *str);
+t_env	*ft_search_env_var(t_env *env, char *name);
+t_env	*ft_create_env(char *name, char *value);
+void	ft_add_var_back(t_env *env, t_env *new_env);
+void	ft_delete_env_var(t_env *env, char *name);
+
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -205,6 +210,7 @@ int		ft_exit_code(char *str);
 int		ft_exit(t_cmd *cmds);
 int		ft_env(t_cmd *cmds);
 int		ft_export(t_cmd *cmds);
+int		ft_unset(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);

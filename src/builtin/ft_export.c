@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/16 14:49:04 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:32:49 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,17 @@
 //function to print the environment variables present at the moment of execution. Simple export without arguments.
 int	ft_print_export(t_cmd *cmds)
 {
-	while (cmds->data->env->next != NULL)
+	t_env	*tmp;
+
+	tmp = cmds->data->env;
+	while (tmp->next != NULL)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
-		ft_putstr_fd(cmds->data->env->var, STDOUT_FILENO);
+		ft_putstr_fd(tmp->var, STDOUT_FILENO);
+		ft_putchar_fd('=', STDOUT_FILENO);
+		ft_putstr_fd(tmp->value, STDOUT_FILENO);
 		write(STDOUT_FILENO, "\n", 1);
-		cmds->data->env = cmds->data->env->next;
+		tmp = tmp->next;
 	}
 	cmds->data->exit_status = 0;
 	return (0);
@@ -43,24 +48,32 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
-/*
-//creation of new variables and assign of values
+
+//creation of new variables and assign of values. This is the actual function
 int	ft_export(t_cmd *cmds)
 {
-	int		i;
-	char	*tmp;
+	char	**input;
+	char	*name;
+	char	*value;
+	t_env	*tmp;
 
-	if (!(cmds->cmd_arg[1]))
+	tmp = cmds->data->env;
+	if (!(cmds->cmd_arg[1]))//if export is called without arguments
 		ft_print_export(cmds);
-	else if (cmds->cmd_arg[1])
+	else//export is called with arguments (var name)
 	{
-		if (ft_find_env_var(cmds->data->env, cmds->cmd_arg[1]))//still need to divide the arg in name of the variable and content of the variable
-
+		input = ft_split(cmds->cmd_arg[1], '=');
+		name = ft_strdup(input[0], cmds->data);
+		value = ft_strdup(input[1], cmds->data);
+		tmp = ft_search_env_var(cmds->data->env, name);
+		if (tmp == NULL)//not found and must be created
+		{
+			tmp = ft_create_env(name, value);
+			ft_add_var_back(cmds->data->env, tmp);
+		}
+		else
+			ft_update_env_var(name, value, cmds->data);
 	}
-	while(cmds->cmd_arg[i])
-	{
-
-	}
-
+	cmds->data->exit_status = 0;
+	return(0);
 }
-*/

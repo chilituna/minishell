@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:52:29 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:21:11 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	data->env = ft_get_env(envp, data);
 	// ft_print_banner();
-	ft_print_env(data->env);
+	// ft_print_env(data->env);
 }
 
 //create a linked list to store env variables:
