@@ -22,8 +22,11 @@ int	ft_print_export(t_cmd *cmds)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
 		ft_putstr_fd(tmp->var, STDOUT_FILENO);
-		ft_putchar_fd('=', STDOUT_FILENO);
-		ft_putstr_fd(tmp->value, STDOUT_FILENO);
+		if (tmp->value)
+		{
+			ft_putchar_fd('=', STDOUT_FILENO);
+			ft_putstr_fd(tmp->value, STDOUT_FILENO);
+		}
 		write(STDOUT_FILENO, "\n", 1);
 		tmp = tmp->next;
 	}
