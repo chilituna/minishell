@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 18:21:11 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:09:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,39 +60,30 @@ void	ft_init_data(char **envp, t_data *data)
 	data->cmd = NULL;
 	data->prompt = NULL;
 	data->exit_status = 0;
-	data->env = ft_get_env(envp, data);
+	ft_copy_env(envp, data);
 	// ft_print_banner();
 	// ft_print_env(data->env);
 }
 
 //create a linked list to store env variables:
 
-t_env	*ft_get_env(char **envp, t_data *data)
+void	ft_copy_env(char **envp, t_data *data)
 {
-	t_env	*env;
-	t_env	*tmp;
-	char	**env_var;
 	int		i;
+	char	*name;
+	char	*value;
 
 	i = 0;
-	env = NULL;
 	while (envp[i])
 	{
-		tmp = malloc(sizeof(t_env));
-		if (!tmp)
-			ft_error_and_exit("malloc error", NULL);
-		env_var = ft_split(envp[i], '=');
-		tmp->var = ft_strdup(env_var[0], data);
-		tmp->value = ft_strdup(env_var[1], data);
-		tmp->next = env;
-		free(env_var[0]);
-		free(env_var[1]);
-		free(env_var);
-		env = tmp;
+		name = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i], data);
+		value = ft_strdup(ft_strchr(envp[i], '=') + 1, data);
+		if (i == 0)
+			data->env = ft_create_env(name, value);
+		else
+			ft_add_var_back(data->env, ft_create_env(name, value));
 		i++;
 	}
-	// ft_print_env(env);
-	return (env);
 }
 
 // READ
@@ -126,8 +117,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!data->prompt)
 			ft_error_and_exit("Exiting minishell", data);
 		ft_signals_running();
-		if (data->prompt[0] != '\0')
-			add_history(data->prompt);
+		if (data->prompt[0] == '\0')
+			continue ;
+		add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
 			data->lexer = ft_lexer(data->prompt, data);
