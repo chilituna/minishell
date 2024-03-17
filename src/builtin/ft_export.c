@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 14:18:01 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:54:25 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,27 +48,32 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
-int	ft_check_input(char *str, t_data *data)
+char	*ft_check_input(char *str, t_data *data)
 {
 	int		i;
+	int		j;
 	char	*name;
-	char	*value;
-	char	**input;
 
+	name = NULL;
 	i = 0;
+	if (!(str[0] >= 65 && str[0] <= 90) && !(str[0] >= 97 && str[0] <= 122))
+		return (NULL);
 	while (str[i] != '\0')
 	{
 		if (str[i] == '=')
-		{
-			input = ft_split(str, '=');
-			name = ft_strdup(input[0], data);
-			value = ft_strdup(input[1], data);
-			if (ft_all_capitals(name) == 0)
-				return (0);
-		}
+			name = ft_substr(str, 0, i, data);
 		i++;
 	}
-	return (1);
+	if (!name)
+		name = str;
+	j = 0;
+	while (name[j] != '\0')
+	{
+		if (isalnum(name[j]) == 0 && name[j] != '_')
+			return (NULL);
+		j++;
+	}
+	return (name);
 }
 
 
@@ -83,7 +88,8 @@ int	ft_export(t_cmd *cmds)
 	tmp = cmds->data->env;
 	if (!(cmds->cmd_arg[1]))//if export is called without arguments
 		ft_print_export(cmds);
-	else if (ft_check_input(cmds->cmd_arg[1], cmds->data) == 1)
+	name = ft_check_input(cmds->cmd_arg[1], cmds->data);
+	if (name == NULL)
 	{
 		ft_putstr_fd(" not a valid identifier", STDERR_FILENO);
 		cmds->data->exit_status = 1;
