@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:38:57 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 19:05:19 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_free_data(t_data *data)
 		ft_free_parser(data->cmd);
 		data->cmd = NULL;
 	}
+	ft_delete_here_doc(data);
 
 }
 
@@ -46,8 +47,6 @@ void	ft_free_lexer(t_lexer *lexer)
 			free(tmp->token);
 		free(tmp);
 	}
-
-	// printf("lexer freed\n");
 }
 
 void	ft_free_parser(t_cmd *cmd)
@@ -72,18 +71,29 @@ void	ft_free_parser(t_cmd *cmd)
 		}
 		if (cmd->cmd_arg)
 			free(cmd->cmd_arg);
-		if (cmd->in)
-			free(cmd->in);
-		if (cmd->out)
-			free(cmd->out);
-		if (cmd->heredoc_delim)
-			free(cmd->heredoc_delim);
-		if (cmd->tokens)
-			free(cmd->tokens);
+		if (cmd->redir)
+			ft_free_redir(cmd->redir);
 		free(cmd);
 		cmd = tmp;
 	}
-	// printf("parser freed\n");
+}
+
+void	ft_free_redir(t_redir *redir)
+{
+	t_redir	*tmp;
+
+	while (redir)
+	{
+		tmp = redir->next;
+		if (redir->in)
+			free(redir->in);
+		if (redir->out)
+			free(redir->out);
+		if (redir->heredoc_delim)
+			free(redir->heredoc_delim);
+		free(redir);
+		redir = tmp;
+	}
 }
 
 //should only be used in case of exit or error
@@ -100,3 +110,11 @@ void	ft_free_env(t_env *env)
 		env = tmp;
 	}
 }
+
+// check if heredocs were used and delete the temporary files
+void	ft_delete_here_doc(t_data *data)
+{
+	printf("deleting heredocs\n");
+	(void)data;
+}
+

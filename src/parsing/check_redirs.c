@@ -3,38 +3,82 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:34:41 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/03 18:04:39 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/16 16:07:00 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// check for input and output redirections and store them in the cmd
+// iterate to the last redir struct in the linked list
+// check for input and output redirections and store them in redir struct
+// which is part of the cmd struct
 // remove redirections from the token array by replacing them with empty strings
 int	ft_store_redirection(t_cmd *cmd, int i)
 {
+	t_redir	*tmp;
+
+	tmp = cmd->redir;
+	while (tmp->next)
+		tmp = tmp->next;
 	if (!cmd->tokens[i + 1])
 		return (0);
 	if (ft_strncmp(cmd->tokens[i], "REDIR_HEREDOC", 13) == 0)
 	{
-		cmd->heredoc = 1;
-		cmd->heredoc_delim = ft_strdup(cmd->tokens[i + 1], cmd->data);
+		tmp->heredoc = 1;
+		tmp->heredoc_delim = ft_strdup(cmd->tokens[i + 1], cmd->data);
 	}
 	else if (ft_strncmp(cmd->tokens[i], "REDIR_IN", 8) == 0)
-		cmd->in = ft_strdup(cmd->tokens[i + 1], cmd->data);
+		tmp->in = ft_strdup(cmd->tokens[i + 1], cmd->data);
 	else
-		cmd->out = ft_strdup(cmd->tokens[i + 1], cmd->data);
+		tmp->out = ft_strdup(cmd->tokens[i + 1], cmd->data);
 	if (ft_strncmp(cmd->tokens[i], "REDIR_APPEND", 12) == 0)
-		cmd->append = 1;
+		tmp->append = 1;
 	cmd->tokens[i + 1] = ft_strdup("", cmd->data);
 	cmd->tokens[i] = ft_strdup("", cmd->data);
 	return (1);
 }
 
-// check for redirections and store in the cmd:
+// if !cmd->redir, initialize redir struct
+// else, add a new redir struct to the linked list
+// return the new redir struct
+t_redir	*ft_init_redir(t_cmd *cmd)
+{
+	t_redir	*new;
+	t_redir	*tmp;
+
+	if (!cmd->redir)
+	{
+		cmd->redir = ft_malloc(sizeof(t_redir), cmd->data);
+		cmd->redir->in = NULL;
+		cmd->redir->out = NULL;
+		cmd->redir->heredoc = 0;
+		cmd->redir->heredoc_delim = NULL;
+		cmd->redir->append = 0;
+		cmd->redir->next = NULL;
+		return (cmd->redir);
+	}
+	else
+	{
+		tmp = cmd->redir;
+		while (tmp->next)
+			tmp = tmp->next;
+		new = ft_malloc(sizeof(t_redir), cmd->data);
+		new->in = NULL;
+		new->out = NULL;
+		new->heredoc = 0;
+		new->heredoc_delim = NULL;
+		new->append = 0;
+		new->next = NULL;
+		tmp->next = new;
+		return (new);
+	}
+}
+
+
+// check for redirections and store in the redir struct
 // save anything else in cmd_arg for execution
 char	**ft_check_redirections(t_cmd *cmd)
 {
@@ -48,6 +92,7 @@ char	**ft_check_redirections(t_cmd *cmd)
 	{
 		if (ft_strncmp(cmd->tokens[i], "REDIR", 5) == 0)
 		{
+			ft_init_redir(cmd);
 			if (ft_store_redirection(cmd, i) == 0)
 				return (NULL);
 			redir_count += 2;

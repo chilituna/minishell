@@ -23,10 +23,20 @@ void	ft_print_cmd(t_cmd *cmd)
 		printf("%s\n", cmd->cmd_arg[i]);
 		i++;
 	}
-	if (cmd->in)
-		printf(BLUE3 "IN: %s\n" RESET, cmd->in);
-	if (cmd->out)
-		printf(BLUE3 "OUT: %s\n" RESET, cmd->out);
+	while (cmd->redir)
+	{
+		if (cmd->redir->in)
+			printf("redir_in: %s\n", cmd->redir->in);
+		if (cmd->redir->out)
+			printf("redir_out: %s\n", cmd->redir->out);
+		if (cmd->redir->append)
+			printf("redir will be appended\n");
+		if (cmd->redir->heredoc)
+			printf("heredoc\n");
+		if (cmd->redir->heredoc_delim)
+			printf("heredoc_delim: %s\n", cmd->redir->heredoc_delim);
+		cmd->redir = cmd->redir->next;
+	}
 }
 
 void	ft_print_env(t_env *env)
@@ -124,6 +134,13 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
+				// return (1);
+			// t_cmd	*tmp = data->cmd;
+			// while (tmp)
+			// {
+			// 	ft_print_cmd(tmp);
+			// 	tmp = tmp->next;
+			// }
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);

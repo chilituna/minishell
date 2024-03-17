@@ -42,6 +42,10 @@
 # define BLUE3 "\033[0;36m"
 # define RESET "\033[0m"
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 50
+# endif
+
 //STRUCTS
 
 // Prototype for the main data
@@ -61,15 +65,26 @@ typedef struct s_lexer
 	t_data			*data;
 }	t_lexer;
 
+// Linked list for redirs:
+// index of the redirection
+// type of redirection
+// name of the file
+typedef struct s_redir
+{
+	char			*in;
+	char			*out;
+	int				append;
+	int				heredoc;
+	char			*heredoc_delim;
+	struct s_redir	*next;
+}	t_redir;
+
 // Command list to store command groups from parser:
 // index / total number of commands
 // list of tokens from lexer
 // command name and flags in cmd_arg
 // path to the command
-// input and output redirections
-// append flag
-// heredoc flag
-// heredoc delimiter
+// pointer to redir list
 // function pointer to the corresponding builtin
 typedef struct s_cmd
 {
@@ -77,11 +92,7 @@ typedef struct s_cmd
 	char			**tokens;
 	char			**cmd_arg;
 	char			*path;
-	char			*in;
-	char			*out;
-	int				append;
-	int				heredoc;
-	char			*heredoc_delim;
+	t_redir			*redir;
 	int				env_len;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
@@ -136,6 +147,8 @@ void	ft_free_data(t_data *data);
 void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
 void	ft_free_env(t_env *env);
+void	ft_free_redir(t_redir *redir);
+void	ft_delete_here_doc(t_data *data);
 
 //check quotes
 int		ft_check_quotes(char *input);
@@ -167,7 +180,7 @@ t_env	*ft_search_env_var(t_env *env, char *name);
 t_env	*ft_create_env(char *name, char *value);
 void	ft_add_var_back(t_env *env, t_env *new_env);
 void	ft_delete_env_var(t_env *env, char *name);
-
+char	*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -197,6 +210,10 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 void	ft_expand_env(t_cmd *cmd, t_data *data);
 void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
 char	*ft_get_env_var(char *var, t_data *data);
+
+//here_doc
+void	ft_check_here_doc(t_cmd *cmd);
+void	ft_heredoc(t_redir *redir, t_data *data);
 
 //builtins
 int		ft_echo(t_cmd *cmds);
