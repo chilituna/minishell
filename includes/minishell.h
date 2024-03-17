@@ -181,6 +181,7 @@ t_env	*ft_create_env(char *name, char *value);
 void	ft_add_var_back(t_env *env, t_env *new_env);
 void	ft_delete_env_var(t_env *env, char *name);
 char	*get_next_line(int fd, t_data *data);
+int		ft_all_capitals(char *name);
 t_env	*ft_lstnew(char *content, char *value);
 t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
