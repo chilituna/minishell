@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 23:32:24 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 12:14:50 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	ft_print_env(t_env *env);
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 void	ft_init_data(char **envp, t_data *data);
-t_env	*ft_get_env(char **envp, t_data *data);
+void	ft_copy_env(char **envp, t_data *data);
 
 //signals
 void	ft_signals_interactive(void);
@@ -181,6 +181,9 @@ t_env	*ft_create_env(char *name, char *value);
 void	ft_add_var_back(t_env *env, t_env *new_env);
 void	ft_delete_env_var(t_env *env, char *name);
 char	*get_next_line(int fd, t_data *data);
+t_env	*ft_lstnew(char *content, char *value);
+t_env	*ft_lstlast(t_env *lst);
+void	ft_lstadd_back(t_env **lst, t_env *new);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);

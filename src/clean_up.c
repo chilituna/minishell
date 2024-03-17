@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 19:05:19 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 11:37:00 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	ft_free_env(t_env *env)
 // check if heredocs were used and delete the temporary files
 void	ft_delete_here_doc(t_data *data)
 {
-	printf("deleting heredocs\n");
+	//printf("deleting heredocs\n");
 	(void)data;
 }
 
