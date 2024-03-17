@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_3.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:16:58 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 14:47:38 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/16 18:46:31 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,15 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data)
 	}
 }
 
-t_env	*ft_create_env(char *str)
+t_env	*ft_create_env(char *name, char *value)
 {
 	t_env	*node;
 
 	node = (t_env *)malloc(sizeof(t_env));
 	if (!node)
 		return (NULL);
-	node->var = str;
+	node->var = name;
+	node->value = value;
 	node->next = NULL;
 	return (node);
 }

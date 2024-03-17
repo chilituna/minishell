@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 12:04:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/14 15:50:17 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/16 23:40:00 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ int	(*ft_get_builtin(char *cmd))(t_cmd *cmd)
 		return (ft_cd);
 	else if (ft_strncmp(cmd, "pwd", 3) == 0)
 		return (ft_pwd);
-	//else if (ft_strncmp(cmd, "export", 6) == 0)
-	//	return (ft_export);
-	// else if (ft_strncmp(cmd, "unset", 5) == 0)
-	// 	return (ft_unset);
+	else if (ft_strncmp(cmd, "export", 6) == 0)
+		return (ft_export);
+	else if (ft_strncmp(cmd, "unset", 5) == 0)
+		return (ft_unset);
 	else if (ft_strncmp(cmd, "env", 3) == 0)
 		return (ft_env);
 	else if (ft_strncmp(cmd, "exit", 4) == 0)

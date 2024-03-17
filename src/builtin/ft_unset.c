@@ -1,30 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/11 22:06:01 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/16 22:27:23 by lperez-h         ###   ########.fr       */
+/*   Created: 2024/03/16 18:47:04 by lperez-h          #+#    #+#             */
+/*   Updated: 2024/03/16 23:41:50 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_env(t_cmd *cmds)
+//this function unset several variables at the time
+//will check for variable name and will delete when it found it
+int	ft_unset(t_cmd *cmds)
 {
 	t_env	*tmp;
+	int		i;
 
 	tmp = cmds->data->env;
-	while (tmp->next != NULL)
+	if (cmds->cmd_arg[1])
 	{
-		ft_putstr_fd(tmp->var, STDOUT_FILENO);
-		ft_putchar_fd('=', STDOUT_FILENO);
-		ft_putstr_fd(tmp->value, STDOUT_FILENO);
-		ft_putchar_fd('\n', STDOUT_FILENO);
-		tmp = tmp->next;
+		i = 0;
+		while(cmds->cmd_arg[i])
+		{
+			tmp = ft_search_env_var(cmds->data->env, cmds->cmd_arg[i]);
+			if(tmp == NULL)//not found the variable
+				return (1);
+			else//variable is found
+				ft_delete_env_var(cmds->data->env, tmp->var);
+			i++;
+		}
 	}
 	cmds->data->exit_status = 0;
-	return (0);
+	return(0);
 }
