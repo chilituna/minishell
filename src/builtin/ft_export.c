@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 16:54:25 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 17:20:17 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*ft_check_input(char *str, t_data *data)
 		i++;
 	}
 	if (!name)
-		name = str;
+		name = ft_strdup(str, data);
 	j = 0;
 	while (name[j] != '\0')
 	{
@@ -90,7 +90,10 @@ int	ft_export(t_cmd *cmds)
 
 	tmp = cmds->data->env;
 	if (!(cmds->cmd_arg[1]))//if export is called without arguments
+	{
 		ft_print_export(cmds);
+		return (0);
+	}
 	name = ft_check_input(cmds->cmd_arg[1], cmds->data);
 	if (name == NULL)
 	{
@@ -102,7 +105,10 @@ int	ft_export(t_cmd *cmds)
 	{
 		input = ft_split(cmds->cmd_arg[1], '=');
 		name = ft_strdup(input[0], cmds->data);
-		value = ft_strdup(input[1], cmds->data);
+		if (input[1] == NULL)
+			value = NULL;
+		else
+			value = ft_strdup(input[1], cmds->data);
 		tmp = ft_search_env_var(cmds->data->env, name);
 		if (tmp == NULL)//not found and must be created
 		{
