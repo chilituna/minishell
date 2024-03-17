@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 16:56:19 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:57:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,9 @@ void	ft_print_cmd(t_cmd *cmd)
 			printf("redir will be appended\n");
 		if (cmd->redir->heredoc)
 			printf("heredoc\n");
-		if (cmd->redir->heredoc_delim)
-			printf("heredoc_delim: %s\n", cmd->redir->heredoc_delim);
+		if (cmd->redir->delim)
+			printf("heredoc_delim: %s\n", cmd->redir->delim);
 		cmd->redir = cmd->redir->next;
-	}
-}
-
-void	ft_print_env(t_env *env)
-{
-	t_env	*tmp;
-
-	tmp = env;
-	while (tmp)
-	{
-		printf("%s=", tmp->var);
-		printf("%s\n", tmp->value);
-		tmp = tmp->next;
 	}
 }
 
@@ -62,11 +49,9 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	// ft_print_banner();
-	// ft_print_env(data->env);
 }
 
-//create a linked list to store env variables:
-
+//create a linked list to store env variables
 void	ft_copy_env(char **envp, t_data *data)
 {
 	int		i;
@@ -126,13 +111,6 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
-				// return (1);
-			// t_cmd	*tmp = data->cmd;
-			// while (tmp)
-			// {
-			// 	ft_print_cmd(tmp);
-			// 	tmp = tmp->next;
-			// }
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);

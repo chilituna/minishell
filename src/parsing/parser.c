@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 15:03:55 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:47:01 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 // group nodes together based on tokens:
 // each group becomes command
 // first loop through lexer until a pipe is found
 // take all nodes before pipe and group them together in a cmd node
 // if no (further) pipes are found, take all nodes until the end of the list
-
 
 // calculate how many pipes are in the input
 // return the number of pipes + 1,
@@ -91,7 +89,6 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 	return (cmd);
 }
 
-
 // copy all lexer nodes before a pipe in the command node 2D array (tokens)
 // continue until the end of the list
 // remove the nodes from the lexer
@@ -146,6 +143,3 @@ int	ft_count_tokens(t_lexer *lexer)
 	}
 	return (i);
 }
-
-
-

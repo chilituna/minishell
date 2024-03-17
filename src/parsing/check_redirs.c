@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:34:41 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/16 16:07:00 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:44:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_store_redirection(t_cmd *cmd, int i)
 	if (ft_strncmp(cmd->tokens[i], "REDIR_HEREDOC", 13) == 0)
 	{
 		tmp->heredoc = 1;
-		tmp->heredoc_delim = ft_strdup(cmd->tokens[i + 1], cmd->data);
+		tmp->delim = ft_strdup(cmd->tokens[i + 1], cmd->data);
 	}
 	else if (ft_strncmp(cmd->tokens[i], "REDIR_IN", 8) == 0)
 		tmp->in = ft_strdup(cmd->tokens[i + 1], cmd->data);
@@ -41,6 +41,18 @@ int	ft_store_redirection(t_cmd *cmd, int i)
 	return (1);
 }
 
+t_redir	*ft_init_first_redir(t_cmd *cmd)
+{
+	cmd->redir = ft_malloc(sizeof(t_redir), cmd->data);
+	cmd->redir->in = NULL;
+	cmd->redir->out = NULL;
+	cmd->redir->heredoc = 0;
+	cmd->redir->delim = NULL;
+	cmd->redir->append = 0;
+	cmd->redir->next = NULL;
+	return (cmd->redir);
+}
+
 // if !cmd->redir, initialize redir struct
 // else, add a new redir struct to the linked list
 // return the new redir struct
@@ -50,16 +62,7 @@ t_redir	*ft_init_redir(t_cmd *cmd)
 	t_redir	*tmp;
 
 	if (!cmd->redir)
-	{
-		cmd->redir = ft_malloc(sizeof(t_redir), cmd->data);
-		cmd->redir->in = NULL;
-		cmd->redir->out = NULL;
-		cmd->redir->heredoc = 0;
-		cmd->redir->heredoc_delim = NULL;
-		cmd->redir->append = 0;
-		cmd->redir->next = NULL;
-		return (cmd->redir);
-	}
+		return (ft_init_first_redir(cmd));
 	else
 	{
 		tmp = cmd->redir;
@@ -69,14 +72,13 @@ t_redir	*ft_init_redir(t_cmd *cmd)
 		new->in = NULL;
 		new->out = NULL;
 		new->heredoc = 0;
-		new->heredoc_delim = NULL;
+		new->delim = NULL;
 		new->append = 0;
 		new->next = NULL;
 		tmp->next = new;
 		return (new);
 	}
 }
-
 
 // check for redirections and store in the redir struct
 // save anything else in cmd_arg for execution
@@ -119,7 +121,6 @@ char	**ft_create_cmd_arg(char **cmd_arg, t_cmd *cmd)
 		}
 		i++;
 	}
-
 	cmd_arg[j] = NULL;
 	return (cmd_arg);
 }

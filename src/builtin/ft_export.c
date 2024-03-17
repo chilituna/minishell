@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 17:20:17 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:42:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//function to print the environment variables present at the moment of execution. Simple export without arguments.
+//function to print the environment variables present at the
+// moment of execution. Simple export without arguments.
 int	ft_print_export(t_cmd *cmds)
 {
 	t_env	*tmp;
@@ -34,7 +35,8 @@ int	ft_print_export(t_cmd *cmds)
 	return (0);
 }
 
-//Function to find the node that contains the specified name of the enviroment variable
+//Function to find the node that contains the specified name
+// of the enviroment variable
 t_env	*ft_find_env_var(t_env *env, char *name)
 {
 	t_env	*tmp;
@@ -79,8 +81,9 @@ char	*ft_check_input(char *str, t_data *data)
 	return (name);
 }
 
-
 //creation of new variables and assign of values. This is the actual function
+//if export is called without arguments, it will print the environment variables
+//not found and must be created
 int	ft_export(t_cmd *cmds)
 {
 	char	**input;
@@ -89,7 +92,7 @@ int	ft_export(t_cmd *cmds)
 	t_env	*tmp;
 
 	tmp = cmds->data->env;
-	if (!(cmds->cmd_arg[1]))//if export is called without arguments
+	if (!(cmds->cmd_arg[1]))
 	{
 		ft_print_export(cmds);
 		return (0);
@@ -110,7 +113,7 @@ int	ft_export(t_cmd *cmds)
 		else
 			value = ft_strdup(input[1], cmds->data);
 		tmp = ft_search_env_var(cmds->data->env, name);
-		if (tmp == NULL)//not found and must be created
+		if (tmp == NULL)
 		{
 			tmp = ft_create_env(name, value);
 			ft_add_var_back(cmds->data->env, tmp);

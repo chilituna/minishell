@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 14:16:58 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 15:18:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:46:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,47 +43,19 @@ int	ft_atoi(char *str)
 	return (res * sign);
 }
 
-//function to search a variable by its name and
-//update their value with a new value providen
-void	ft_update_env_var(char *var, char *new_value, t_data *data)
+//function to check that all the letters in a string are capital letters
+//returns 0 if all the letters are upper case, 1 if not.
+int	ft_all_capitals(char *name)
 {
-	int		j;
-	t_env	*tmp;
+	int	i;
 
-	tmp = data->env;
-	while (tmp->next != NULL)
+	i = 0;
+	while (name[i])
 	{
-		j = ft_strlen(tmp->var);
-		if (ft_strncmp(tmp->var, var, j) == 0 && (var[j] == '\0'))//if found var name
-		{
-			free(tmp->value);
-			tmp->value = ft_strdup(new_value, data);
-		}
-		tmp = tmp->next;
+		if (name[i] >= 65 && name[i] <= 90)
+			i++;
+		else
+			return (1);
 	}
-}
-
-t_env	*ft_create_env(char *name, char *value)
-{
-	t_env	*node;
-
-	node = (t_env *)malloc(sizeof(t_env));
-	if (!node)
-		return (NULL);
-	node->var = name;
-	node->value = value;
-	node->next = NULL;
-	return (node);
-}
-
-void	ft_add_var_back(t_env *env, t_env *new_env)
-{
-	t_env	*tmp;
-
-	if (env == NULL && new_env == NULL)
-		return ;
-	tmp = env;
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = new_env;
+	return (0);
 }

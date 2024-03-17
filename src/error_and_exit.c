@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 12:31:30 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 17:47:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// if readline is NULL, there was error with readline function
-// or the user typed Ctrl+D to signal end-of-file (EOF).
+// if readline is NULL, there was error with readline function.
+// or the user typed Ctrl+D to exit minishell.
 // if readline history exists, it is freed.
 void	ft_error_and_exit(char *str, t_data *data)
 {
@@ -29,7 +29,7 @@ void	ft_error_and_exit(char *str, t_data *data)
 	exit(1);
 }
 
-// error for incorrect number of arguments
+// error for incorrect number of arguments when launching the program
 void	ft_error_minishell(char *str)
 {
 	printf(RED "ERROR: %s\n" RESET, str);
