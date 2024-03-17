@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 15:43:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 16:56:19 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,5 +138,5 @@ int	main(int argc, char **argv, char **envp)
 		ft_free_data(data);
 	}
 	free(data);
-	return (0);
+	return (data->exit_status);
 }
