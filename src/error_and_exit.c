@@ -6,7 +6,7 @@
 /*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 14:29:27 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 12:31:30 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	ft_exit_minishell(t_data *data)
 	if (data->env)
 		ft_free_env(data->env);
 	free(data);
-	exit(0);
+	exit(data->exit_status);
 }

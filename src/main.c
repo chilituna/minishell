@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 12:14:57 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 14:09:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ int	main(int argc, char **argv, char **envp)
 		if (!data->prompt)
 			ft_error_and_exit("Exiting minishell", data);
 		ft_signals_running();
-		if (data->prompt[0] != '\0')
-			add_history(data->prompt);
+		if (data->prompt[0] == '\0')
+			continue ;
+		add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
 			data->lexer = ft_lexer(data->prompt, data);
