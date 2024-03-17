@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 13:20:11 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 14:18:01 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_export(t_cmd *cmds)
 		ft_print_export(cmds);
 	else if (ft_check_input(cmds->cmd_arg[1], cmds->data) == 1)
 	{
-		ft_putstr_fd("( Not a valid identifier)", STDERR_FILENO);
+		ft_putstr_fd(" not a valid identifier", STDERR_FILENO);
 		cmds->data->exit_status = 1;
 		return (1);
 	}
