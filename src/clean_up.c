@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 13:37:18 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:33:23 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ft_free_data(t_data *data)
 		data->cmd = NULL;
 	}
 	ft_delete_here_doc(data);
-
 }
 
 void	ft_free_lexer(t_lexer *lexer)
@@ -89,8 +88,8 @@ void	ft_free_redir(t_redir *redir)
 			free(redir->in);
 		if (redir->out)
 			free(redir->out);
-		if (redir->heredoc_delim)
-			free(redir->heredoc_delim);
+		if (redir->delim)
+			free(redir->delim);
 		free(redir);
 		redir = tmp;
 	}
@@ -110,11 +109,3 @@ void	ft_free_env(t_env *env)
 		env = tmp;
 	}
 }
-
-// check if heredocs were used and delete the temporary files
-void	ft_delete_here_doc(t_data *data)
-{
-	//printf("deleting heredocs\n");
-	(void)data;
-}
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/16 18:27:41 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:18:27 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_heredoc(t_redir *redir, t_data *data)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO, data);
-		if (!ft_strncmp(line, redir->heredoc_delim, ft_strlen(redir->heredoc_delim)))
+		if (!ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))
 		{
 			free(line);
 			break ;
@@ -66,4 +66,10 @@ void	ft_check_here_doc(t_cmd *cmd)
 			ft_heredoc(redir, cmd->data);
 		redir = redir->next;
 	}
+}
+
+// check if heredocs were used and delete the temporary files
+void	ft_delete_here_doc(t_data *data)
+{
+	(void)data;
 }
