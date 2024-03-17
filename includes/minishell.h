@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 14:05:46 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:26:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 void	ft_expand_env(t_cmd *cmd, t_data *data);
 void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
 char	*ft_get_env_var(char *var, t_data *data);
+t_env	*ft_find_env_var(t_env *env, char *name);
 
 //here_doc
 void	ft_check_here_doc(t_cmd *cmd);

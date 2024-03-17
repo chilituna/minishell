@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 14:18:01 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 15:41:49 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ int	ft_print_export(t_cmd *cmds)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
 		ft_putstr_fd(tmp->var, STDOUT_FILENO);
-		ft_putchar_fd('=', STDOUT_FILENO);
-		ft_putstr_fd(tmp->value, STDOUT_FILENO);
+		if (tmp->value)
+		{
+			ft_putchar_fd('=', STDOUT_FILENO);
+			ft_putstr_fd(tmp->value, STDOUT_FILENO);
+		}
 		write(STDOUT_FILENO, "\n", 1);
 		tmp = tmp->next;
 	}
