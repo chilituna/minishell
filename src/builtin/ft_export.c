@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/16 18:32:49 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:20:11 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,29 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
+int	ft_check_input(char *str, t_data *data)
+{
+	int		i;
+	char	*name;
+	char	*value;
+	char	**input;
+
+	i = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '=')
+		{
+			input = ft_split(str, '=');
+			name = ft_strdup(input[0], data);
+			value = ft_strdup(input[1], data);
+			if (ft_all_capitals(name) == 0)
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 
 //creation of new variables and assign of values. This is the actual function
 int	ft_export(t_cmd *cmds)
@@ -60,7 +83,13 @@ int	ft_export(t_cmd *cmds)
 	tmp = cmds->data->env;
 	if (!(cmds->cmd_arg[1]))//if export is called without arguments
 		ft_print_export(cmds);
-	else//export is called with arguments (var name)
+	else if (ft_check_input(cmds->cmd_arg[1], cmds->data) == 1)
+	{
+		ft_putstr_fd("( Not a valid identifier)", STDERR_FILENO);
+		cmds->data->exit_status = 1;
+		return (1);
+	}
+	else
 	{
 		input = ft_split(cmds->cmd_arg[1], '=');
 		name = ft_strdup(input[0], cmds->data);
@@ -75,5 +104,5 @@ int	ft_export(t_cmd *cmds)
 			ft_update_env_var(name, value, cmds->data);
 	}
 	cmds->data->exit_status = 0;
-	return(0);
+	return (0);
 }

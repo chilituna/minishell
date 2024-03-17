@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/14 15:52:44 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 12:25:49 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,15 @@ int	ft_echo(t_cmd *cmds)
 
 	i = 1;//init at 1 to skip program name
 	flag = 1;//init as false
-	if(!(cmds->cmd_arg[1]))//if there are no arguments to cd print a new line and return prompt to user
+	if (!(cmds->cmd_arg[1]))//if there are no arguments to cd print a new line and return prompt to user
 	{
 		write(1, "\n", 1);
 		return (0);
+	}
+	else if ((cmds->cmd_arg[i][0] == '-') && (cmds->cmd_arg[i][1] == 'n') && !(cmds->cmd_arg[i][2]))
+	{
+		cmds->data->exit_status = 0;
+		return (EXIT_SUCCESS);
 	}
 	while ((cmds->cmd_arg[i][0] != '\0') && (cmds->cmd_arg[i][0] == '-') && (cmds->cmd_arg[i][1] == 'n'))//check for flag -n
 	{
