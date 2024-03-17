@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:06:01 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/16 22:27:23 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/17 12:20:32 by aarpo e          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	ft_env(t_cmd *cmds)
 	t_env	*tmp;
 
 	tmp = cmds->data->env;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		ft_putstr_fd(tmp->var, STDOUT_FILENO);
 		ft_putchar_fd('=', STDOUT_FILENO);
