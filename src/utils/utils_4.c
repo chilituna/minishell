@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:42:52 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/17 13:07:24 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:25:28 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,20 @@ int	ft_all_capitals(char *name)
 			return (1);
 	}
 	return (0);
+}
+
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (size == 0)
+		return (ft_strlen(src));
+	while ((i < size - 1) && (src[i] != '\0'))
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return(ft_strlen(src));
 }

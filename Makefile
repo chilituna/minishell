@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/17 13:08:28 by lperez-h         ###   ########.fr        #
+#    Updated: 2024/03/19 21:26:12 by lperez-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	utils/utils.c utils/utils_2.c utils/ft_split.c  utils/utils_3.c utils/ft_itoa.c utils/utils_4.c\
 	utils/get_next_line.c utils/utils_lst.c \
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c builtin/ft_export.c builtin/ft_unset.c \
-	exec/executor.c exec/heredoc.c
+	exec/executor.c exec/heredoc.c exec/ft_get_path.c 
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 

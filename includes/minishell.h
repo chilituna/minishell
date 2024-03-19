@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 16:42:21 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:25:09 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ t_env	*ft_lstnew(char *content, char *value);
 t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 char	*ft_check_input(char *str, t_data *data);
+size_t	ft_strlcpy(char *dest, char *src, size_t size);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -237,6 +238,8 @@ int		ft_unset(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);
+char	*ft_find_cmd_path(t_cmd *cmds, t_data *data);
+char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 
 #endif
 
