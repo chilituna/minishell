@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/20 16:16:24 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:30:21 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_heredoc_expand(char *line, t_data *data)
 			while (ft_isalnum(line[i]) || line[i] == '_' || line[i] == '?')
 				i++;
 			end_line = ft_substr(line, i, ft_strlen(line) - i, data);
-			env = ft_get_env_var(ft_substr(line, start, i - start, data), data);
+			env = ft_getenv(ft_substr(line, start, i - start, data), data);
 			expanded_line = ft_strjoin(expanded_line, env, data);
 			expanded_line = ft_strjoin(expanded_line, end_line, data);
 			ft_freeall(line, end_line, env);

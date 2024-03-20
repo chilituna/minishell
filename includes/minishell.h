@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 18:11:29 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 20:28:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,8 +224,10 @@ int				(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 
 //expander
 void			ft_expand_env(t_cmd *cmd, t_data *data);
-void			ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
-char			*ft_get_env_var(char *name, t_data *data);
+int				ft_skip_quotes(t_cmd *cmd, int i, int j);
+int				ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data);
+int				ft_expand_env_var(t_cmd *cmd, int i, int j, t_data *data);
+char			*ft_getenv(char *var, t_data *data);
 
 //builtins
 int				ft_cd(t_cmd *cmds);
