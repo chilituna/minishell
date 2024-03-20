@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 13:58:39 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:30:24 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	ft_free_parser(t_cmd *cmd)
 			free(cmd->tokens[i]);
 			i++;
 		}
+		if (cmd->tokens)
+			free(cmd->tokens);
 		i = 0;
 		while (cmd->cmd_arg[i])
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 17:47:33 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:12:23 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ void	ft_error_minishell(char *str)
 // exit minishell
 void	ft_exit_minishell(t_data *data)
 {
+	int	exit_status;
+
 	if (history_length > 0)
 		rl_clear_history();
 	if (data)
 		ft_free_data(data);
 	if (data->env)
 		ft_free_env(data->env);
+	exit_status = data->exit_status;
 	free(data);
-	exit(data->exit_status);
+	exit(exit_status);
 }

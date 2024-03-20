@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 21:48:56 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/21 00:10:13 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ int	ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data)
 	char	*beginnig_tmp;
 	char	*exit_status;
 	char	*end_tmp;
+	int		new_index;
 
 	beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
 	exit_status = ft_itoa(data->exit_status);
+	new_index = j + ft_strlen(exit_status);
 	end_tmp = ft_substr(cmd->cmd_arg[i], j + 2,
 			ft_strlen(cmd->cmd_arg[i]) - j - 2, data);
 	free(cmd->cmd_arg[i]);
@@ -80,32 +82,36 @@ int	ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data)
 	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end_tmp, data);
 	free(beginnig_tmp);
 	free(end_tmp);
-	return (2);
+	return (new_index);
 }
 
 int	ft_expand_env_var(t_cmd *cmd, int i, int j, t_data *data)
 {
 	char	*beginnig_tmp;
+	char	*env_str;
 	char	*env;
-	char	*end_tmp;
+	char	*end;
 	int		k;
+
 
 	beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
 	k = j + 1;
 	while (ft_isalnum(cmd->cmd_arg[i][k]) || cmd->cmd_arg[i][k] == '_')
 		k++;
-	env = ft_getenv(ft_substr(cmd->cmd_arg[i], j + 1, k - j - 1, data), data);
-	end_tmp = ft_substr(cmd->cmd_arg[i], k,
-			ft_strlen(cmd->cmd_arg[i]) - k, data);
+	env_str = ft_substr(cmd->cmd_arg[i], j + 1, k - j - 1, data);
+	env = ft_getenv(env_str, data);
+	free(env_str);
+	end = ft_substr(cmd->cmd_arg[i], k, ft_strlen(cmd->cmd_arg[i]) - k, data);
 	free(cmd->cmd_arg[i]);
 	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, env, data);
+	k = j + ft_strlen(env);
 	free(beginnig_tmp);
 	free(env);
 	beginnig_tmp = cmd->cmd_arg[i];
-	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end_tmp, data);
+	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end, data);
 	free(beginnig_tmp);
-	free(end_tmp);
-	return (k - 1);
+	free(end);
+	return (k);
 }
 
 // get environment variable from data->env
@@ -126,11 +132,9 @@ char	*ft_getenv(char *var, t_data *data)
 		if (ft_strncmp(tmp->var, var, j) == 0 && var[j] == '\0')
 		{
 			env_var = ft_strdup(tmp->value, data);
-			free(var);
 			return (env_var);
 		}
 		tmp = tmp->next;
 	}
-	free(var);
 	return (ft_strdup("", data));
 }

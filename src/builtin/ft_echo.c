@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/17 18:40:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:21:40 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,14 @@ void	ft_put_line(int n, char **str, int out)
 {
 	while (str[n])
 	{
-		ft_putstr_fd(str[n++], out);
-		if (str[n])
-			ft_putchar_fd(' ', out);
+		if (str[n][0] != '\0')
+		{
+			ft_putstr_fd(str[n], out);
+			if (str[++n])
+				ft_putchar_fd(' ', out);
+		}
+		else
+			n++;
 	}
 }
 
