@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/19 18:12:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:30:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,23 +159,24 @@ void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd);
 void	ft_process_quotes(char **arg, t_cmd *cmd);
 
 //utils
-size_t	ft_strlen(const char *str);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *str, int fd);
+void	*ft_malloc(size_t size, t_data *data);
+//utils_str1
+size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s, t_data *data);
-//utils_2
-char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data);
-int		ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
-void	*ft_malloc(size_t size, t_data *data);
+char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data);
+//utils_str2
 char	*ft_strjoin(const char *s1, const char *s2, t_data *data);
-//utils_3
+int		ft_atoi(char *str);
+unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
+//utils_check
+int		ft_isspace(int c);
 int		ft_isalnum(int c);
 int		ft_all_capitals(char *name);
-int		ft_atoi(char *str);
-void	ft_update_env_var(char *var, char *new_value, t_data *data);
-//utils_4
+//utils_env
 t_env	*ft_search_env_var(t_env *env, char *name);
 t_env	*ft_create_env(char *name, char *value);
 void	ft_add_var_back(t_env *env, t_env *new_env);
@@ -186,7 +187,6 @@ t_env	*ft_lstnew(char *content, char *value);
 t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 char	*ft_check_input(char *str, t_data *data);
-size_t	ft_strlcpy(char *dest, char *src, size_t size);
 //other utils
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);

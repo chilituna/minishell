@@ -1,23 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_3.c                                          :+:      :+:    :+:   */
+/*   utils_str2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/03 14:16:58 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:46:51 by aarponen         ###   ########.fr       */
+/*   Created: 2024/03/20 14:14:00 by aarponen          #+#    #+#             */
+/*   Updated: 2024/03/20 14:29:34 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_isalnum(int c)
+char	*ft_strjoin(const char *s1, const char *s2, t_data *data)
 {
-	if ((c >= 48 && c <= 57) || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (1);
-	else
-		return (0);
+	char	*str;
+	size_t	len;
+	int		i;
+	int		j;
+
+	len = ft_strlen(s1) + ft_strlen(s2);
+	str = ft_malloc(sizeof(char) * (len + 1), data);
+	i = 0;
+	while (s1[i])
+	{
+		str[i] = s1[i];
+		i++;
+	}
+	j = 0;
+	while (s2[j])
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	str[i + j] = '\0';
+	return (str);
 }
 
 int	ft_atoi(char *str)
@@ -41,21 +58,4 @@ int	ft_atoi(char *str)
 		str++;
 	}
 	return (res * sign);
-}
-
-//function to check that all the letters in a string are capital letters
-//returns 0 if all the letters are upper case, 1 if not.
-int	ft_all_capitals(char *name)
-{
-	int	i;
-
-	i = 0;
-	while (name[i])
-	{
-		if (name[i] >= 65 && name[i] <= 90)
-			i++;
-		else
-			return (1);
-	}
-	return (0);
 }

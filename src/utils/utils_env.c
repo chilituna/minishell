@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_4.c                                          :+:      :+:    :+:   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 12:42:52 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/19 21:25:28 by lperez-h         ###   ########.fr       */
+/*   Created: 2024/03/20 14:21:27 by aarponen          #+#    #+#             */
+/*   Updated: 2024/03/20 14:22:03 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,3 @@ void	ft_delete_env_var(t_env *env, char *name)
 	}
 }
 
-size_t	ft_strlcpy(char *dest, char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size == 0)
-		return (ft_strlen(src));
-	while ((i < size - 1) && (src[i] != '\0'))
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return(ft_strlen(src));
-}

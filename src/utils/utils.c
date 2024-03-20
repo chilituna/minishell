@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:46:07 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:25:03 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-size_t	ft_strlen(const char *str)
-{
-	int	x;
-
-	x = 0;
-	while (str[x])
-		x++;
-	return (x);
-}
 
 void	ft_putchar_fd(char c, int fd)
 {
@@ -36,34 +26,15 @@ void	ft_putstr_fd(char *str, int fd)
 	}
 }
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+// malloc with error check
+void	*ft_malloc(size_t size, t_data *data)
 {
-	unsigned int	c;
+	void	*ptr;
 
-	c = 0;
-	while (s1[c] == s2[c] && s1[c] && s2[c] && c < n)
-		c++;
-	if (c == n)
-		return (0);
-	return ((unsigned char)s1[c] - (unsigned char)s2[c]);
+	ptr = malloc(size);
+	if (ptr == NULL)
+		ft_error_and_exit("malloc failed", data);
+	return (ptr);
 }
 
-char	*ft_strdup(const char *s, t_data *data)
-{
-	char		*new_s;
-	size_t		len;
-	size_t		i;
 
-	len = ft_strlen(s);
-	new_s = ft_malloc((len +1) * sizeof(char), data);
-	if (new_s == NULL)
-		return (NULL);
-	i = 0;
-	while (i < len)
-	{
-		new_s[i] = s[i];
-		i++;
-	}
-	new_s[i] = '\0';
-	return (new_s);
-}
