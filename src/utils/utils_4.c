@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:42:52 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/17 18:01:17 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:25:28 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,20 @@ void	ft_delete_env_var(t_env *env, char *name)
 		}
 		tmp = tmp->next;
 	}
+}
+
+size_t	ft_strlcpy(char *dest, char *src, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (size == 0)
+		return (ft_strlen(src));
+	while ((i < size - 1) && (src[i] != '\0'))
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return(ft_strlen(src));
 }
