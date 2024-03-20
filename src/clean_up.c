@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:33:23 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:58:39 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_free_data(t_data *data)
 		ft_free_parser(data->cmd);
 		data->cmd = NULL;
 	}
-	ft_delete_here_doc(data);
 }
 
 void	ft_free_lexer(t_lexer *lexer)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 18:42:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:59:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ int	ft_print_export(t_cmd *cmds)
 t_env	*ft_find_env_var(t_env *env, char *name)
 {
 	t_env	*tmp;
-	int		i;
 
-	i = 0;
 	tmp = env;
 	while (tmp->next != NULL)
 	{
