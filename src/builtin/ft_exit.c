@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 16:44:23 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/17 18:41:44 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,22 @@ int	ft_exit_code(char *str)
 	return (code);
 }
 
+//check for more than 1 argument
+//check for only numeric values in the arguments
+//check if exit value is greater than 255
+//a value greater than 255 should be truncated by the
+//shell and unavailable even for parent process
 int	ft_exit(t_cmd *cmds)
 {
 	int	nbr;
 
 	nbr = 0;
-	if (cmds->cmd_arg[1] && cmds->cmd_arg[2])//check for more than 1 argument
+	if (cmds->cmd_arg[1] && cmds->cmd_arg[2])
 	{
 		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
 		nbr = 1;
 	}
-	else if (ft_is_num(cmds->cmd_arg[1]) == 0)//check for only numeric values in the arguments
+	else if (ft_is_num(cmds->cmd_arg[1]) == 0)
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(cmds->cmd_arg[1], STDERR_FILENO);
@@ -70,8 +75,8 @@ int	ft_exit(t_cmd *cmds)
 	else if (cmds->cmd_arg[1])
 	{
 		nbr = ft_exit_code(cmds->cmd_arg[1]);
-		if (nbr > 255)//check if exit value is greater than 255
-			nbr = nbr % 256;// a value greater than 255 should be truncated by the shell and unavailable even for parent process
+		if (nbr > 255)
+			nbr = nbr % 256;
 		cmds->data->exit_status = nbr;
 		ft_exit_minishell(cmds->data);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/13 14:21:11 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:32:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,11 @@ void	ft_signals_interactive(void)
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-// ctrl-C: Interrupts the current command and displays a new prompt on a new line.
-// TODO: ctrl-D: In the context of a here document (heredoc), it typically marks the end-of-file (EOF), signaling to the shell that the input is complete.
+// ctrl-C: Interrupts the current command and
+// displays a new prompt on a new line.
+// TODO: ctrl-D: In the context of a here document (heredoc),
+// it typically marks the end-of-file (EOF),
+// signaling to the shell that the input is complete.
 // ctrl-\: Exits the shell abruptly by sending a SIGQUIT signal.
 void	ft_signals_running(void)
 {
@@ -69,5 +72,3 @@ void	ft_signals_running(void)
 	sa_quit.sa_handler = &ft_interrupt;
 	sigaction(SIGQUIT, &sa_quit, NULL);
 }
-
-

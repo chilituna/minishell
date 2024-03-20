@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
 /*   Updated: 2024/03/19 21:25:09 by lperez-h         ###   ########.fr       */
@@ -75,7 +75,7 @@ typedef struct s_redir
 	char			*out;
 	int				append;
 	int				heredoc;
-	char			*heredoc_delim;
+	char			*delim;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -119,13 +119,12 @@ typedef struct s_data
 
 }	t_data;
 
-
 //FUNCTIONS
 
-//just for testing
-void	ft_print_env(t_env *env);
+// just for testing
+void	ft_print_cmd(t_cmd *cmd);
 
-//main.c --> start program, show prompt, loop (TLDR)
+//start program, show prompt, loop (TLDR)
 int		main(int argc, char **argv, char **envp);
 void	ft_print_banner(void);
 void	ft_init_data(char **envp, t_data *data);
@@ -148,7 +147,6 @@ void	ft_free_lexer(t_lexer *lexer);
 void	ft_free_parser(t_cmd *cmd);
 void	ft_free_env(t_env *env);
 void	ft_free_redir(t_redir *redir);
-void	ft_delete_here_doc(t_data *data);
 
 //check quotes
 int		ft_check_quotes(char *input);
@@ -162,31 +160,37 @@ void	ft_process_quotes(char **arg, t_cmd *cmd);
 
 //utils
 size_t	ft_strlen(const char *str);
+void	ft_putchar_fd(char c, int fd);
+void	ft_putstr_fd(char *str, int fd);
 int		ft_strncmp(const char *s1, const char *s2, unsigned int n);
 char	*ft_strdup(const char *s, t_data *data);
+//utils_2
 char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data);
 int		ft_isspace(int c);
 char	*ft_strchr(const char *s, int c);
 void	*ft_malloc(size_t size, t_data *data);
-void	ft_putchar_fd(char c, int fd);
-void	ft_putstr_fd(char *str, int fd);
 char	*ft_strjoin(const char *s1, const char *s2, t_data *data);
-char	**ft_split(char const *s, char c);
+//utils_3
 int		ft_isalnum(int c);
-char	*ft_itoa(int n);
-void	ft_update_env_var(char *var, char *new_value, t_data *data);
+int		ft_all_capitals(char *name);
 int		ft_atoi(char *str);
+void	ft_update_env_var(char *var, char *new_value, t_data *data);
+//utils_4
 t_env	*ft_search_env_var(t_env *env, char *name);
 t_env	*ft_create_env(char *name, char *value);
 void	ft_add_var_back(t_env *env, t_env *new_env);
 void	ft_delete_env_var(t_env *env, char *name);
-char	*get_next_line(int fd, t_data *data);
-int		ft_all_capitals(char *name);
+void	ft_update_env_var(char *var, char *new_value, t_data *data);
+//utils_lst
 t_env	*ft_lstnew(char *content, char *value);
 t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
 char	*ft_check_input(char *str, t_data *data);
 size_t	ft_strlcpy(char *dest, char *src, size_t size);
+//other utils
+char	**ft_split(char const *s, char c);
+char	*ft_itoa(int n);
+char	*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer	*ft_lexer(char *str, t_data *data);
@@ -205,6 +209,8 @@ int		ft_count_tokens(t_lexer *lexer);
 //check commands
 int		ft_check_cmds(t_cmd *cmd);
 //check redirections
+t_redir	*ft_init_redir(t_cmd *cmd);
+t_redir	*ft_init_first_redir(t_cmd *cmd);
 char	**ft_check_redirections(t_cmd *cmd);
 int		ft_store_redirection(t_cmd *cmd, int i);
 char	**ft_create_cmd_arg(char **cmd_arg, t_cmd *cmd);
@@ -216,24 +222,28 @@ int		(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 void	ft_expand_env(t_cmd *cmd, t_data *data);
 void	ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
 char	*ft_get_env_var(char *var, t_data *data);
-t_env	*ft_find_env_var(t_env *env, char *name);
 
 //here_doc
 void	ft_check_here_doc(t_cmd *cmd);
 void	ft_heredoc(t_redir *redir, t_data *data);
+void	ft_delete_here_doc(t_data *data);
+void	ft_delete_here_doc(t_data *data);
 
 //builtins
-int		ft_echo(t_cmd *cmds);
-void	ft_put_line(int n, char **str, int out);
-int		ft_pwd(t_cmd *cmds);
 int		ft_cd(t_cmd *cmds);
 int		ft_change_dir(char *path, t_data *data);
 int		ft_update_pwd(char *var, t_data *data);
+int		ft_echo(t_cmd *cmds);
+void	ft_put_line(int n, char **str, int out);
+int		ft_pwd(t_cmd *cmds);
+int		ft_env(t_cmd *cmds);
+int		ft_exit(t_cmd *cmds);
 int		ft_is_num(const char *str);
 int		ft_exit_code(char *str);
-int		ft_exit(t_cmd *cmds);
-int		ft_env(t_cmd *cmds);
 int		ft_export(t_cmd *cmds);
+char	*ft_check_input(char *str, t_data *data);
+t_env	*ft_find_env_var(t_env *env, char *name);
+int		ft_print_export(t_cmd *cmds);
 int		ft_unset(t_cmd *cmds);
 
 //execute
@@ -242,4 +252,3 @@ char	*ft_find_cmd_path(t_cmd *cmds, t_data *data);
 char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 
 #endif
-

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarpo e  <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:04:52 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/17 12:09:34 by aarpo e          ###   ########.fr       */
+/*   Updated: 2024/03/17 18:46:45 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,6 @@ t_env	*ft_lstnew(char *content, char *value)
 		return (NULL);
 	env->var = content;
 	env->value = value;
-
 	env->next = NULL;
 	return (env);
 }
-
-
