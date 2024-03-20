@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:30:59 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/19 21:25:09 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data);
 t_env	*ft_lstnew(char *content, char *value);
 t_env	*ft_lstlast(t_env *lst);
 void	ft_lstadd_back(t_env **lst, t_env *new);
+char	*ft_check_input(char *str, t_data *data);
+size_t	ft_strlcpy(char *dest, char *src, size_t size);
 //other utils
 char	**ft_split(char const *s, char c);
 char	*ft_itoa(int n);
@@ -246,5 +248,7 @@ int		ft_unset(t_cmd *cmds);
 
 //execute
 void	ft_execute_cmds(t_cmd *cmd);
+char	*ft_find_cmd_path(t_cmd *cmds, t_data *data);
+char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 
 #endif
