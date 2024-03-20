@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:57:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:57:15 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_signals_running();
 		if (data->prompt[0] == '\0')
 			continue ;
+			// return (0);
 		add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
@@ -111,6 +112,7 @@ int	main(int argc, char **argv, char **envp)
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
 				continue ;
+				// return (0);
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);

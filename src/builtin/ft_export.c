@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/20 13:59:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 21:33:54 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,9 @@ int	ft_export(t_cmd *cmds)
 	name = ft_check_input(cmds->cmd_arg[1], cmds->data);
 	if (name == NULL)
 	{
-		ft_putstr_fd(" not a valid identifier", STDERR_FILENO);
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(cmds->cmd_arg[1], STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		cmds->data->exit_status = 1;
 		return (1);
 	}
