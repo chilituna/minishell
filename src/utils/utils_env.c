@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:21:27 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 14:22:03 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:17:05 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,3 @@ void	ft_delete_env_var(t_env *env, char *name)
 		tmp = tmp->next;
 	}
 }
-

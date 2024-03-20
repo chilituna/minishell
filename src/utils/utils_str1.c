@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:10:45 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 14:12:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:14:52 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*ft_strdup(const char *s, t_data *data)
 	new_s[i] = '\0';
 	return (new_s);
 }
-
 
 // take a string and return a substring of len length from start
 char	*ft_substr(char const *s, unsigned int start, size_t len, t_data *data)

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 14:42:51 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 18:11:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,8 @@ unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 int				ft_isspace(int c);
 int				ft_isalnum(int c);
 int				ft_all_capitals(char *name);
+int				ft_isalpha(int c);
+
 //utils_env
 t_env			*ft_search_env_var(t_env *env, char *name);
 t_env			*ft_create_env(char *name, char *value);
@@ -199,6 +201,7 @@ t_lexer			*ft_init_lexer(t_lexer *lexer, int i, t_data *data);
 void			ft_tokenizer(t_lexer *lexer);
 char			*ft_pick_string(char *str, t_lexer *lexer);
 int				ft_quoted_string(char *str, char c);
+int				ft_pick_redir(char *str, int i, int start, t_lexer *lexer);
 
 //parser.c
 int				ft_check_pipes(t_lexer *lexer);
@@ -222,7 +225,7 @@ int				(*ft_get_builtin(char *cmd))(t_cmd *cmd);
 //expander
 void			ft_expand_env(t_cmd *cmd, t_data *data);
 void			ft_check_for_env(t_cmd *cmd, int i, int j, t_data *data);
-char			*ft_get_env_var(char *var, t_data *data);
+char			*ft_get_env_var(char *name, t_data *data);
 
 //builtins
 int				ft_cd(t_cmd *cmds);
@@ -243,8 +246,9 @@ int				ft_unset(t_cmd *cmds);
 
 //here_doc
 void			ft_check_here_doc(t_cmd *cmd);
-void			ft_heredoc(t_redir *redir, t_data *data);
+int				ft_heredoc(t_redir *redir, t_data *data);
 char			*ft_create_here_doc(t_data *data);
+char			*ft_heredoc_expand(char *line, t_data *data);
 
 //execute
 void			ft_execute_cmds(t_cmd *cmd);
