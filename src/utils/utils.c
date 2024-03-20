@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 14:25:03 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:16:59 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,3 @@ void	*ft_malloc(size_t size, t_data *data)
 		ft_error_and_exit("malloc failed", data);
 	return (ptr);
 }
-
-

@@ -3,23 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/19 21:23:55 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:30:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 //This function takes 2 strings and join them to form the PATH
-//it takes 2 strings as parameters and concatenate them to form a 
-//valid PATH. 
+//it takes 2 strings as parameters and concatenate them to form a
+//valid PATH.
 char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp)
 {
 	char	*cmd_path;
 	int		len;
 
+	(void)cmds;
 	len = ft_strlen(path);
 	cmd_path = (char *)malloc(sizeof(char) * (len + 1));
 	if (!cmd_path)
@@ -37,7 +38,7 @@ char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp)
 //This function find the valid PATH for the specified command
 //it will take the PATH and split it using the ':' as delimitator
 //then it will iterate in the 2d array searching for a valid path
-//for the specified command. When a valid PATH is found it will 
+//for the specified command. When a valid PATH is found it will
 //call the ft_get_cmd_path function, else it will return NULL
 char	*ft_find_cmd_path(t_cmd *cmds, t_data *data)
 {
@@ -47,7 +48,7 @@ char	*ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	int		i;
 
 	i = 0;
-	path = ft_split(cmds->path[0], ':');
+	path = ft_split(cmds->path, ':');
 	while (path[i])
 	{
 		tmp_path = ft_strjoin(path[i], "/", data);
@@ -60,4 +61,3 @@ char	*ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	}
 	return (NULL);
 }
-

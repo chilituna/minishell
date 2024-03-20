@@ -6,11 +6,18 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/20 14:02:23 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:16:24 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_freeall(char *line, char *end_line, char *env_var)
+{
+	free(line);
+	free(end_line);
+	free(env_var);
+}
 
 // check if the line contains $, if it does, expand the env var
 // return the expanded line
@@ -20,12 +27,12 @@ char	*ft_heredoc_expand(char *line, t_data *data)
 	int		i;
 	int		start;
 	char	*end_line;
-	char	*env_var;
+	char	*env;
 
 	i = 0;
 	while (line[i])
 	{
-		if (line [i]== '$')
+		if (line[i] == '$')
 		{
 			expanded_line = ft_substr(line, 0, i, data);
 			i++;
@@ -33,12 +40,10 @@ char	*ft_heredoc_expand(char *line, t_data *data)
 			while (ft_isalnum(line[i]) || line[i] == '_' || line[i] == '?')
 				i++;
 			end_line = ft_substr(line, i, ft_strlen(line) - i, data);
-			env_var = ft_get_env_var(ft_substr(line, start, i - start, data), data);
-			expanded_line = ft_strjoin(expanded_line, env_var, data);
+			env = ft_get_env_var(ft_substr(line, start, i - start, data), data);
+			expanded_line = ft_strjoin(expanded_line, env, data);
 			expanded_line = ft_strjoin(expanded_line, end_line, data);
-			free(line);
-			free(end_line);
-			free(env_var);
+			ft_freeall(line, end_line, env);
 		}
 		i++;
 	}
@@ -58,7 +63,7 @@ char	*ft_create_here_doc(t_data *data)
 }
 
 // create a temporary file to store the heredoc
-void	ft_heredoc(t_redir *redir, t_data *data)
+int	ft_heredoc(t_redir *redir, t_data *data)
 {
 	char		*filename;
 	int			fd;
@@ -67,10 +72,7 @@ void	ft_heredoc(t_redir *redir, t_data *data)
 	filename = ft_create_here_doc(data);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
-	{
-		ft_putstr_fd("heredoc error ", STDIN_FILENO);
-		return ;
-	}
+		return (1);
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
@@ -86,6 +88,7 @@ void	ft_heredoc(t_redir *redir, t_data *data)
 	}
 	redir->in = filename;
 	close(fd);
+	return (0);
 }
 
 // check if redirections include heredoc
@@ -97,8 +100,16 @@ void	ft_check_here_doc(t_cmd *cmd)
 	while (redir)
 	{
 		if (redir->heredoc)
+		{
 			ft_heredoc(redir, cmd->data);
+			{
+				if (ft_heredoc(redir, cmd->data) == 1)
+				{
+					ft_putstr_fd("heredoc error ", STDIN_FILENO);
+					return ;
+				}
+			}
+		}
 		redir = redir->next;
 	}
 }
-

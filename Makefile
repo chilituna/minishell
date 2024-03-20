@@ -6,7 +6,7 @@
 #    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/20 14:27:22 by aarponen         ###   ########.fr        #
+#    Updated: 2024/03/20 16:24:35 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LIBS = -lreadline
 
 SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
-	parsing/parser.c parsing/lexer.c parsing/expander.c \
+	parsing/parser.c parsing/lexer.c parsing/lexer_helper.c parsing/expander.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c parsing/check_redirs.c \
 	parsing/remove_quotes.c \
 	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c \
