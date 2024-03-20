@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:30:59 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/19 18:12:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -224,8 +224,7 @@ char	*ft_get_env_var(char *var, t_data *data);
 //here_doc
 void	ft_check_here_doc(t_cmd *cmd);
 void	ft_heredoc(t_redir *redir, t_data *data);
-void	ft_delete_here_doc(t_data *data);
-void	ft_delete_here_doc(t_data *data);
+char	*ft_create_here_doc(t_data *data);
 
 //builtins
 int		ft_cd(t_cmd *cmds);
