@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/20 23:21:40 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:10:46 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ int	ft_echo(t_cmd *cmds)
 	{
 		write(1, "\n", 1);
 		return (0);
-	}
-	else if ((cmds->cmd_arg[i][0] == '-')
-		&& (cmds->cmd_arg[i][1] == 'n') && !(cmds->cmd_arg[i][2]))
-	{
-		cmds->data->exit_status = 0;
-		return (EXIT_SUCCESS);
 	}
 	while ((cmds->cmd_arg[i][0] != '\0')
 		&& (cmds->cmd_arg[i][0] == '-') && (cmds->cmd_arg[i][1] == 'n'))

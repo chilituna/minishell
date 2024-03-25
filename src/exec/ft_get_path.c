@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/20 16:30:33 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/25 17:21:46 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,18 @@ char	*ft_find_cmd_path(t_cmd *cmds, t_data *data)
 
 	i = 0;
 	path = ft_split(cmds->path, ':');
+	result = ft_strjoin("/", cmds->cmd_arg[0], data);
 	while (path[i])
 	{
-		tmp_path = ft_strjoin(path[i], "/", data);
-		result = ft_strjoin(tmp_path, cmds->cmd_arg[0], data);
-		if (access(result, F_OK) == 0)
-			return (ft_get_cmd_path(cmds, result, tmp_path));
+		tmp_path = ft_strjoin(path[i], result, data);
+		if (access(tmp_path, F_OK) == 0)
+		{
+			free(result);
+			result = tmp_path;
+			break ;
+		}
 		free(tmp_path);
-		free(result);
 		i++;
 	}
-	return (NULL);
+	return (result);
 }

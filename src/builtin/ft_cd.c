@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/20 21:28:32 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/25 14:33:05 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,16 @@ int	ft_cd(t_cmd *cmds)
 		ft_change_dir(cmds->cmd_arg[1], cmds->data);
 	tmp = ft_find_env_var(cmds->data->env, "HOME");
 	path_home = tmp->value;
-	if (!(cmds->cmd_arg[1]) && ft_change_dir(path_home, cmds->data))
+	if (!(cmds->cmd_arg[1]) || (!ft_strncmp(cmds->cmd_arg[1], "--", 2)))
+	{
+		ft_change_dir(path_home, cmds->data);
 		cmds->data->exit_status = 0;
+		return (0);
+	}
 	else
 	{
-		if (!ft_strncmp(cmds->cmd_arg[1], "--", 2)
-			&& ft_change_dir(path_home, cmds->data))
-		{
-			cmds->data->exit_status = 0;
-			return (0);
-		}
 		ft_change_dir(cmds->cmd_arg[1], cmds->data);
+		cmds->data->exit_status = 0;
+		return (0);
 	}
-	return (0);
 }
