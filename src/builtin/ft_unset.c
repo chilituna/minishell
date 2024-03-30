@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:47:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/17 18:36:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:48:00 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ int	ft_unset(t_cmd *cmds)
 	tmp = cmds->data->env;
 	if (cmds->cmd_arg[1])
 	{
-		i = 0;
+		i = 1;
 		while (cmds->cmd_arg[i])
 		{
 			tmp = ft_search_env_var(cmds->data->env, cmds->cmd_arg[i]);
-			if (tmp == NULL)
-				return (1);
-			else
+			if (tmp)
 				ft_delete_env_var(cmds->data->env, tmp->var);
 			i++;
 		}

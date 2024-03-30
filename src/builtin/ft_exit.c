@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/17 18:41:44 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:53:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	ft_exit_code(char *str)
 {
 	int	code;
 
-	if (!str[0])
+	if (!str)
 		code = 0;
 	else
 		code = ft_atoi(str);
@@ -72,7 +72,7 @@ int	ft_exit(t_cmd *cmds)
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		nbr = 2;
 	}
-	else if (cmds->cmd_arg[1])
+	else
 	{
 		nbr = ft_exit_code(cmds->cmd_arg[1]);
 		if (nbr > 255)

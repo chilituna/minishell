@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/25 14:33:05 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/30 15:38:25 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ int	ft_change_dir(char *path, t_data *data)
 		if (access(path, F_OK) == -1)
 		{
 			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-			ft_putstr_fd("No such file or directory\n", STDERR_FILENO);
+			ft_putstr_fd(path, STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 		}
 		else if (access(path, R_OK | W_OK | X_OK) == -1)
 		{
 			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(path, STDERR_FILENO);
 			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
 		}
 		data->exit_status = 1;
@@ -62,27 +64,23 @@ int	ft_cd(t_cmd *cmds)
 	char	*path_home;
 	t_env	*tmp;
 
+	tmp = ft_find_env_var(cmds->data->env, "HOME");
+	path_home = tmp->value;
+	if (!cmds->cmd_arg[1])
+	{
+		ft_change_dir(path_home, cmds->data);
+		return (0);
+	}
 	if (cmds->cmd_arg[2])
 	{
-		ft_putstr_fd(RED"minishell: cd: "RESET, STDERR_FILENO);
-		ft_putstr_fd(RED"too many arguments\n"RESET, STDERR_FILENO);
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
 		cmds->data->exit_status = 1;
 		return (1);
 	}
 	if (cmds->cmd_arg[1][0] == '/')
 		ft_change_dir(cmds->cmd_arg[1], cmds->data);
-	tmp = ft_find_env_var(cmds->data->env, "HOME");
-	path_home = tmp->value;
-	if (!(cmds->cmd_arg[1]) || (!ft_strncmp(cmds->cmd_arg[1], "--", 2)))
-	{
-		ft_change_dir(path_home, cmds->data);
-		cmds->data->exit_status = 0;
-		return (0);
-	}
 	else
-	{
 		ft_change_dir(cmds->cmd_arg[1], cmds->data);
-		cmds->data->exit_status = 0;
-		return (0);
-	}
+	return (0);
 }
