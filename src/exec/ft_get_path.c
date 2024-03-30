@@ -3,64 +3,77 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/25 17:21:46 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:27:32 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//This function takes 2 strings and join them to form the PATH
-//it takes 2 strings as parameters and concatenate them to form a
-//valid PATH.
-char	*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp)
+//Function to generate an array with the
+//environment variables inside of it
+//it considers the case where there is no path
+//in the case of unset of the path
+static char	**ft_extract_path(t_cmd *cmds)
 {
-	char	*cmd_path;
-	int		len;
+	char	**path;
+	t_env	*tmp;
 
-	(void)cmds;
-	len = ft_strlen(path);
-	cmd_path = (char *)malloc(sizeof(char) * (len + 1));
-	if (!cmd_path)
+	tmp = ft_search_env_var(cmds->data->env, "PATH"); 
+	if(tmp == NULL)
 	{
-		free(path);
-		free(tmp);
+		cmds->data->exit_status = 1;
 		return (NULL);
 	}
-	ft_strlcpy(cmd_path, path, len + 1);
-	free(path);
-	free(tmp);
-	return (cmd_path);
+	path = ft_split(tmp->value, ':');
+	return(path);
+}
+
+//This function find a valid cmd_path
+//for the command received as argument
+//it returns a string with the right path when is found
+//null when is not found
+static char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
+{
+	int		i;
+	char	*cmd_path;
+	char	*result;
+
+	i = 0;
+	cmd_path = ft_strjoin("/", cmd, data);
+	while(path[i])
+	{
+		result = ft_strjoin(path[i], cmd_path, data);
+		if (access(result, F_OK | X_OK) == 0)
+			return (result);
+		free(result);
+		i++;
+	}
+	return (NULL);
 }
 
 //This function find the valid PATH for the specified command
-//it will take the PATH and split it using the ':' as delimitator
-//then it will iterate in the 2d array searching for a valid path
-//for the specified command. When a valid PATH is found it will
-//call the ft_get_cmd_path function, else it will return NULL
-char	*ft_find_cmd_path(t_cmd *cmds, t_data *data)
+//it will extract the path from env variables and find a valid 
+//path for the command. When a valid path is found, it is stored
+//in the cmds->path field
+void	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 {
-	char	**path;
-	char	*tmp_path;
-	char	*result;
-	int		i;
+	char	**env;
+	char	*cmd_path;
 
-	i = 0;
-	path = ft_split(cmds->path, ':');
-	result = ft_strjoin("/", cmds->cmd_arg[0], data);
-	while (path[i])
+	env = ft_extract_path(cmds);
+	if (!env)
 	{
-		tmp_path = ft_strjoin(path[i], result, data);
-		if (access(tmp_path, F_OK) == 0)
-		{
-			free(result);
-			result = tmp_path;
-			break ;
-		}
-		free(tmp_path);
-		i++;
+		data->exit_status = 1;
+		ft_putstr_fd(RED"minishell: path not found\n"RESET, STDERR_FILENO);
 	}
-	return (result);
+	cmd_path = ft_find_valid_path(cmds->cmd_arg[0], env, data);
+	if (!cmd_path)
+	{
+		data->exit_status = 1;
+		ft_putstr_fd(RED"minishell: path for utility not found\n"RESET, STDERR_FILENO);
+	}
+	cmds->path = cmd_path;
 }

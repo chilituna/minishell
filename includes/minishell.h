@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
 /*   Updated: 2024/03/30 17:07:23 by aarponen         ###   ########.fr       */
@@ -41,6 +41,8 @@
 # define BLUE2 "\033[0;34m"
 # define BLUE3 "\033[0;36m"
 # define RESET "\033[0m"
+# define WRITE_END 1
+# define READ_END 0
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 50
@@ -190,6 +192,8 @@ t_env			*ft_lstnew(char *content, char *value);
 t_env			*ft_lstlast(t_env *lst);
 void			ft_lstadd_back(t_env **lst, t_env *new);
 char			*ft_check_input(char *str, t_data *data);
+int				ft_envlist_size(t_env	*list);
+int				ft_list_size(t_cmd *cmds);
 //other utils
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
@@ -253,8 +257,10 @@ char			*ft_create_here_doc(t_data *data);
 char			*ft_heredoc_expand(char *line, t_data *data);
 
 //execute
-void			ft_execute_cmds(t_cmd *cmd);
-char			*ft_find_cmd_path(t_cmd *cmds, t_data *data);
+void			ft_find_cmd_path(t_cmd *cmds, t_data *data, char *str);
 char			*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
+char			**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds);
+void			ft_execute_single_command(t_cmd *cmds);
+void			ft_execute_cmds(t_cmd *cmds);
 
 #endif
