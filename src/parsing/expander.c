@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/21 00:10:13 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:33:40 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	*ft_getenv(char *var, t_data *data)
 	while (tmp)
 	{
 		j = ft_strlen(tmp->var);
-		if (ft_strncmp(tmp->var, var, j) == 0 && var[j] == '\0')
+		if (ft_strncmp(tmp->var, var, j) == 0 && var[j] == '\0' && tmp->value)
 		{
 			env_var = ft_strdup(tmp->value, data);
 			return (env_var);

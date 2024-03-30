@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/03/20 21:33:54 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/30 17:10:59 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	ft_print_export(t_cmd *cmds)
 	t_env	*tmp;
 
 	tmp = cmds->data->env;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
 		ft_putstr_fd(tmp->var, STDOUT_FILENO);
@@ -42,7 +42,7 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	t_env	*tmp;
 
 	tmp = env;
-	while (tmp->next != NULL)
+	while (tmp)
 	{
 		if (ft_strncmp(tmp->var, name, ft_strlen(name)) == 0)
 			return (tmp);
@@ -64,7 +64,10 @@ char	*ft_check_input(char *str, t_data *data)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '=')
+		{
 			name = ft_substr(str, 0, i, data);
+			break ;
+		}
 		i++;
 	}
 	if (!name)
@@ -84,12 +87,10 @@ char	*ft_check_input(char *str, t_data *data)
 //not found and must be created
 int	ft_export(t_cmd *cmds)
 {
-	char	**input;
 	char	*name;
 	char	*value;
 	t_env	*tmp;
 
-	tmp = cmds->data->env;
 	if (!(cmds->cmd_arg[1]))
 	{
 		ft_print_export(cmds);
@@ -106,19 +107,19 @@ int	ft_export(t_cmd *cmds)
 	}
 	else
 	{
-		input = ft_split(cmds->cmd_arg[1], '=');
-		name = ft_strdup(input[0], cmds->data);
-		if (input[1] == NULL)
+		if (ft_strchr(cmds->cmd_arg[1], '=') == NULL)
 			value = NULL;
 		else
-			value = ft_strdup(input[1], cmds->data);
+			value = ft_substr(cmds->cmd_arg[1], ft_strlen(name) + 1,
+					ft_strlen(cmds->cmd_arg[1]) - ft_strlen(name) - 1,
+					cmds->data);
 		tmp = ft_search_env_var(cmds->data->env, name);
 		if (tmp == NULL)
 		{
 			tmp = ft_create_env(name, value);
 			ft_add_var_back(cmds->data->env, tmp);
 		}
-		else
+		else if (value)
 			ft_update_env_var(name, value, cmds->data);
 	}
 	cmds->data->exit_status = 0;
