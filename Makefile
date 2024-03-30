@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
+#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/03/20 16:24:35 by aarponen         ###   ########.fr        #
+#    Updated: 2024/03/29 02:18:08 by luifer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ LIBS = -lreadline
 SRC_DIR = src
 SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	parsing/parser.c parsing/lexer.c parsing/lexer_helper.c parsing/expander.c \
-	parsing/check_quotes.c parsing/check_cmds.c parsing/check_builtins.c parsing/check_redirs.c \
+	parsing/check_quotes.c parsing/check_cmds.c parsing/check_redirs.c \
 	parsing/remove_quotes.c \
 	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c \
 	utils/ft_split.c utils/get_next_line.c utils/ft_itoa.c \
 	utils/utils_lst.c utils/utils_check.c \
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c \
 	builtin/ft_export.c builtin/ft_unset.c \
-	exec/executor.c exec/heredoc.c exec/ft_get_path.c
+	exec/executor.c exec/heredoc.c exec/ft_get_path.c exec/execute_builtins.c
 OBJ_DIR = obj
 OBJ_FILES = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
