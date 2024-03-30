@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lst.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:04:52 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/17 18:46:45 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/03/28 23:45:19 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,40 @@ t_env	*ft_lstnew(char *content, char *value)
 	env->value = value;
 	env->next = NULL;
 	return (env);
+}
+
+//Measures the size of the env list
+//it takes the env list as input parameter
+//and returns its size as an integer
+int	ft_envlist_size(t_env	*list)
+{
+	t_env	*tmp;
+	int		i;
+
+	tmp = list;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
+}
+
+//Measures the size of the command list 
+//it takes the command list as parameter
+//and returns its size as an integer
+int	ft_list_size(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	int		i;
+
+	tmp = cmds;
+	i = 0;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	return (i);
 }
