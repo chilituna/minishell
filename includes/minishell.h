@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/30 17:07:23 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/01 14:45:28 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ typedef struct s_cmd
 	char			*path;
 	t_redir			*redir;
 	int				env_len;
+	int				*cmd_fd;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -257,10 +258,16 @@ char			*ft_create_here_doc(t_data *data);
 char			*ft_heredoc_expand(char *line, t_data *data);
 
 //execute
-void			ft_find_cmd_path(t_cmd *cmds, t_data *data, char *str);
+void			ft_find_cmd_path(t_cmd *cmds, t_data *data);
 char			*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 char			**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds);
 void			ft_execute_single_command(t_cmd *cmds);
 void			ft_execute_cmds(t_cmd *cmds);
+int				ft_set_pipes(t_cmd *cmds);
+int				ft_set_fd_for_pipe(t_cmd *cmds, t_cmd *current_cmd);
+void			ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd);
+int				ft_create_child_process(t_cmd *cmds);
+int				ft_redirect_input(t_cmd *cmds);
+int				ft_redirect_output(t_cmd *cmds);
 
 #endif

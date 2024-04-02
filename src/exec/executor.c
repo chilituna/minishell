@@ -6,7 +6,7 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/30 17:38:30 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/01 14:44:09 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_execute_single_command(t_cmd *cmds)
 	char	**env;
 	pid_t	pid;
 
+	ft_check_here_doc(cmds);
 	if (cmds->builtin)
 		cmds->builtin(cmds);
 	else
@@ -73,27 +74,32 @@ void	ft_execute_single_command(t_cmd *cmds)
 //for heredocs, builtins and size of list of commands
 void	ft_execute_cmds(t_cmd *cmds)
 {
-	int	pipes;
-	int	childs;
-	int	i;
-	int	j;
+	t_cmd	*tmp;
+	//int		pipes;
+	int		childs;
+	int		i;
+	//int		j;
 
 	if (ft_list_size(cmds) == 1)
 		ft_execute_single_command(cmds);
 	else
 	{
 		childs = ft_list_size(cmds);
-		pipes = childs - 1;
 		i = 0;
-		j = 0;
-		while (cmds)
+		tmp = cmds;
+		while (tmp)
 		{
-			ft_check_here_doc(cmds);
-			if (cmds->builtin)
-				cmds->builtin(cmds);
-			else
-				ft_execute_single_command(cmds);
-			cmds = cmds->next;
+			ft_set_pipes(cmds);
+			ft_create_child_process(cmds);
+			ft_set_fd_for_pipe(cmds, tmp);
+			ft_close_fd_for_pipe(cmds, tmp);
+			ft_execute_single_command(tmp);
+			while (i <= childs)//while loop to wait for each child process execution
+			{
+				wait(NULL);
+				i++;
+			}
+			tmp = tmp->next;
 		}
 	}
 }
