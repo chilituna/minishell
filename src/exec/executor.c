@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/01 14:44:09 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/02 14:18:56 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_execute_single_command(t_cmd *cmds)
 		cmds->builtin(cmds);
 	else
 	{
-		ft_find_cmd_path(cmds, cmds->data, cmds->cmd_arg[0]);
+		ft_find_cmd_path(cmds, cmds->data);
 		path = ft_strdup(cmds->path, cmds->data);
 		env = ft_convert_env_list_to_array(cmds->data->env, cmds);
 		pid = fork();

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/03/20 20:30:21 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/02 14:57:53 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ char	*ft_heredoc_expand(char *line, t_data *data)
 			end_line = ft_substr(line, i, ft_strlen(line) - i, data);
 			env = ft_getenv(ft_substr(line, start, i - start, data), data);
 			expanded_line = ft_strjoin(expanded_line, env, data);
-			expanded_line = ft_strjoin(expanded_line, end_line, data);
-			ft_freeall(line, end_line, env);
+			line = ft_strjoin(expanded_line, end_line, data);
+			ft_freeall(expanded_line, end_line, env);
+			i = -1;
 		}
 		i++;
 	}
-	return (expanded_line);
+	return (line);
 }
 
 char	*ft_create_here_doc(t_data *data)
@@ -101,13 +102,10 @@ void	ft_check_here_doc(t_cmd *cmd)
 	{
 		if (redir->heredoc)
 		{
-			ft_heredoc(redir, cmd->data);
+			if (ft_heredoc(redir, cmd->data) == 1)
 			{
-				if (ft_heredoc(redir, cmd->data) == 1)
-				{
-					ft_putstr_fd("heredoc error ", STDIN_FILENO);
-					return ;
-				}
+				ft_putstr_fd("heredoc error ", STDIN_FILENO);
+				return ;
 			}
 		}
 		redir = redir->next;
