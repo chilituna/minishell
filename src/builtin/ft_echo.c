@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/03/25 12:10:46 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:29:11 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,17 @@ int	ft_echo(t_cmd *cmds)
 		write(1, "\n", 1);
 		return (0);
 	}
-	while ((cmds->cmd_arg[i][0] != '\0')
-		&& (cmds->cmd_arg[i][0] == '-') && (cmds->cmd_arg[i][1] == 'n'))
+	if ((cmds->cmd_arg[1][0] == '-') && (cmds->cmd_arg[1][1] == 'n'))
 	{
 		j = 1;
 		while (cmds->cmd_arg[i][j] == 'n')
 			j++;
 		if (cmds->cmd_arg[i][j] == '\0')
 			flag = 0;
-		else
-			break ;
 		i++;
 	}
-	ft_put_line(i, cmds->cmd_arg, STDOUT_FILENO);
+	if (cmds->cmd_arg[i])
+		ft_put_line(i, cmds->cmd_arg, STDOUT_FILENO);
 	if (flag == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (EXIT_SUCCESS);
