@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/02 14:18:56 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/03 21:53:59 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,53 @@ void	ft_execute_single_command(t_cmd *cmds)
 			cmds->data->exit_status = 0;
 		}
 		free(env);
+	}
+}
+
+//Function to execute a binary command from the system
+//it find the path of the command to execute it
+//generate an array with env variables to pass to execve function
+//and executes the command.
+void	ft_exec_cmd(t_cmd *cmds)
+{
+	char	*path;
+	char	**env;
+	int		status;
+
+	ft_find_cmd_path(cmds, cmds->data);
+	path = ft_strdup(cmds->path, cmds->data);
+	env = ft_convert_env_list_to_array(cmds->data->env, cmds);
+	execve(path, cmds->cmd_arg, env);
+
+}
+
+//Function to execute commands in a pipeline
+//it iterates through the list of commands and
+//creates a child process for each command and
+//executes a command inside the child process
+void	ft_pipe(t_cmd *cmds)
+{
+	pid_t	pid;
+	int		size;
+	int		i;
+
+	size = ft_list_size(cmds);
+	i = 0;
+	while (i < size && cmds)
+	{
+		pid = fork();
+		if (pid == -1)
+			ft_error_forking(cmds->data);
+		if (pid == 0)
+		{
+			if (dup2(cmds->cmd_fd[READ_END], STDOUT_FILENO) == -1) || close(cmds->cmd))
+		}
+	}
+	if (pid == 0)
+	{
+		if (dup2(fd[WRITE_END], STDOUT_FILENO) == -1 || close(fd[READ_END]) == -1 || close(fd[WRITE_END]) == -1)
+			ft_error_fd(cmds->data);
+		ft_exec_cmd(cmds);
 	}
 }
 
