@@ -6,16 +6,17 @@
 /*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/01 14:43:23 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/04 00:21:26 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
 
 //Function to create a pipe for each command node
-//it traverse the list and generate a fd with end and write
-//end for each command. It returns 0 on success, 1 on failure
-int	ft_set_pipes(t_cmd *cmds)
+//it traverse the list and generate a fd with read and write
+//end for each command except for the last one (stdout or redirect). 
+//It returns 0 on success, 1 on failure
+int	ft_set_cmds_pipes(t_cmd *cmds)
 {
 	int		fd[2];
 	t_cmd	*tmp;
@@ -23,12 +24,10 @@ int	ft_set_pipes(t_cmd *cmds)
 	tmp = cmds;
 	while(tmp)
 	{
+		if(tmp->next == NULL)
+			break ;
 		if (pipe(fd) == -1)
-		{
-			ft_putstr_fd(RED"minishell: error piping"RESET, STDERR_FILENO);
-			cmds->data->exit_status = 1;
-			return (1);
-		}
+			ft_error_piping(cmds->data);
 		tmp->cmd_fd = fd;
 		tmp = tmp->next;
 	}
@@ -48,14 +47,14 @@ int	ft_set_fd_for_pipe(t_cmd *cmds, t_cmd *current_cmd)
 		dup2(current_cmd->prev->cmd_fd[READ_END], STDIN_FILENO);
 	if (current_cmd->next)
 		dup2(current_cmd->cmd_fd[WRITE_END], STDOUT_FILENO);
-	ft_close_fd_for_pipe(cmds, current_cmd);
+	ft_close_fd_for_pipe(cmds, cmds);
 	return (1);
 }
 
 //Function to close the file descriptors
 //in the pipes. It receives a command to skip 
-//for which the file descriptos will be leaved open
-//since it may still need to be processed.
+//the child specify it's own command to skip, in order 
+//to not close it's own fd
 void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 {
 	t_cmd	*tmp;
@@ -149,4 +148,33 @@ int	ft_redirect_output(t_cmd *cmds)
 		}
 	}
 	return (1);
+}
+
+
+//Function to get the output of the children process
+//it wait for the execution of child process and return
+//exit status of last command executed in case of pipiline
+int	ft_wait_children(t_cmd *cmds, pid_t pid)
+{
+	pid_t	wait_pid;
+	int		status;
+	int		result;
+
+	ft_close_fd_for_pipe(cmds, cmds);//To fix -> need to add a function to close a sigle fd
+	result = 0;
+	wait_pid = 0;
+	while (wait_pid != -1 || errno != ECHILD)
+	{
+		wait_pid = waitpid(-1, &status, 0);
+		if (wait_pid == pid)
+			result = status;
+		continue ;
+	}
+	if (WIFSIGNALED(result))
+		status = 128 + WTERMSIG(result);
+	else if (WIFEXITED(result))
+		status = WEXITSTATUS(result);
+	else
+		status = result;
+	return (status);
 }
