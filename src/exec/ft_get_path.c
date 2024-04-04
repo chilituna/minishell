@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/01 14:45:34 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/04 18:30:10 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ void	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	cmd_path = ft_find_valid_path(cmds->cmd_arg[0], env, data);
 	if (!cmd_path)
 	{
+		ft_putstr_fd(RED"minishell:"RESET, STDERR_FILENO);
+		ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+		ft_putstr_fd(RED"command not found"RESET, STDERR_FILENO);
 		data->exit_status = 1;
-		ft_putstr_fd(RED"minishell: path for utility not found\n"RESET, STDERR_FILENO);
 	}
 	cmds->path = cmd_path;
 }

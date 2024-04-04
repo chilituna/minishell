@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/03 21:55:58 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/04 13:04:50 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,27 @@ void	ft_error_piping(t_data *data)
 void	ft_error_forking(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error in fork execution"RESET, STDOUT_FILENO);
+	ft_putstr_fd(RED"error in fork execution\n"RESET, STDOUT_FILENO);
 	data->exit_status = 1;
 }
 
 void	ft_error_fd(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error closing and duplicating file desciptor"RESET, STDOUT_FILENO);
+	ft_putstr_fd(RED"error closing and duplicating file desciptor\n"RESET, STDOUT_FILENO);
 	data->exit_status = 1;
 }
 
 void	ft_error_executing(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error with execution"RESET, STDOUT_FILENO);
+	ft_putstr_fd(RED"error with execution\n"RESET, STDOUT_FILENO);
+	data->exit_status = 1;
+}
+
+void	ft_error_cmd(t_data *data)
+{
+	ft_putstr_fd(RED"minishell:"RESET, STDERR_FILENO);
+	ft_putstr_fd(RED"cannot execute\n"RESET, STDERR_FILENO);
 	data->exit_status = 1;
 }
