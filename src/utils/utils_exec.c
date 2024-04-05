@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/04 00:21:26 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/04 19:10:02 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	ft_redirect_input(t_cmd *cmds)
 {
 	int	open_fd;
 
-	if ((cmds->redir->in) || ((cmds->redir->heredoc) == 1))
+	if (((cmds->redir->in) || (cmds->redir->heredoc)) == 1)
 	{
 		open_fd = open(cmds->redir->in, O_RDONLY);
 		if (open_fd == -1)
@@ -150,7 +150,7 @@ int	ft_redirect_output(t_cmd *cmds)
 	return (1);
 }
 
-
+/*
 //Function to get the output of the children process
 //it wait for the execution of child process and return
 //exit status of last command executed in case of pipiline
@@ -160,7 +160,7 @@ int	ft_wait_children(t_cmd *cmds, pid_t pid)
 	int		status;
 	int		result;
 
-	ft_close_fd_for_pipe(cmds, cmds);//To fix -> need to add a function to close a sigle fd
+	ft_close_fd_for_pipe(cmds, cmds);//To fix -> need to add a function to close a single fd
 	result = 0;
 	wait_pid = 0;
 	while (wait_pid != -1 || errno != ECHILD)
@@ -178,3 +178,4 @@ int	ft_wait_children(t_cmd *cmds, pid_t pid)
 		status = result;
 	return (status);
 }
+*/
