@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 13:23:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:51:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,8 @@ void			ft_process_quotes(char **arg, t_cmd *cmd);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *str, int fd);
 void			*ft_malloc(size_t size, t_data *data);
+void			ft_free_array(char **arr);
+void			ft_freeall_here(char *line, char *end_line, char *env_var);
 //utils_str1
 size_t			ft_strlen(const char *str);
 int				ft_strncmp(const char *s1, const char *s2, unsigned int n);

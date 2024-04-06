@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 14:49:02 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:06:59 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,11 @@ char	*ft_update_str(char	*arg, int start, int len, t_data *data)
 	new_arg = ft_strjoin(str1, str2, data);
 	free(str1);
 	free(str2);
-	str1 = new_arg;
+	str1 = ft_strdup(new_arg, data);
+	free(new_arg);
 	new_arg = ft_strjoin(str1, str3, data);
 	free(str1);
 	free(str3);
+	free(arg);
 	return (new_arg);
 }
