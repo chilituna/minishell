@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 17:21:21 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:25:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,7 @@ int				ft_isalpha(int c);
 t_env			*ft_search_env_var(t_env *env, char *name);
 t_env			*ft_create_env(char *name, char *value);
 void			ft_add_var_back(t_env *env, t_env *new_env);
-void			ft_delete_env_var(t_env *env, char *name);
+void			ft_delete_env_var(t_env **env, char *name);
 void			ft_update_env_var(char *var, char *new_value, t_data *data);
 char			*ft_getenv(char *var, t_data *data);
 //utils_lst
@@ -227,6 +227,7 @@ int				ft_count_tokens(t_lexer *lexer);
 
 //check commands
 int				ft_check_cmds(t_cmd *cmd);
+void			ft_remove_empty(t_cmd *cmd);
 //check redirections
 t_redir			*ft_init_redir(t_cmd *cmd);
 t_redir			*ft_init_first_redir(t_cmd *cmd);
