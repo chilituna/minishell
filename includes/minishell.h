@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 15:51:51 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 17:21:21 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ t_env			*ft_create_env(char *name, char *value);
 void			ft_add_var_back(t_env *env, t_env *new_env);
 void			ft_delete_env_var(t_env *env, char *name);
 void			ft_update_env_var(char *var, char *new_value, t_data *data);
+char			*ft_getenv(char *var, t_data *data);
 //utils_lst
 t_env			*ft_lstnew(char *content, char *value);
 t_env			*ft_lstlast(t_env *lst);
@@ -241,7 +242,7 @@ void			ft_expand_env(t_cmd *cmd, t_data *data);
 int				ft_skip_quotes(t_cmd *cmd, int i, int j);
 int				ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data);
 int				ft_expand_env_var(t_cmd *cmd, int i, int j, t_data *data);
-char			*ft_getenv(char *var, t_data *data);
+int				ft_expand_double(t_cmd *cmd, int i, int j, t_data *data);
 
 //builtins
 int				ft_cd(t_cmd *cmds);
