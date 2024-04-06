@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 14:46:46 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 16:33:08 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	ft_expand_env_var(t_cmd *cmd, int i, int j, t_data *data)
 	k = j + ft_strlen(env);
 	free(beginnig_tmp);
 	free(env);
-	beginnig_tmp = cmd->cmd_arg[i];
+	beginnig_tmp = ft_strdup(cmd->cmd_arg[i], data);
+	free(cmd->cmd_arg[i]);
 	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end, data);
 	free(beginnig_tmp);
 	free(end);

@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/02 14:57:53 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 15:51:01 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_freeall(char *line, char *end_line, char *env_var)
+int	ft_endofvar(char *line, int i)
 {
-	free(line);
-	free(end_line);
-	free(env_var);
+	while (ft_isalnum(line[i]) || line[i] == '_' || line[i] == '?')
+		i++;
+	return (i);
 }
 
 // check if the line contains $, if it does, expand the env var
 // return the expanded line
 char	*ft_heredoc_expand(char *line, t_data *data)
 {
-	char	*expanded_line;
+	char	*tmp_line;
 	int		i;
 	int		start;
 	char	*end_line;
@@ -34,16 +34,15 @@ char	*ft_heredoc_expand(char *line, t_data *data)
 	{
 		if (line[i] == '$')
 		{
-			expanded_line = ft_substr(line, 0, i, data);
+			tmp_line = ft_substr(line, 0, i, data);
 			i++;
 			start = i;
-			while (ft_isalnum(line[i]) || line[i] == '_' || line[i] == '?')
-				i++;
+			i = ft_endofvar(line, i);
 			end_line = ft_substr(line, i, ft_strlen(line) - i, data);
 			env = ft_getenv(ft_substr(line, start, i - start, data), data);
-			expanded_line = ft_strjoin(expanded_line, env, data);
-			line = ft_strjoin(expanded_line, end_line, data);
-			ft_freeall(expanded_line, end_line, env);
+			tmp_line = ft_strjoin(tmp_line, env, data);
+			line = ft_strjoin(ft_strjoin(tmp_line, env, data), end_line, data);
+			ft_freeall_here(tmp_line, end_line, env);
 			i = -1;
 		}
 		i++;
