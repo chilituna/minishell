@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/04 19:10:02 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:32:58 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,26 +74,16 @@ void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 //Function to create a child process for each command
 //in the command list, it will make a fork call 
 //for each command. It returns 1 on error, 0 on success
-int	ft_create_child_process(t_cmd *cmds)
+int	ft_execute_child(pid_t pid, t_cmd *cmds)
 {
-	t_cmd	*tmp;
-	pid_t	pid;
-
-	tmp = cmds;
-	while(tmp)
-	{
-		pid = fork();
-		if (pid == -1)
-		{
-			ft_putstr_fd(RED"minishell: error forking"RESET, STDERR_FILENO);
-			cmds->data->exit_status = 1;
-			return (1);
-		}
-		tmp = tmp->next;
-	}
-	return (0);
+	if ((dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1))
+			ft_error_dup(cmds->data);
+	if (close(cmds->cmd_fd[READ_END]) == -1 || close(cmds->cmd_fd[WRITE_END]) == -1)
+		ft_error_closing(cmds->data);
+	ft_exec_cmd(cmds);
+	ft_error_executing(cmds->data);
+	return ;
 }
-
 
 //Function to redirect the input
 //it checks if the input redirection is

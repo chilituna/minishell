@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/04 13:05:08 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:41:44 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,9 +145,11 @@ void			ft_error_minishell(char *str);
 void			ft_exit_minishell(t_data *data);
 void			ft_error_forking(t_data *data);
 void			ft_error_piping(t_data *data);
-void			ft_error_fd(t_data *data);
+void			ft_error_dup(t_data *data);
 void			ft_error_executing(t_data *data);
 void			ft_error_cmd(t_data *data);
+void			ft_error_executing(t_data *data);
+void			ft_error_closing(t_data *data);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
