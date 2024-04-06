@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/05 11:41:38 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/06 12:14:26 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_exec_cmd(t_cmd *cmds)
 {
 	char	*path;
 	char	**env;
-	int		status;
+	//int		status;
 
 	ft_find_cmd_path(cmds, cmds->data);
 	path = ft_strdup(cmds->path, cmds->data);
@@ -131,16 +131,16 @@ void	ft_execute_cmds(t_cmd *cmds)
 		tmp = cmds;
 		while (i < size && tmp)
 		{
-			ft_set_pipes(cmds);
-			ft_create_child_process(cmds);
+			// ft_set_pipes(cmds);
+			// ft_create_child_process(cmds);
 			ft_set_fd_for_pipe(cmds, tmp);
 			ft_close_fd_for_pipe(cmds, tmp);
 			ft_execute_single_command(tmp);
-			while (i <= childs)//while loop to wait for each child process execution
-			{
-				wait(NULL);
-				i++;
-			}
+			// while (i <= childs)//while loop to wait for each child process execution
+			// {
+			// 	wait(NULL);
+			// 	i++;
+			// }
 			tmp = tmp->next;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/05 11:32:58 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/06 12:11:00 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 //Function to create a pipe for each command node
 //it traverse the list and generate a fd with read and write
-//end for each command except for the last one (stdout or redirect). 
+//end for each command except for the last one (stdout or redirect).
 //It returns 0 on success, 1 on failure
 int	ft_set_cmds_pipes(t_cmd *cmds)
 {
@@ -31,13 +31,13 @@ int	ft_set_cmds_pipes(t_cmd *cmds)
 		tmp->cmd_fd = fd;
 		tmp = tmp->next;
 	}
-	return (0); 
+	return (0);
 }
 
-//Function to set the file descriptors 
+//Function to set the file descriptors
 //in the pipes. It check if the current command is empty for safety
 //if there is a previous command it duplicate the read end
-//of the pipe and 
+//of the pipe and
 //When done it close unused file descriptors
 int	ft_set_fd_for_pipe(t_cmd *cmds, t_cmd *current_cmd)
 {
@@ -52,8 +52,8 @@ int	ft_set_fd_for_pipe(t_cmd *cmds, t_cmd *current_cmd)
 }
 
 //Function to close the file descriptors
-//in the pipes. It receives a command to skip 
-//the child specify it's own command to skip, in order 
+//in the pipes. It receives a command to skip
+//the child specify it's own command to skip, in order
 //to not close it's own fd
 void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 {
@@ -72,17 +72,18 @@ void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 }
 
 //Function to create a child process for each command
-//in the command list, it will make a fork call 
+//in the command list, it will make a fork call
 //for each command. It returns 1 on error, 0 on success
 int	ft_execute_child(pid_t pid, t_cmd *cmds)
 {
+	(void)pid;
 	if ((dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1))
 			ft_error_dup(cmds->data);
 	if (close(cmds->cmd_fd[READ_END]) == -1 || close(cmds->cmd_fd[WRITE_END]) == -1)
 		ft_error_closing(cmds->data);
 	ft_exec_cmd(cmds);
 	ft_error_executing(cmds->data);
-	return ;
+	return (1);
 }
 
 //Function to redirect the input
