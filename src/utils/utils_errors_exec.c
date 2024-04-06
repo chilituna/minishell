@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_errors_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:16:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/05 11:42:01 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/06 12:49:00 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,19 @@ void	ft_error_forking(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
 	ft_putstr_fd(RED"error in fork execution\n"RESET, STDOUT_FILENO);
+	data->exit_status = 1;
+}
+
+void	ft_error_opening(t_data *data)
+{
+	ft_putstr_fd(RED"minishell: "RESET, STDERR_FILENO);
+	ft_putstr_fd(RED"error opening\n"RESET, STDERR_FILENO);
+	data->exit_status = 1;
+}
+
+void	ft_error_writing(t_data *data)
+{
+	ft_putstr_fd(RED"minishell: "RESET, STDERR_FILENO);
+	ft_putstr_fd(RED"error writing\n"RESET, STDERR_FILENO);
 	data->exit_status = 1;
 }
