@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/04 18:30:10 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/06 13:59:35 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static char	**ft_extract_path(t_cmd *cmds)
 	t_env	*tmp;
 
 	tmp = ft_search_env_var(cmds->data->env, "PATH"); 
-	if(tmp == NULL)
+	if (tmp == NULL)
 	{
 		cmds->data->exit_status = 1;
 		return (NULL);
 	}
 	path = ft_split(tmp->value, ':');
-	return(path);
+	return (path);
 }
 
 //This function find a valid cmd_path
@@ -43,7 +43,7 @@ static char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
 
 	i = 0;
 	cmd_path = ft_strjoin("/", cmd, data);
-	while(path[i])
+	while (path[i])
 	{
 		result = ft_strjoin(path[i], cmd_path, data);
 		if (access(result, F_OK | X_OK) == 0)
@@ -75,7 +75,7 @@ void	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 		ft_putstr_fd(RED"minishell:"RESET, STDERR_FILENO);
 		ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
 		ft_putstr_fd(RED"command not found"RESET, STDERR_FILENO);
-		data->exit_status = 1;
+		data->exit_status = 127;
 	}
 	cmds->path = cmd_path;
 }
