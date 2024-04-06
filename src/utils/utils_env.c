@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:21:27 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/30 17:40:29 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 20:45:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,32 @@ t_env	*ft_search_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
-//Function to search a enviroment variable and unset it
-//it delete in place the linked list when found
-void	ft_delete_env_var(t_env *env, char *name)
+//Function to search a enviroment variable and
+//delete it from the env linked list when found
+void	ft_delete_env_var(t_env **env, char *name)
 {
 	t_env	*tmp;
-	t_env	*to_remove;
+	t_env	*head;
 
-	tmp = env;
+	tmp = *env;
+	head = *env;
 	while (tmp)
 	{
-		if (ft_strncmp(tmp->var, name, ft_strlen(name)) == 0)
+		if (ft_strlen(name) == ft_strlen(tmp->var)
+			&& ft_strncmp(tmp->var, name, ft_strlen(name)) == 0)
 		{
-			to_remove = tmp;
-			tmp = tmp->next;
-			free(to_remove);
-			return ;
-		}
-		else if (ft_strncmp(tmp->next->var, name, ft_strlen(name)) == 0)
-		{
-			to_remove = tmp->next;
-			tmp->next = tmp->next->next;
-			free(to_remove);
+			free(tmp->var);
+			if (tmp->value)
+				free(tmp->value);
+			if (tmp == head)
+				*env = tmp->next;
+			else
+				tmp->next = tmp->next->next;
+			tmp->var = NULL;
+			tmp->value = NULL;
 			return ;
 		}
 		tmp = tmp->next;
 	}
 }
+
