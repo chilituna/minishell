@@ -14,7 +14,7 @@
 
 //Function to create a pipe for each command node
 //it traverse the list and generate a fd with read and write
-//end for each command except for the last one (stdout or redirect). 
+//end for each command except for the last one (stdout or redirect).
 //It returns 0 on success, 1 on failure
 void	ft_set_cmds_pipes_fd(t_cmd *cmds)
 {
@@ -60,7 +60,7 @@ int	ft_wait_children(pid_t pid)
 	return (status);
 }
 
-//Function to set the file descriptors 
+//Function to set the file descriptors
 //in the pipes. It check if the current command is empty for safety
 //if there is a previous command it duplicate the read end
 //of the pipe to receive input. If there is a next command it duplicate the 
@@ -105,8 +105,8 @@ int	ft_get_exit_status(int status)
 
 /*
 //Function to close the file descriptors
-//in the pipes. It receives a command to skip 
-//the child specify it's own command to skip, in order 
+//in the pipes. It receives a command to skip
+//the child specify it's own command to skip, in order
 //to not close it's own fd
 void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 {
@@ -125,10 +125,11 @@ void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 }
 
 //Function to create a child process for each command
-//in the command list, it will make a fork call 
+//in the command list, it will make a fork call
 //for each command. It returns 1 on error, 0 on success
 int	ft_execute_child(t_cmd *cmds)
 {
+	(void)pid;
 	if ((dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1))
 		ft_error_dup(cmds->data);
 	if (close(cmds->cmd_fd[READ_END]) == -1 
