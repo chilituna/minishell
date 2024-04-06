@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: luifer <luifer@student.42.fr>              +#+  +:+       +#+         #
+#    By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/04/05 11:21:16 by luifer           ###   ########.fr        #
+#    Updated: 2024/04/06 17:23:44 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	parsing/parser.c parsing/lexer.c parsing/lexer_helper.c parsing/expander.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_redirs.c \
 	parsing/remove_quotes.c \
-	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c \
+	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c utils/utils_env2.c \
 	utils/ft_split.c utils/get_next_line.c utils/ft_itoa.c utils/utils_errors_exec.c\
 	utils/utils_lst.c utils/utils_check.c utils/utils_exec.c\
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c \
