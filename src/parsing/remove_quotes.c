@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:45:04 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:49:02 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	ft_process_quotes(char **arg, t_cmd *cmd)
 			in_quote = 0;
 			if (j >= (int)ft_strlen(*arg))
 				break ;
+			j = 0;
 		}
 		else if ((*arg)[j] == quote && in_quote)
 			in_quote = 0;

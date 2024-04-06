@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/05 11:41:44 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/06 13:23:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,5 +276,8 @@ void			ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd);
 int				ft_create_child_process(t_cmd *cmds);
 int				ft_redirect_input(t_cmd *cmds);
 int				ft_redirect_output(t_cmd *cmds);
+void			ft_exec_cmd(t_cmd *cmds);
+int				ft_execute_child(pid_t pid, t_cmd *cmds);
+void			ft_set_pipes(t_cmd *cmds);
 
 #endif

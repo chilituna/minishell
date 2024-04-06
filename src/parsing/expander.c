@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/30 17:33:40 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/06 14:46:46 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // expand environment variables and exit status
 // iterate through each string in cmd_arg
 // anyhing in single quotes is not expanded
+// / unless single quotes are inside double quotes
 // if $ is found, check if the next character is ?:
 // - if it is, replace with exit status
 // else if the next character is a letter or _,
@@ -31,24 +32,37 @@ void	ft_expand_env(t_cmd *cmd, t_data *data)
 	int		j;
 
 	i = 0;
+	j = 0;
 	while (cmd->cmd_arg[i])
 	{
-		if (cmd->cmd_arg[i][0] != '\'')
+		j = 0;
+		while (cmd->cmd_arg[i][j])
 		{
-			j = 0;
-			while (cmd->cmd_arg[i][j])
+			if (cmd->cmd_arg[i][j] == '\'')
+				j = ft_skip_quotes(cmd, i, j);
+			if (cmd->cmd_arg[i][j] == '\"')
 			{
-				if (cmd->cmd_arg[i][j] == '\'')
-					j = ft_skip_quotes(cmd, i, j);
-				if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] == '?')
-					j = ft_expand_exit(cmd, i, j, data);
-				else if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1]
-					&& (ft_isalpha(cmd->cmd_arg[i][j + 1])
-					|| cmd->cmd_arg[i][j + 1] == '_'))
-					j = ft_expand_env_var(cmd, i, j, data);
-				if (cmd->cmd_arg[i][j])
-					j++;
+				j++;
+				while (cmd->cmd_arg[i][j] && cmd->cmd_arg[i][j] != '\"')
+				{
+					if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] == '?')
+						j = ft_expand_exit(cmd, i, j, data);
+					else if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1]
+						&& (ft_isalpha(cmd->cmd_arg[i][j + 1])
+						|| cmd->cmd_arg[i][j + 1] == '_'))
+						j = ft_expand_env_var(cmd, i, j, data);
+					if (cmd->cmd_arg[i][j])
+						j++;
+				}
 			}
+			if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1] == '?')
+				j = ft_expand_exit(cmd, i, j, data);
+			else if (cmd->cmd_arg[i][j] == '$' && cmd->cmd_arg[i][j + 1]
+				&& (ft_isalpha(cmd->cmd_arg[i][j + 1])
+				|| cmd->cmd_arg[i][j + 1] == '_'))
+				j = ft_expand_env_var(cmd, i, j, data);
+			if (cmd->cmd_arg[i][j])
+				j++;
 		}
 		i++;
 	}
