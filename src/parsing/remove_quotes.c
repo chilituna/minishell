@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 17:06:59 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/07 18:24:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,45 @@ void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd)
 	}
 }
 
+//remove quotes in case the file name has quotes:
+//iterate through the string until a quote is found
+//remove all the quotes of the same type
+void	ft_process_redir_quotes(char *str, t_cmd *cmd)
+{
+	int		j;
+	char	quote;
+	char	*beginnig;
+	char	*end;
+
+	j = 0;
+	quote = '\0';
+	while (str[j])
+	{
+		if (str[j] == '\'' || str[j] == '\"')
+		{
+			quote = str[j];
+			while (str[j])
+			{
+				if (str[j] == quote)
+				{
+					beginnig = ft_substr(str, 0, j, cmd->data);
+					end = ft_substr(str, j + 1, ft_strlen(str) - j - 1, cmd->data);
+					free(str);
+					str = ft_strjoin(beginnig, end, cmd->data);
+					free(beginnig);
+					free(end);
+					j = 0;
+				}
+				j++;
+			}
+		}
+		j++;
+	}
+}
+
+//remove quotes from the command arguments
+//iterate through the string until a quote is found
+//update the string by removing the quotes of the same type
 void	ft_process_quotes(char **arg, t_cmd *cmd)
 {
 	int		j;
@@ -57,9 +96,11 @@ void	ft_process_quotes(char **arg, t_cmd *cmd)
 	}
 }
 
+//remove quotes from the command arguments and redirections
 void	ft_remove_quotes(t_cmd *cmd)
 {
 	int		i;
+	t_redir	*tmp;
 
 	i = 0;
 	while (cmd->cmd_arg[i])
@@ -67,8 +108,19 @@ void	ft_remove_quotes(t_cmd *cmd)
 		ft_process_quotes(&cmd->cmd_arg[i], cmd);
 		i++;
 	}
+	tmp = cmd->redir;
+	while (tmp)
+	{
+		if (tmp->in)
+			ft_process_redir_quotes(cmd->redir->in, cmd);
+		if (tmp->out)
+			ft_process_redir_quotes(cmd->redir->out, cmd);
+		tmp = tmp->next;
+	}
 }
 
+//update the string by removing the quotes
+//return the new string
 char	*ft_update_str(char	*arg, int start, int len, t_data *data)
 {
 	char	*new_arg;

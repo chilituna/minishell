@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/07 14:22:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/07 15:16:58 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,38 @@ char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 
 void	ft_execute_single_command(t_cmd *cmds)
 {
-	char	*path;
 	char	**env;
 	pid_t	pid;
 
-	if (cmds->builtin)
+	if (cmds->builtin && (ft_strncmp(cmds->cmd_arg[0], "cd", 2) == 0
+			|| ft_strncmp(cmds->cmd_arg[0], "exit", 4) == 0))
 	{
 		ft_check_pipe_redirections(cmds);
 		cmds->builtin(cmds);
 	}
 	else
 	{
-		ft_find_cmd_path(cmds, cmds->data);
-		path = ft_strdup(cmds->path, cmds->data);
 		env = ft_convert_env_list_to_array(cmds->data->env, cmds);
 		pid = fork();
 		if (pid == 0)
 		{
 			if (ft_check_pipe_redirections(cmds) == 1)
 				exit (1);
-			execve(path, cmds->cmd_arg, env);
-			ft_error_executing(cmds->data);
+			if (cmds->builtin)
+			{
+				cmds->builtin(cmds);
+				exit (cmds->data->exit_status);
+			}
+			else
+			{
+				if (ft_find_cmd_path(cmds, cmds->data) == 1)
+					exit (1);
+				execve(cmds->path, cmds->cmd_arg, env);
+				ft_error_executing(cmds->data);
+			}
 		}
-		waitpid(pid, NULL, 0);
-		cmds->data->exit_status = 0;
+		ft_wait_children(pid);
 		ft_free_array(env);
-		free(path);
 	}
 }
 
@@ -142,7 +148,7 @@ int	ft_execute_cmds(t_cmd *cmds)
 		}
 		return (ft_wait_children(pid));
 	}
-	return (0);
+	return (cmds->data->exit_status);
 }
 
 /*
