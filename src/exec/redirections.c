@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:34:50 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/06 20:51:51 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:57:54 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ int	ft_redirect_input(t_cmd *cmds)
 	ft_check_here_doc(cmds);
 	if (cmds->redir->in)
 	{
+		if (access(cmds->redir->in, R_OK) == -1)
+			return (ft_error_opening(cmds->data));
 		open_fd = open(cmds->redir->in, O_RDONLY);
 		if (open_fd == -1)
-			ft_error_opening(cmds->data);
+			return (ft_error_opening(cmds->data));
 		if (dup2(open_fd, STDIN_FILENO) == -1)
-			ft_error_dup(cmds->data);
+			return (ft_error_dup(cmds->data));
 		if (close(open_fd) == -1)
-			ft_error_closing(cmds->data);
+			return (ft_error_closing(cmds->data));
 	}
 	return (0);
 }
@@ -46,23 +48,23 @@ int	ft_redirect_output(t_cmd *cmds)
 	{
 		write_fd = open(cmds->redir->out, O_APPEND | O_CREAT);
 		if (write_fd == -1)
-			ft_error_writing(cmds->data);
+			return (ft_error_writing(cmds->data));
 		if (dup2(write_fd, STDOUT_FILENO) == -1)
-			ft_error_dup(cmds->data);
+			return (ft_error_dup(cmds->data));
 		if (close(write_fd) == -1)
-			ft_error_closing(cmds->data);
+			return (ft_error_closing(cmds->data));
 	}
 	else if (cmds->redir->out)
 	{
 		write_fd = open(cmds->redir->out, O_CREAT | O_WRONLY);
 		if (write_fd == -1)
-			ft_error_writing(cmds->data);
+			return (ft_error_writing(cmds->data));
 		if (dup2(write_fd, STDOUT_FILENO) == -1)
-			ft_error_dup(cmds->data);
+			return (ft_error_dup(cmds->data));
 		if (close(write_fd) == -1)
-			ft_error_closing(cmds->data);
+			return (ft_error_closing(cmds->data));
 	}
-	return (1);
+	return (0);
 }
 
 //Function to check pipeline redirections
@@ -70,7 +72,7 @@ int	ft_redirect_output(t_cmd *cmds)
 //redirection list. For each command it will
 //iterate the corresponding redir list and check
 //for input or output redirection
-void	ft_check_pipe_redirections(t_cmd *cmds)
+int	ft_check_pipe_redirections(t_cmd *cmds)
 {
 	t_cmd	*tmp;
 	t_redir	*tmp_redir;
@@ -82,12 +84,16 @@ void	ft_check_pipe_redirections(t_cmd *cmds)
 		while (tmp_redir)
 		{
 			if (tmp_redir->in)
-				ft_redirect_input(tmp);
+			{
+				if (ft_redirect_input(tmp) == 1)
+					return (1);
+			}
 			if (tmp_redir->out)
 				ft_redirect_output(tmp);
 			tmp_redir = tmp_redir->next;
 		}
 		tmp = tmp->next;
 	}
+	return (0);
 }
 

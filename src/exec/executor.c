@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 21:22:55 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/07 14:22:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@ void	ft_execute_single_command(t_cmd *cmds)
 	char	**env;
 	pid_t	pid;
 
-	ft_check_here_doc(cmds);
 	if (cmds->builtin)
+	{
+		ft_check_pipe_redirections(cmds);
 		cmds->builtin(cmds);
+	}
 	else
 	{
 		ft_find_cmd_path(cmds, cmds->data);
@@ -56,13 +58,16 @@ void	ft_execute_single_command(t_cmd *cmds)
 		env = ft_convert_env_list_to_array(cmds->data->env, cmds);
 		pid = fork();
 		if (pid == 0)
-			execve(path, cmds->cmd_arg, env);
-		else
 		{
-			wait(NULL);
-			cmds->data->exit_status = 0;
+			if (ft_check_pipe_redirections(cmds) == 1)
+				exit (1);
+			execve(path, cmds->cmd_arg, env);
+			ft_error_executing(cmds->data);
 		}
-		free(env);
+		waitpid(pid, NULL, 0);
+		cmds->data->exit_status = 0;
+		ft_free_array(env);
+		free(path);
 	}
 }
 

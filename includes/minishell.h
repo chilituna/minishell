@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 20:42:15 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/07 13:56:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,15 +144,15 @@ void			ft_interrupt(int sig);
 void			ft_error_and_exit(char *str, t_data *data);
 void			ft_error_minishell(char *str);
 void			ft_exit_minishell(t_data *data);
-void			ft_error_forking(t_data *data);
-void			ft_error_piping(t_data *data);
-void			ft_error_dup(t_data *data);
-void			ft_error_executing(t_data *data);
-void			ft_error_cmd(t_data *data);
-void			ft_error_executing(t_data *data);
-void			ft_error_closing(t_data *data);
-void			ft_error_opening(t_data *data);
-void			ft_error_writing(t_data *data);
+int				ft_error_forking(t_data *data);
+int				ft_error_piping(t_data *data);
+int				ft_error_dup(t_data *data);
+int				ft_error_executing(t_data *data);
+int				ft_error_cmd(t_data *data);
+int				ft_error_executing(t_data *data);
+int				ft_error_closing(t_data *data);
+int				ft_error_opening(t_data *data);
+int				ft_error_writing(t_data *data);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
@@ -281,17 +281,14 @@ void			ft_set_cmds_pipes_fd(t_cmd *cmds);
 void			ft_dup_fd_for_pipe(t_cmd *cmds);
 void			ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd);
 int				ft_create_child_process(t_cmd *cmds);
-int				ft_execute_child(t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
 int				ft_wait_children(pid_t pid);
 
 //redirections
-void			ft_check_pipe_redirections(t_cmd *cmds);
+int				ft_check_pipe_redirections(t_cmd *cmds);
 int				ft_redirect_input(t_cmd *cmds);
 int				ft_redirect_output(t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
-int				ft_execute_child(pid_t pid, t_cmd *cmds);
 void			ft_set_pipes(t_cmd *cmds);
-
 
 #endif
