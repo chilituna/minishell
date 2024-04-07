@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/06 13:59:35 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/07 15:11:22 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static char	**ft_extract_path(t_cmd *cmds)
 	char	**path;
 	t_env	*tmp;
 
-	tmp = ft_search_env_var(cmds->data->env, "PATH"); 
+	tmp = ft_search_env_var(cmds->data->env, "PATH");
 	if (tmp == NULL)
 	{
 		cmds->data->exit_status = 1;
@@ -55,10 +55,10 @@ static char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
 }
 
 //This function find the valid PATH for the specified command
-//it will extract the path from env variables and find a valid 
+//it will extract the path from env variables and find a valid
 //path for the command. When a valid path is found, it is stored
 //in the cmds->path field
-void	ft_find_cmd_path(t_cmd *cmds, t_data *data)
+int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 {
 	char	**env;
 	char	*cmd_path;
@@ -72,10 +72,12 @@ void	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	cmd_path = ft_find_valid_path(cmds->cmd_arg[0], env, data);
 	if (!cmd_path)
 	{
-		ft_putstr_fd(RED"minishell:"RESET, STDERR_FILENO);
 		ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-		ft_putstr_fd(RED"command not found"RESET, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n"RESET, STDERR_FILENO);
 		data->exit_status = 127;
+		return (1);
 	}
-	cmds->path = cmd_path;
+	else
+		cmds->path = cmd_path;
+	return (0);
 }

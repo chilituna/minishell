@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/07 13:56:51 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/07 18:56:56 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int				ft_error_executing(t_data *data);
 int				ft_error_cmd(t_data *data);
 int				ft_error_executing(t_data *data);
 int				ft_error_closing(t_data *data);
-int				ft_error_opening(t_data *data);
+int				ft_error_opening(t_data *data, char *file);
 int				ft_error_writing(t_data *data);
 
 //clean_up.c
@@ -170,6 +170,7 @@ void			ft_remove_quotes(t_cmd *cmd);
 char			*ft_update_str(char	*arg, int start, int len, t_data *data);
 void			ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd);
 void			ft_process_quotes(char **arg, t_cmd *cmd);
+void			ft_process_redir_quotes(char *str, t_cmd *cmd);
 
 //utils
 void			ft_putchar_fd(char c, int fd);
@@ -272,7 +273,7 @@ char			*ft_create_here_doc(t_data *data);
 char			*ft_heredoc_expand(char *line, t_data *data);
 
 //execute
-void			ft_find_cmd_path(t_cmd *cmds, t_data *data);
+int				ft_find_cmd_path(t_cmd *cmds, t_data *data);
 char			*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 char			**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds);
 void			ft_execute_single_command(t_cmd *cmds);
@@ -286,8 +287,8 @@ int				ft_wait_children(pid_t pid);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);
-int				ft_redirect_input(t_cmd *cmds);
-int				ft_redirect_output(t_cmd *cmds);
+int				ft_redirect_input(t_redir *redir, t_cmd *cmds);
+int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
 void			ft_set_pipes(t_cmd *cmds);
 
