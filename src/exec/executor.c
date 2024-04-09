@@ -3,44 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/07 15:16:58 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:32:31 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Convert the environment list into an array
-//it iterates through the list joining the variable name
-//with their respective value and save each one into the array
-//it returns the array once it traverse the whole list.
-char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
-{
-	int		size;
-	char	**result;
-	t_env	*tmp;
-	int		i;
-
-	size = ft_envlist_size(env);
-	result = (char **)malloc(sizeof(char *) * (size + 1));
-	if (!result)
-		return (NULL);
-	i = 0;
-	tmp = env;
-	while (env)
-	{
-		result[i] = ft_strjoin(env->var, env->value, cmds->data);
-		i++;
-		env = env->next;
-	}
-	result[size] = NULL;
-	env = tmp;
-	return (result);
-}
-
-void	ft_execute_single_command(t_cmd *cmds)
+//Function to execute a single command in the shell
+//it check for redirections, create child process 
+//and execute command
+int	ft_execute_single_command(t_cmd *cmds)
 {
 	char	**env;
 	pid_t	pid;
@@ -72,9 +47,10 @@ void	ft_execute_single_command(t_cmd *cmds)
 				ft_error_executing(cmds->data);
 			}
 		}
-		ft_wait_children(pid);
 		ft_free_array(env);
+		return (ft_wait_children(pid));
 	}
+	return (1);
 }
 
 //Function to execute a binary command from the system
@@ -91,28 +67,37 @@ void	ft_exec_cmd(t_cmd *cmds)
 	env = ft_convert_env_list_to_array(cmds->data->env, cmds);
 	execve(path, cmds->cmd_arg, env);
 	free(path);
-	free(env);
+	ft_free_array(env);
 	ft_error_executing(cmds->data);
 }
 
-//Function to execute commands in a pipeline
-//it iterates through the list of commands and
-//creates a child process for each command and
-//executes a command inside the child process
-void	ft_pipe(t_cmd *cmds)
+//function to execute a child process
+//it will create child process and execute command
+int	ft_execute_childrens(t_cmd *cmds)
 {
+	int		size;
+	int		i;
+	t_cmd	*tmp;
 	pid_t	pid;
 
-	pid = fork();
-	if (pid == -1)
-		ft_error_forking(cmds->data);
-	if (pid == 0)
-		ft_exec_cmd(cmds);
-	//else
-	//{
-	//	waitpid(pid, NULL, 0);
-	//	return ;
-	//}
+	size = ft_list_size(cmds);
+	i = 0;
+	tmp = cmds;
+	while (i < size && tmp)
+	{
+		pid = fork();
+		if (pid == -1)
+			ft_error_forking(cmds->data);
+		else if (pid == 0)
+		{
+			ft_set_fd_for_pipes(cmds->data, i, size);
+			ft_close_fds(cmds, cmds->data);
+			ft_exec_cmd(tmp);
+		}
+		i++;
+		tmp = tmp->next;
+	}
+	return (ft_wait_children(pid));
 }
 
 //Function to execute the commands received
@@ -120,35 +105,21 @@ void	ft_pipe(t_cmd *cmds)
 //for heredocs, builtins and size of list of commands
 int	ft_execute_cmds(t_cmd *cmds)
 {
-	t_cmd	*tmp;
-	int		size;
-	pid_t	pid;
+	int	size;
+	int	exit_code;
 
 	size = ft_list_size(cmds);
 	if (size == 1)
-		ft_execute_single_command(cmds);
+		return (ft_execute_single_command(cmds));
 	else
 	{
-		tmp = cmds;
-		ft_set_cmds_pipes_fd(tmp);
-		if (ft_strncmp(tmp->cmd_arg[0], "cd", 2) == 0)
-			cmds->builtin(tmp);
-		while (tmp)
-		{
-			pid = fork();
-			if (pid == -1)
-				ft_error_forking(cmds->data);
-			if (pid == 0)
-			{
-				ft_check_pipe_redirections(tmp);
-				ft_dup_fd_for_pipe(tmp);
-				ft_exec_cmd(tmp);
-			}
-			tmp = tmp->next;
-		}
-		return (ft_wait_children(pid));
+		cmds->data->pipe_fd = (int **)malloc(sizeof(size - 1) * 2);
+		if (!cmds->data->pipe_fd)
+			return (1);
+		exit_code = ft_execute_childrens(cmds);
 	}
-	return (cmds->data->exit_status);
+	cmds->data->exit_status = exit_code;
+	return (exit_code);
 }
 
 /*
@@ -181,4 +152,35 @@ void	ft_execute_single_command(t_cmd *cmds)
 		}
 	}
 }
+
+//Function to execute commands in a pipeline
+//it iterates through the list of commands and
+//creates a child process for each command and
+//executes a command inside the child process
+void	ft_pipes(t_cmd *cmds)
+{
+	t_cmd	*tmp;
+	pid_t	pid;
+	int		size;
+	int		i;
+
+	size = ft_list_size(cmds);
+	i = 0;
+	tmp = cmds;
+	while (i < size)
+	{
+		if ((i < size - 1) && (pipe(cmds->data->pipe_fd[i]) == -1))
+			ft_error_piping(cmds->data);
+		pid = fork();
+		if (pid == -1)
+			ft_error_forking(cmds->data);
+		else if (pid == 0)
+		{
+			
+		}
+			
+	}
+	
+}
+
 */

@@ -6,31 +6,38 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/06 20:57:52 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:25:04 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//Function to create a pipe for each command node
-//it traverse the list and generate a fd with read and write
-//end for each command except for the last one (stdout or redirect).
-//It returns 0 on success, 1 on failure
-void	ft_set_cmds_pipes_fd(t_cmd *cmds)
+//Convert the environment list into an array
+//it iterates through the list joining the variable name
+//with their respective value and save each one into the array
+//it returns the array once it traverse the whole list.
+char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 {
-	int		fd[2];
-	t_cmd	*tmp;
+	int		size;
+	char	**result;
+	t_env	*tmp;
+	int		i;
 
-	tmp = cmds;
-	while (tmp)
+	size = ft_envlist_size(env);
+	result = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	tmp = env;
+	while (env)
 	{
-		if (tmp->next == NULL)
-			break ;
-		if (pipe(fd) == -1)
-			ft_error_piping(cmds->data);
-		tmp->cmd_fd = fd;
-		tmp = tmp->next;
+		result[i] = ft_strjoin(env->var, env->value, cmds->data);
+		i++;
+		env = env->next;
 	}
+	result[size] = NULL;
+	env = tmp;
+	return (result);
 }
 
 //Function to get the output of the children process
@@ -60,40 +67,6 @@ int	ft_wait_children(pid_t pid)
 	return (status);
 }
 
-//Function to set the file descriptors
-//in the pipes. It check if the current command is empty for safety
-//if there is a previous command it duplicate the read end
-//of the pipe to receive input. If there is a next command it duplicate the 
-//write end of the pipe to send output. In case both are present (next + prev) 
-//duplicate both. When done it close unused file descriptors
-void	ft_dup_fd_for_pipe(t_cmd *cmds)
-{
-	if (cmds->prev && cmds->next)
-	{
-		if (dup2(cmds->cmd_fd[READ_END], STDIN_FILENO) == -1)
-			ft_error_dup(cmds->data);
-		if (dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1)
-			ft_error_dup(cmds->data);
-		if (close(cmds->cmd_fd[READ_END]) == -1)
-			ft_error_closing(cmds->data);
-		if (close(cmds->cmd_fd[WRITE_END]) == -1)
-			ft_error_closing(cmds->data);
-	}
-	else if (cmds->prev == NULL)
-	{
-		if (dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1)
-			ft_error_dup(cmds->data);
-		if (close(cmds->cmd_fd[WRITE_END]) == -1)
-			ft_error_closing(cmds->data);
-	}
-	if (cmds->next == NULL)
-	{
-		if (dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1)
-			ft_error_dup(cmds->data);
-		if (close(cmds->cmd_fd[WRITE_END]) == -1)
-			ft_error_closing(cmds->data);
-	}
-}
 
 //Function to get the exit status of child process
 int	ft_get_exit_status(int status)
@@ -101,6 +74,42 @@ int	ft_get_exit_status(int status)
 	if (WIFSIGNALED(status))
 		return (128 + WTERMSIG(status));
 	return (WEXITSTATUS(status));
+}
+
+void	ft_close_fds(t_cmd *cmds, t_data *data)
+{
+	int		size;
+	int		i;
+
+	i = 0;
+	size = ft_list_size(cmds);
+	while (i < size - 1)
+	{
+		close(data->pipe_fd[i][READ_END]);
+		close(data->pipe_fd[i][WRITE_END]);
+		i++;
+	}
+}
+
+//Function to set the file descriptors in pipelines
+//duplicate the fd needed and close the unused ones
+// 
+void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
+{
+	if (pos > 0)
+	{
+		if (dup2(data->pipe_fd[pos - 1][READ_END], STDIN_FILENO) == -1)
+			ft_error_dup(data);
+		if (close(data->pipe_fd[pos - 1][READ_END]) == -1)
+			ft_error_closing(data);
+	}
+	if (pos < size - 1)
+	{
+		if (dup2(data->pipe_fd[pos][WRITE_END], STDOUT_FILENO) == -1)
+			ft_error_dup(data);
+		if (close(data->pipe_fd[pos][WRITE_END]) == -1)
+			ft_error_closing(data);
+	}
 }
 
 /*
@@ -115,10 +124,10 @@ void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 	tmp = cmds;
 	while (tmp)
 	{
-		if (tmp != skip_cmd && tmp->cmd_fd)
+		if (tmp != skip_cmd && tmp->pipe_fd)
 		{
-			close(tmp->cmd_fd[READ_END]);
-			close(tmp->cmd_fd[WRITE_END]);
+			close(tmp->pipe_fd[READ_END]);
+			close(tmp->pipe_fd[WRITE_END]);
 		}
 		tmp = tmp->next;
 	}
@@ -130,13 +139,69 @@ void	ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd)
 int	ft_execute_child(t_cmd *cmds)
 {
 	(void)pid;
-	if ((dup2(cmds->cmd_fd[WRITE_END], STDOUT_FILENO) == -1))
+	if ((dup2(cmds->pipe_fd[WRITE_END], STDOUT_FILENO) == -1))
 		ft_error_dup(cmds->data);
-	if (close(cmds->cmd_fd[READ_END]) == -1 
-		|| close(cmds->cmd_fd[WRITE_END]) == -1)
+	if (close(cmds->pipe_fd[READ_END]) == -1 
+		|| close(cmds->pipe_fd[WRITE_END]) == -1)
 		ft_error_closing(cmds->data);
 	ft_exec_cmd(cmds);
 	//return (ft_wait_children(cmds));
+}
+
+//Function to create a pipe for each command node
+//it traverse the list and generate a fd with read and write
+//end for each command except for the last one (stdout or redirect).
+//It returns 0 on success, 1 on failure
+void	ft_set_cmds_pipes_fd(t_cmd *cmds)
+{
+	int		fd[2];
+	t_cmd	*tmp;
+
+	tmp = cmds;
+	while (tmp)
+	{
+		if (tmp->next == NULL)
+			break ;
+		if (pipe(fd) == -1)
+			ft_error_piping(cmds->data);
+		tmp->pipe_fd = fd;
+		tmp = tmp->next;
+	}
+}
+
+//Function to set the file descriptors
+//in the pipes. It check if the current command is empty for safety
+//if there is a previous command it duplicate the read end
+//of the pipe to receive input. If there is a next command it duplicate the 
+//write end of the pipe to send output. In case both are present (next + prev) 
+//duplicate both. When done it close unused file descriptors
+void	ft_dup_fd_for_pipe(t_cmd *cmds)
+{
+	if (cmds->prev && cmds->next)
+	{
+		if (dup2(cmds->data->pipe_fd[READ_END], STDIN_FILENO) == -1)
+			ft_error_dup(cmds->data);
+		if (dup2(cmds->data->pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
+			ft_error_dup(cmds->data);
+		if (close(cmds->data->pipe_fd[READ_END]) == -1)
+			ft_error_closing(cmds->data);
+		if (close(cmds->data->pipe_fd[WRITE_END]) == -1)
+			ft_error_closing(cmds->data);
+	}
+	else if (cmds->prev == NULL)
+	{
+		if (dup2(cmds->data->pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
+			ft_error_dup(cmds->data);
+		if (close(cmds->data->pipe_fd[WRITE_END]) == -1)
+			ft_error_closing(cmds->data);
+	}
+	if (cmds->next == NULL)
+	{
+		if (dup2(cmds->data->pipe_fd[WRITE_END], STDOUT_FILENO) == -1)
+			ft_error_dup(cmds->data);
+		if (close(cmds->data->pipe_fd[WRITE_END]) == -1)
+			ft_error_closing(cmds->data);
+	}
 }
 
 */

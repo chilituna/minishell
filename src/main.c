@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 21:22:23 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:12:27 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->lexer = NULL;
 	data->cmd = NULL;
 	data->prompt = NULL;
+	data->pipe_fd = NULL;
 	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	// ft_print_banner();
