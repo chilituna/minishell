@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/07 18:56:56 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/09 18:30:26 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ typedef struct s_cmd
 	char			*path;
 	t_redir			*redir;
 	int				env_len;
-	int				*cmd_fd;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -119,6 +118,7 @@ typedef struct s_data
 	t_lexer	*lexer;
 	t_cmd	*cmd;
 	t_env	*env;
+	int		**pipe_fd;
 	int		exit_status;
 
 }	t_data;
@@ -276,14 +276,14 @@ char			*ft_heredoc_expand(char *line, t_data *data);
 int				ft_find_cmd_path(t_cmd *cmds, t_data *data);
 char			*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
 char			**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds);
-void			ft_execute_single_command(t_cmd *cmds);
+int				ft_execute_single_command(t_cmd *cmds);
 int				ft_execute_cmds(t_cmd *cmds);
-void			ft_set_cmds_pipes_fd(t_cmd *cmds);
-void			ft_dup_fd_for_pipe(t_cmd *cmds);
-void			ft_close_fd_for_pipe(t_cmd *cmds, t_cmd *skip_cmd);
 int				ft_create_child_process(t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
 int				ft_wait_children(pid_t pid);
+void			ft_close_fds(t_cmd *cmds, t_data *data);
+void			ft_set_fd_for_pipes(t_data *data, int pos, int size);
+int				ft_execute_childrens(t_cmd *cmds);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);
