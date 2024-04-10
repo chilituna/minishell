@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_errors_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:16:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/07 16:51:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 15:54:16 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 int	ft_error_dup(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error closing and duplicating file desciptor\n"RESET, STDOUT_FILENO);
+	ft_putstr_fd(RED"error duplicating file desciptor\n"RESET, STDOUT_FILENO);
 	data->exit_status = 1;
 	return (1);
 }
