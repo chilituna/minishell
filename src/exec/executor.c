@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 14:09:31 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:28:19 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	ft_execute_single_command(t_cmd *cmds)
 				ft_error_executing(cmds->data);
 			}
 		}
-		return (ft_wait_children(pid));
+		cmds->pid = 0;
+		return (ft_wait_children(cmds));
 	}
 	return (1);
 }

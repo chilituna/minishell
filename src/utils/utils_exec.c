@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 14:08:16 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:27:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_wait_children(t_cmd *cmds)
 	result = 0;
 	wait_pid = 0;
 	tmp = cmds;
-	while (tmp || errno != ECHILD)
+	while (tmp && errno != ECHILD)
 	{
 		wait_pid = waitpid(tmp->pid, &status, 0);
 		if (wait_pid == tmp->pid)
