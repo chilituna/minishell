@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_redirs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:34:41 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/17 18:44:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 22:03:36 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

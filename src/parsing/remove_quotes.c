@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/07 18:24:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 23:11:00 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd)
 //remove quotes in case the file name has quotes:
 //iterate through the string until a quote is found
 //remove all the quotes of the same type
-void	ft_process_redir_quotes(char *str, t_cmd *cmd)
+void	ft_process_redir_quotes(char **str, t_cmd *cmd)
 {
 	int		j;
 	char	quote;
@@ -42,19 +42,19 @@ void	ft_process_redir_quotes(char *str, t_cmd *cmd)
 
 	j = 0;
 	quote = '\0';
-	while (str[j])
+	while ((*str)[j])
 	{
-		if (str[j] == '\'' || str[j] == '\"')
+		if ((*str)[j] == '\'' || (*str)[j] == '\"')
 		{
-			quote = str[j];
-			while (str[j])
+			quote = (*str)[j];
+			while ((*str)[j])
 			{
-				if (str[j] == quote)
+				if ((*str)[j] == quote)
 				{
-					beginnig = ft_substr(str, 0, j, cmd->data);
-					end = ft_substr(str, j + 1, ft_strlen(str) - j - 1, cmd->data);
-					free(str);
-					str = ft_strjoin(beginnig, end, cmd->data);
+					beginnig = ft_substr((*str), 0, j, cmd->data);
+					end = ft_substr((*str), j + 1, ft_strlen(*str) - j - 1, cmd->data);
+					free(*str);
+					*str = ft_strjoin(beginnig, end, cmd->data);
 					free(beginnig);
 					free(end);
 					j = 0;
@@ -112,9 +112,9 @@ void	ft_remove_quotes(t_cmd *cmd)
 	while (tmp)
 	{
 		if (tmp->in)
-			ft_process_redir_quotes(cmd->redir->in, cmd);
+			ft_process_redir_quotes(&tmp->in, cmd);
 		if (tmp->out)
-			ft_process_redir_quotes(cmd->redir->out, cmd);
+			ft_process_redir_quotes(&tmp->out, cmd);
 		tmp = tmp->next;
 	}
 }
