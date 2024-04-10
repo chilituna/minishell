@@ -289,7 +289,7 @@ int				ft_execute_childrens(t_cmd *cmds);
 void			ft_set_fd_first_command(t_data *data, int pos);
 void			ft_set_fd_middle_command(t_data *data, int pos);
 void			ft_set_fd_last_command(t_data *data, int pos);
-void			ft_set_pipes_fd(t_cmd *cmds);
+int				ft_set_pipes_fd(t_cmd *cmds);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);
