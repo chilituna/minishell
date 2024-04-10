@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 23:02:35 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/10 22:27:00 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void			ft_remove_quotes(t_cmd *cmd);
 char			*ft_update_str(char	*arg, int start, int len, t_data *data);
 void			ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd);
 void			ft_process_quotes(char **arg, t_cmd *cmd);
-void			ft_process_redir_quotes(char *str, t_cmd *cmd);
+void			ft_process_redir_quotes(char **str, t_cmd *cmd);
 
 //utils
 void			ft_putchar_fd(char c, int fd);

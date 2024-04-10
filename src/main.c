@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 13:08:45 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 23:11:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,30 @@
 
 void	ft_print_cmd(t_cmd *cmd)
 {
-	int	i;
+	int		i;
+	t_redir	*tmp;
 
 	i = 0;
-	printf(BLUE1 "COMMAND: %d\n" RESET, cmd->index + 1);
+	printf(BLUE1 "COMMAND: %d\n" RESET, i);
 	while (cmd->cmd_arg[i])
 	{
 		printf("%s\n", cmd->cmd_arg[i]);
 		i++;
 	}
-	while (cmd->redir)
+	tmp = cmd->redir;
+	while (tmp)
 	{
-		if (cmd->redir->in)
-			printf("redir_in: %s\n", cmd->redir->in);
-		if (cmd->redir->out)
-			printf("redir_out: %s\n", cmd->redir->out);
-		if (cmd->redir->append)
+		if (tmp->in)
+			printf("redir_in: %s\n", tmp->in);
+		if (tmp->out)
+			printf("redir_out: %s\n", tmp->out);
+		if (tmp->append)
 			printf("redir will be appended\n");
-		if (cmd->redir->heredoc)
+		if (tmp->heredoc)
 			printf("heredoc\n");
-		if (cmd->redir->delim)
-			printf("heredoc_delim: %s\n", cmd->redir->delim);
-		cmd->redir = cmd->redir->next;
+		if (tmp->delim)
+			printf("heredoc_delim: %s\n", tmp->delim);
+		tmp = tmp->next;
 	}
 }
 
