@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 15:37:04 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:28:21 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ void	ft_free_data(t_data *data)
 	{
 		ft_free_parser(data->cmd);
 		data->cmd = NULL;
+	}
+	if (data->envp)
+	{
+		ft_free_array(data->envp);
+		data->envp = NULL;
 	}
 }
 

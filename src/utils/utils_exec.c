@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 13:12:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:27:14 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,20 @@ char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 	t_env	*tmp;
 	int		i;
 
-	tmp = env;
-	size = ft_envlist_size(tmp);
-	result = ft_malloc(sizeof(char) * (size + 1), cmds->data);
+	size = ft_envlist_size(env);
+	result = (char **)malloc(sizeof(char *) * (size + 1));
+	if (!result)
+		return (NULL);
 	i = 0;
-	while (tmp)
+	tmp = env;
+	while (env)
 	{
-		result[i] = ft_strjoin(tmp->var, tmp->value, cmds->data);
+		result[i] = ft_strjoin(env->var, env->value, cmds->data);
 		i++;
-		tmp = tmp->next;
+		env = env->next;
 	}
 	result[size] = NULL;
+	env = tmp;
 	return (result);
 }
 
@@ -63,7 +66,6 @@ int	ft_wait_children(pid_t pid)
 		status = result;
 	return (status);
 }
-
 
 //Function to get the exit status of child process
 int	ft_get_exit_status(int status)
