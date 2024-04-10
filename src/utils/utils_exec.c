@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 14:27:14 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:08:16 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,22 @@ char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 //Function to get the output of the children process
 //it wait for the execution of child process and return
 //exit status of last command executed in case of pipeline
-int	ft_wait_children(pid_t pid)
+int	ft_wait_children(t_cmd *cmds)
 {
 	pid_t	wait_pid;
+	t_cmd	*tmp;
 	int		status;
 	int		result;
 
 	result = 0;
 	wait_pid = 0;
-	while (wait_pid != -1 || errno != ECHILD)
+	tmp = cmds;
+	while (tmp || errno != ECHILD)
 	{
-		wait_pid = waitpid(-1, &status, 0);
-		if (wait_pid == pid)
+		wait_pid = waitpid(tmp->pid, &status, 0);
+		if (wait_pid == tmp->pid)
 			result = status;
-		continue ;
+		tmp = tmp->next;
 	}
 	if (WIFSIGNALED(result))
 		status = 128 + WTERMSIG(result);
@@ -95,20 +97,12 @@ void	ft_close_fds(t_cmd *cmds, t_data *data)
 //
 void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 {
+	if (pos == 0)
+		ft_set_fd_first_command(data, pos);
+	if (pos == size - 1)
+		ft_set_fd_last_command(data, pos);
 	if (pos > 0)
-	{
-		if (dup2(data->pipe_fd[pos - 1][READ_END], STDIN_FILENO) == -1)
-			ft_error_dup(data);
-		if (close(data->pipe_fd[pos - 1][READ_END]) == -1)
-			ft_error_closing(data);
-	}
-	if (pos < size - 1)
-	{
-		if (dup2(data->pipe_fd[pos][WRITE_END], STDOUT_FILENO) == -1)
-			ft_error_dup(data);
-		if (close(data->pipe_fd[pos][WRITE_END]) == -1)
-			ft_error_closing(data);
-	}
+		ft_set_fd_middle_command(data, pos);
 }
 
 /*

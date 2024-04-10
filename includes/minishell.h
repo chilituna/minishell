@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 13:07:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:08:28 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_cmd
 	char			*path;
 	t_redir			*redir;
 	int				env_len;
+	pid_t			pid;
 	int				(*builtin)(struct s_cmd *cmd);
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
@@ -281,10 +282,13 @@ int				ft_execute_single_command(t_cmd *cmds);
 int				ft_execute_cmds(t_cmd *cmds);
 int				ft_create_child_process(t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
-int				ft_wait_children(pid_t pid);
+int				ft_wait_children(t_cmd *cmds);
 void			ft_close_fds(t_cmd *cmds, t_data *data);
 void			ft_set_fd_for_pipes(t_data *data, int pos, int size);
 int				ft_execute_childrens(t_cmd *cmds);
+void			ft_set_fd_first_command(t_data *data, int pos);
+void			ft_set_fd_middle_command(t_data *data, int pos);
+void			ft_set_fd_last_command(t_data *data, int pos);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);

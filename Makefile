@@ -6,7 +6,7 @@
 #    By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/04/06 20:37:24 by lperez-h         ###   ########.fr        #
+#    Updated: 2024/04/10 13:42:18 by lperez-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ SRC_FILES = main.c clean_up.c error_and_exit.c signals.c banner.c \
 	parsing/remove_quotes.c \
 	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c utils/utils_env2.c \
 	utils/ft_split.c utils/get_next_line.c utils/ft_itoa.c utils/utils_errors_exec.c\
-	utils/utils_lst.c utils/utils_check.c utils/utils_exec.c\
+	utils/utils_lst.c utils/utils_check.c utils/utils_exec.c utils/utils_exec2.c\
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c \
 	builtin/ft_export.c builtin/ft_unset.c \
 	exec/executor.c exec/heredoc.c exec/ft_get_path.c exec/execute_builtins.c exec/redirections.c

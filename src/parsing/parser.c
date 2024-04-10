@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 19:46:01 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 13:08:13 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 12:12:42 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_cmd	*ft_init_cmd(t_cmd *cmd, int i, t_data *data)
 	cmd->builtin = NULL;
 	cmd->redir = NULL;
 	cmd->env_len = 0;
+	cmd->pid = -1;
 	cmd->next = NULL;
 	cmd->prev = NULL;
 	cmd->data = data;

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 14:26:26 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:09:31 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,9 @@ int	ft_execute_childrens(t_cmd *cmds)
 		}
 		i++;
 		tmp = tmp->next;
+		tmp->pid = pid;
 	}
-	return (ft_wait_children(pid));
+	return (ft_wait_children(cmds));
 }
 
 //Function to execute the commands received
@@ -113,7 +114,7 @@ int	ft_execute_cmds(t_cmd *cmds)
 		return (ft_execute_single_command(cmds));
 	else
 	{
-		cmds->data->pipe_fd = (int **)malloc(sizeof(size - 1) * 2);
+		cmds->data->pipe_fd = (int **)malloc(sizeof(size - 1) * 2 + 1);
 		if (!cmds->data->pipe_fd)
 			return (1);
 		exit_code = ft_execute_childrens(cmds);
