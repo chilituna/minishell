@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/04/10 16:27:33 by aarponen         ###   ########.fr       */
-=======
-/*   Updated: 2024/04/10 16:54:46 by lperez-h         ###   ########.fr       */
->>>>>>> 737c3f621b393875dbd1933c70d35647fe17afb7
+/*   Updated: 2024/04/10 17:00:34 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +114,7 @@ void	ft_set_pipes_fd(t_cmd *cmds)
 	int	size;
 	int	i;
 
-	size = ft_list_size;
+	size = ft_list_size(cmds);
 	i = 0;
 	while (i < size - 1)
 	{
