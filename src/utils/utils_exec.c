@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 17:00:34 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 23:11:31 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,29 +99,42 @@ void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 {
 	if (pos == 0)
 		ft_set_fd_first_command(data, pos);
-	if (pos == size - 1)
+	else if (pos == size - 1)
 		ft_set_fd_last_command(data, pos);
-	if (pos > 0)
+	else if (pos > 0)
 		ft_set_fd_middle_command(data, pos);
 }
 
-//Function to create a pipe for each command node
-//it traverse the list and generate a fd with read and write
-//end for each command except for the last one (stdout or redirect).
-//It returns 0 on success, 1 on failure
-void	ft_set_pipes_fd(t_cmd *cmds)
+//Function to create the pipes needed for the pipeline
+//it will generate size - 1 pipes. It first allocates memory
+//for the outer array(rows) and then for the inner array (columns)
+//when the memory is allocated it creates the pipes and check for 
+//errors during creation.
+int	ft_set_pipes_fd(t_cmd *cmds)
 {
 	int	size;
 	int	i;
+	int	j;
 
 	size = ft_list_size(cmds);
 	i = 0;
+	cmds->data->pipe_fd = malloc(sizeof(int *) * (size - 1));//outer array
+	if (!cmds->data->pipe_fd)
+		return (1);//ft_error_malloc?
+	while(j < size - 1)
+	{
+		cmds->data->pipe_fd[j] = malloc(sizeof(int) * 2);
+		if (!cmds->data->pipe_fd[j])
+			return (1);
+		j++;
+	}
 	while (i < size - 1)
 	{
 		if (pipe(cmds->data->pipe_fd[i]) == -1)
 			ft_error_piping(cmds->data);
 		i++;
 	}
+	return (0);
 }
 
 /*
