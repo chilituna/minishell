@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
 /*   Updated: 2024/04/10 14:08:16 by lperez-h         ###   ########.fr       */
@@ -68,7 +68,6 @@ int	ft_wait_children(t_cmd *cmds)
 		status = result;
 	return (status);
 }
-
 
 //Function to get the exit status of child process
 int	ft_get_exit_status(int status)
@@ -135,7 +134,7 @@ int	ft_execute_child(t_cmd *cmds)
 	(void)pid;
 	if ((dup2(cmds->pipe_fd[WRITE_END], STDOUT_FILENO) == -1))
 		ft_error_dup(cmds->data);
-	if (close(cmds->pipe_fd[READ_END]) == -1 
+	if (close(cmds->pipe_fd[READ_END]) == -1
 		|| close(cmds->pipe_fd[WRITE_END]) == -1)
 		ft_error_closing(cmds->data);
 	ft_exec_cmd(cmds);
@@ -166,8 +165,8 @@ void	ft_set_cmds_pipes_fd(t_cmd *cmds)
 //Function to set the file descriptors
 //in the pipes. It check if the current command is empty for safety
 //if there is a previous command it duplicate the read end
-//of the pipe to receive input. If there is a next command it duplicate the 
-//write end of the pipe to send output. In case both are present (next + prev) 
+//of the pipe to receive input. If there is a next command it duplicate the
+//write end of the pipe to send output. In case both are present (next + prev)
 //duplicate both. When done it close unused file descriptors
 void	ft_dup_fd_for_pipe(t_cmd *cmds)
 {

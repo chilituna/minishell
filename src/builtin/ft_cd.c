@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/06 16:48:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:58:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,11 @@ int	ft_update_pwd(char *var, t_data *data)
 {
 	char	buffer[PATH_MAX];
 	char	*new_value;
-	char	*env_var;
 
 	if (getcwd(buffer, sizeof(buffer)) != NULL)
 	{
 		new_value = ft_strdup(buffer, data);
-		env_var = ft_strjoin(var, "=", data);
-		ft_update_env_var(env_var, new_value, data);
-		free(env_var);
+		ft_update_env_var(var, new_value, data);
 		free(new_value);
 	}
 	return (1);

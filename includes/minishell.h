@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
 /*   Updated: 2024/04/10 14:08:28 by lperez-h         ###   ########.fr       */
@@ -119,6 +119,7 @@ typedef struct s_data
 	t_lexer	*lexer;
 	t_cmd	*cmd;
 	t_env	*env;
+	char	**envp;
 	int		**pipe_fd;
 	int		exit_status;
 
