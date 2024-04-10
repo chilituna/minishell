@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:21:27 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 20:45:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/10 14:00:13 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,14 @@ void	ft_update_env_var(char *var, char *new_value, t_data *data)
 	t_env	*tmp;
 
 	tmp = data->env;
+	k = ft_strlen(var);
 	while (tmp)
 	{
 		j = ft_strlen(tmp->var);
-		k = ft_strlen(var);
 		if (k == j && ft_strncmp(tmp->var, var, j) == 0)
 		{
 			free(tmp->value);
 			tmp->value = ft_strdup(new_value, data);
-			free(var);
-			free(new_value);
 			return ;
 		}
 		tmp = tmp->next;
@@ -108,4 +106,3 @@ void	ft_delete_env_var(t_env **env, char *name)
 		tmp = tmp->next;
 	}
 }
-
