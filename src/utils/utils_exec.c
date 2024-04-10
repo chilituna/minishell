@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/04/10 16:27:33 by aarponen         ###   ########.fr       */
+=======
+/*   Updated: 2024/04/10 16:54:46 by lperez-h         ###   ########.fr       */
+>>>>>>> 737c3f621b393875dbd1933c70d35647fe17afb7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +109,25 @@ void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 		ft_set_fd_middle_command(data, pos);
 }
 
+//Function to create a pipe for each command node
+//it traverse the list and generate a fd with read and write
+//end for each command except for the last one (stdout or redirect).
+//It returns 0 on success, 1 on failure
+void	ft_set_pipes_fd(t_cmd *cmds)
+{
+	int	size;
+	int	i;
+
+	size = ft_list_size;
+	i = 0;
+	while (i < size - 1)
+	{
+		if (pipe(cmds->data->pipe_fd[i]) == -1)
+			ft_error_piping(cmds->data);
+		i++;
+	}
+}
+
 /*
 //Function to close the file descriptors
 //in the pipes. It receives a command to skip
@@ -141,26 +164,6 @@ int	ft_execute_child(t_cmd *cmds)
 	//return (ft_wait_children(cmds));
 }
 
-//Function to create a pipe for each command node
-//it traverse the list and generate a fd with read and write
-//end for each command except for the last one (stdout or redirect).
-//It returns 0 on success, 1 on failure
-void	ft_set_cmds_pipes_fd(t_cmd *cmds)
-{
-	int		fd[2];
-	t_cmd	*tmp;
-
-	tmp = cmds;
-	while (tmp)
-	{
-		if (tmp->next == NULL)
-			break ;
-		if (pipe(fd) == -1)
-			ft_error_piping(cmds->data);
-		tmp->pipe_fd = fd;
-		tmp = tmp->next;
-	}
-}
 
 //Function to set the file descriptors
 //in the pipes. It check if the current command is empty for safety
