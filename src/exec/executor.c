@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/09 18:32:31 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/10 13:36:47 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //Function to execute a single command in the shell
-//it check for redirections, create child process 
+//it check for redirections, create child process
 //and execute command
 int	ft_execute_single_command(t_cmd *cmds)
 {
-	char	**env;
 	pid_t	pid;
 
 	if (cmds->builtin && (ft_strncmp(cmds->cmd_arg[0], "cd", 2) == 0
-			|| ft_strncmp(cmds->cmd_arg[0], "exit", 4) == 0))
+			|| ft_strncmp(cmds->cmd_arg[0], "exit", 4) == 0
+			|| ft_strncmp(cmds->cmd_arg[0], "export", 6) == 0
+			|| ft_strncmp(cmds->cmd_arg[0], "unset", 5) == 0))
 	{
 		ft_check_pipe_redirections(cmds);
 		cmds->builtin(cmds);
 	}
 	else
 	{
-		env = ft_convert_env_list_to_array(cmds->data->env, cmds);
 		pid = fork();
 		if (pid == 0)
 		{
@@ -43,11 +43,11 @@ int	ft_execute_single_command(t_cmd *cmds)
 			{
 				if (ft_find_cmd_path(cmds, cmds->data) == 1)
 					exit (1);
-				execve(cmds->path, cmds->cmd_arg, env);
+				cmds->data->envp = ft_convert_env_list_to_array(cmds->data->env, cmds);
+				execve(cmds->path, cmds->cmd_arg, cmds->data->envp);
 				ft_error_executing(cmds->data);
 			}
 		}
-		ft_free_array(env);
 		return (ft_wait_children(pid));
 	}
 	return (1);
@@ -176,11 +176,11 @@ void	ft_pipes(t_cmd *cmds)
 			ft_error_forking(cmds->data);
 		else if (pid == 0)
 		{
-			
+
 		}
-			
+
 	}
-	
+
 }
 
 */
