@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec2.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:39:03 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/10 16:32:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:50:15 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,3 +51,29 @@ void	ft_set_fd_last_command(t_data *data, int pos)
 		ft_error_closing(data);
 }
 
+void	ft_init_and_create_pipe(t_cmd *cmds)
+{
+	int	size;
+	int	i;
+	int	j;
+
+	size = ft_list_size(cmds);
+	i = 0;
+	while (i < size - 1)
+	{
+		j = 0;
+		while (j < 2)
+		{
+			cmds->data->pipe_fd[i][j] = 100;
+			j++;
+		}
+		i++;
+	}
+	i = 0;
+	while (i < size - 1)
+	{
+		if (pipe(cmds->data->pipe_fd[i]) == -1)
+			ft_error_piping(cmds->data);
+		i++;
+	}
+}

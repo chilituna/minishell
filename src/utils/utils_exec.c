@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 23:11:31 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/11 11:24:59 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 //for the outer array(rows) and then for the inner array (columns)
 //when the memory is allocated it creates the pipes and check for 
 //errors during creation.
-int	ft_set_pipes_fd(t_cmd *cmds)
+int	ft_create_pipes_and_init(t_cmd *cmds)
 {
 	int	size;
 	int	i;
@@ -121,19 +121,15 @@ int	ft_set_pipes_fd(t_cmd *cmds)
 	cmds->data->pipe_fd = malloc(sizeof(int *) * (size - 1));//outer array
 	if (!cmds->data->pipe_fd)
 		return (1);//ft_error_malloc?
-	while(j < size - 1)
+	j = 0;
+	while (j < size - 1)
 	{
 		cmds->data->pipe_fd[j] = malloc(sizeof(int) * 2);
 		if (!cmds->data->pipe_fd[j])
 			return (1);
 		j++;
 	}
-	while (i < size - 1)
-	{
-		if (pipe(cmds->data->pipe_fd[i]) == -1)
-			ft_error_piping(cmds->data);
-		i++;
-	}
+	ft_init_and_create_pipe(cmds);
 	return (0);
 }
 

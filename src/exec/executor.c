@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 23:03:16 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/11 11:31:47 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	ft_execute_cmds(t_cmd *cmds)
 		return (ft_execute_single_command(cmds));
 	else
 	{
-		ft_set_pipes_fd(cmds);
+		ft_create_pipes_and_init(cmds);
 		exit_code = ft_execute_childrens(cmds);
 	}
 	cmds->data->exit_status = exit_code;
