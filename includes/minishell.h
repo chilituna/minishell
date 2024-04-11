@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 22:27:00 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/11 11:23:59 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,7 +289,8 @@ int				ft_execute_childrens(t_cmd *cmds);
 void			ft_set_fd_first_command(t_data *data, int pos);
 void			ft_set_fd_middle_command(t_data *data, int pos);
 void			ft_set_fd_last_command(t_data *data, int pos);
-int				ft_set_pipes_fd(t_cmd *cmds);
+int				ft_create_pipes_and_init(t_cmd *cmds);
+void			ft_init_and_create_pipe(t_cmd *cmds);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);
