@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/11 11:24:59 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/11 21:50:41 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,9 @@ void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 int	ft_create_pipes_and_init(t_cmd *cmds)
 {
 	int	size;
-	int	i;
 	int	j;
 
 	size = ft_list_size(cmds);
-	i = 0;
 	cmds->data->pipe_fd = malloc(sizeof(int *) * (size - 1));//outer array
 	if (!cmds->data->pipe_fd)
 		return (1);//ft_error_malloc?

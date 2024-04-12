@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/11 11:31:47 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:17:42 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,16 +88,17 @@ int	ft_execute_childrens(t_cmd *cmds)
 	{
 		pid = fork();
 		if (pid == -1)
-			ft_error_forking(cmds->data);
+			ft_error_forking(tmp->data);
 		else if (pid == 0)
 		{
-			ft_set_fd_for_pipes(cmds->data, i, size);
-			ft_close_fds(cmds, cmds->data);
+			ft_set_fd_for_pipes(tmp->data, i, size);
+			ft_close_fds(tmp, tmp->data);
 			ft_exec_cmd(tmp);
 		}
+		if (tmp)
+			tmp->pid = pid;
 		i++;
 		tmp = tmp->next;
-		tmp->pid = pid;
 	}
 	return (ft_wait_children(cmds));
 }

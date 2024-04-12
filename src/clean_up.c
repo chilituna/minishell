@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 14:28:21 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:27:08 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ void	ft_free_data(t_data *data)
 	{
 		ft_free_array(data->envp);
 		data->envp = NULL;
+	}
+	if (data->pipe_fd)
+	{
+		ft_free_fd(data->pipe_fd);
+		data->pipe_fd = NULL;
 	}
 }
 
