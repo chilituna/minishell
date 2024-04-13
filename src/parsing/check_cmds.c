@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 23:11:38 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:10:19 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,7 @@ int	ft_check_cmds(t_cmd *cmd)
 		cmd->cmd_arg = ft_check_redirections(cmd);
 		if (!cmd->cmd_arg)
 			return (ft_print_error("Syntax error: incorrect redirections"));
-		if (!cmd->cmd_arg[0])
-			printf(RED "Syntax error: no command\n" RESET);
-		if (ft_is_builtin(cmd->cmd_arg[0]))
+		if (cmd->cmd_arg[0] && ft_is_builtin(cmd->cmd_arg[0]))
 			cmd->builtin = ft_get_builtin(cmd->cmd_arg[0]);
 		if (cmd->cmd_arg[0])
 			ft_expand_env(cmd, cmd->data);

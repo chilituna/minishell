@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 14:58:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:44:06 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ int	ft_execute_childrens(t_cmd *cmds)
 		else if (pid == 0)
 		{
 			ft_set_fd_for_pipes(tmp->data, i, size);
+			if (ft_check_pipe_redirections(tmp) == 1)
+				exit (1);
 			ft_close_fds(cmds, tmp->data);
 			ft_exec_cmd(tmp);
 		}

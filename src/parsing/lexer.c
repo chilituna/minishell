@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 19:08:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 17:57:40 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,7 @@ t_lexer	*ft_lexer(char *input, t_data *data)
 	i = 0;
 	while (input[0])
 	{
-		new = ft_init_lexer(new, i, data);
-		input = ft_pick_string(input, new);
-		ft_tokenizer(new);
+		new = ft_init_lexer(i, data);
 		if (i == 0)
 			head = new;
 		else
@@ -36,15 +34,18 @@ t_lexer	*ft_lexer(char *input, t_data *data)
 			tmp->next = new;
 			new->prev = tmp;
 		}
+		input = ft_pick_string(input, new);
+		ft_tokenizer(new);
 		tmp = new;
 		i++;
 	}
-	tmp = NULL;
 	return (head);
 }
 
-t_lexer	*ft_init_lexer(t_lexer *lexer, int i, t_data *data)
+t_lexer	*ft_init_lexer(int i, t_data *data)
 {
+	t_lexer	*lexer;
+
 	lexer = ft_malloc(sizeof(t_lexer), data);
 	lexer->index = i;
 	lexer->str = NULL;
