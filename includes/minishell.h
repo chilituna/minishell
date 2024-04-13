@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 17:54:14 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:18:27 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ int				ft_error_cmd(t_data *data);
 int				ft_error_executing(t_data *data);
 int				ft_error_closing(t_data *data);
 int				ft_error_opening(t_data *data, char *file);
-int				ft_error_writing(t_data *data);
+int				ft_error_writing(t_data *data, char *file);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
