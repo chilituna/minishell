@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/11 21:50:41 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/13 15:02:06 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_set_fd_for_pipes(t_data *data, int pos, int size)
 //Function to create the pipes needed for the pipeline
 //it will generate size - 1 pipes. It first allocates memory
 //for the outer array(rows) and then for the inner array (columns)
-//when the memory is allocated it creates the pipes and check for 
+//when the memory is allocated it creates the pipes and check for
 //errors during creation.
 int	ft_create_pipes_and_init(t_cmd *cmds)
 {
