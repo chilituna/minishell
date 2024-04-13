@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:21:27 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 14:00:13 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 12:55:11 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,12 @@ t_env	*ft_search_env_var(t_env *env, char *name)
 void	ft_delete_env_var(t_env **env, char *name)
 {
 	t_env	*tmp;
+	t_env	*prev;
 	t_env	*head;
 
 	tmp = *env;
 	head = *env;
+	prev = NULL;
 	while (tmp)
 	{
 		if (ft_strlen(name) == ft_strlen(tmp->var)
@@ -98,11 +100,11 @@ void	ft_delete_env_var(t_env **env, char *name)
 			if (tmp == head)
 				*env = tmp->next;
 			else
-				tmp->next = tmp->next->next;
-			tmp->var = NULL;
-			tmp->value = NULL;
+				prev->next = tmp->next;
+			free(tmp);
 			return ;
 		}
+		prev = tmp;
 		tmp = tmp->next;
 	}
 }
