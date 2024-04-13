@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/11 11:23:59 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/11 23:26:57 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,6 +162,7 @@ void			ft_free_lexer(t_lexer *lexer);
 void			ft_free_parser(t_cmd *cmd);
 void			ft_free_env(t_env *env);
 void			ft_free_redir(t_redir *redir);
+void			ft_free_fd(int **arr);
 
 //check quotes
 int				ft_check_quotes(char *input);
