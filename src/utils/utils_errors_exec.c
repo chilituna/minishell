@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:16:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/13 16:12:07 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 19:18:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,10 +71,10 @@ int	ft_error_opening(t_data *data, char *file)
 	return (1);
 }
 
-int	ft_error_writing(t_data *data)
+int	ft_error_writing(t_data *data, char *file)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	perror(data->cmd->redir->out);
+	perror(file);
 	data->exit_status = 1;
 	return (1);
 }

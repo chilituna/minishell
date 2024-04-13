@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 18:42:42 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:53:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	start = i;
 	if (lexer->prev && lexer->prev->token && (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
 	{
+		if (str[i] == '\'')
+		i += ft_quoted_string(str + i, '\'');
+		else if (str[i] == '\"')
+		i += ft_quoted_string(str + i, '\"');
 		while (!ft_isspace(str[i]) && str[i] != '\0' && str[i] != '|')
 			i++;
 	}
