@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:34:50 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/10 23:28:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:31:27 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_redirect_input(t_redir *redir, t_cmd *cmds)
 //it checks if the output redirection is
 //present and duplicate the fd accordingly
 //it considers the case of append
-int	ft_check_outfile(t_redir *redir, t_cmd *cmds)
+int	ft_check_outfile(t_redir *redir)
 {
 	int	write_fd;
 
@@ -47,10 +47,6 @@ int	ft_check_outfile(t_redir *redir, t_cmd *cmds)
 		write_fd = open(redir->out, O_WRONLY | O_APPEND | O_CREAT, 0664);
 	else
 		write_fd = open(redir->out, O_WRONLY | O_TRUNC | O_CREAT, 0664);
-	if (write_fd == -1)
-		return (ft_error_writing(cmds->data));
-	if (close(write_fd) == -1)
-		return (ft_error_closing(cmds->data));
 	return (0);
 }
 
@@ -95,7 +91,7 @@ int	ft_check_pipe_redirections(t_cmd *cmds)
 			last_i = tmp_redir;
 		if (tmp_redir->out)
 		{
-			ft_check_outfile(tmp_redir, tmp);
+			ft_check_outfile(tmp_redir);
 			last_o = tmp_redir;
 		}
 		tmp_redir = tmp_redir->next;

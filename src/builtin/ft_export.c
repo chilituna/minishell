@@ -6,19 +6,52 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 11:49:55 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 13:11:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+//function to sort the environment variables alphabetically
+void	ft_sort_env_list(t_env *env)
+{
+	t_env	*tmp;
+	char	*var;
+	char	*value;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (tmp->next)
+		{
+			if (ft_strncmp(tmp->var, tmp->next->var,
+					ft_strlen(tmp->var)) > 0)
+			{
+				var = tmp->var;
+				value = tmp->value;
+				tmp->var = tmp->next->var;
+				tmp->value = tmp->next->value;
+				tmp->next->var = var;
+				tmp->next->value = value;
+				tmp = env;
+			}
+			else
+				tmp = tmp->next;
+		}
+		else
+			break ;
+	}
+}
+
 //function to print the environment variables present at the
 // moment of execution. Simple export without arguments.
+// the list should be printed alphabetically
 int	ft_print_export(t_cmd *cmds)
 {
 	t_env	*tmp;
 
 	tmp = cmds->data->env;
+	ft_sort_env_list(tmp);
 	while (tmp)
 	{
 		write(STDOUT_FILENO, "declare -x ", 12);
