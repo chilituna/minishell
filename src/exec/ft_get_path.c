@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/07 15:11:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:26:45 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	**ft_extract_path(t_cmd *cmds)
 //for the command received as argument
 //it returns a string with the right path when is found
 //null when is not found
-static char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
+char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
 {
 	int		i;
 	char	*cmd_path;
@@ -60,14 +60,31 @@ static char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
 //in the cmds->path field
 int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 {
-	char	**env;
-	char	*cmd_path;
+	char		**env;
+	char		*cmd_path;
+	struct stat	path_stat;
 
 	env = ft_extract_path(cmds);
 	if (!env)
 	{
 		data->exit_status = 1;
-		ft_putstr_fd(RED"minishell: path not found\n"RESET, STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: could not get env\n"RESET, STDERR_FILENO);
+	}
+	if (cmds->cmd_arg[0][0] == '/' || cmds->cmd_arg[0][0] == '.')
+	{
+		if (stat(cmds->cmd_arg[0], &path_stat) == 0)
+		{
+			if (S_ISDIR(path_stat.st_mode))
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+				ft_putstr_fd(": Is a directory\n"RESET, STDERR_FILENO);
+				data->exit_status = 126;
+				exit(126);
+			}
+		}
+		cmds->path = ft_strdup(cmds->cmd_arg[0], data);
+		return (0);
 	}
 	cmd_path = ft_find_valid_path(cmds->cmd_arg[0], env, data);
 	if (!cmd_path)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/11 23:26:57 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/13 17:54:14 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,7 +219,7 @@ char			*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer			*ft_lexer(char *str, t_data *data);
-t_lexer			*ft_init_lexer(t_lexer *lexer, int i, t_data *data);
+t_lexer			*ft_init_lexer(int i, t_data *data);
 void			ft_tokenizer(t_lexer *lexer);
 char			*ft_pick_string(char *str, t_lexer *lexer);
 int				ft_quoted_string(char *str, char c);
@@ -292,6 +292,7 @@ void			ft_set_fd_middle_command(t_data *data, int pos);
 void			ft_set_fd_last_command(t_data *data, int pos);
 int				ft_create_pipes_and_init(t_cmd *cmds);
 void			ft_init_and_create_pipe(t_cmd *cmds);
+char			*ft_find_valid_path(char *cmd, char **path, t_data *data);
 
 //redirections
 int				ft_check_pipe_redirections(t_cmd *cmds);

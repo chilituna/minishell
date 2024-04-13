@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 23:11:00 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 18:03:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ void	ft_remove_quotes(t_cmd *cmd)
 			ft_process_redir_quotes(&tmp->in, cmd);
 		if (tmp->out)
 			ft_process_redir_quotes(&tmp->out, cmd);
+		if (tmp->delim)
+			ft_process_redir_quotes(&tmp->delim, cmd);
 		tmp = tmp->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_errors_exec.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 11:16:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/10 15:54:16 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/13 16:12:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 //function for error in duplicating file descriptor
 int	ft_error_dup(t_data *data)
 {
-	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error duplicating file desciptor\n"RESET, STDOUT_FILENO);
+	ft_putstr_fd("minishell: "RESET, STDERR_FILENO);
+	ft_putstr_fd("error duplicating file desciptor\n", STDERR_FILENO);
 	data->exit_status = 1;
 	return (1);
 }
 
 int	ft_error_closing(t_data *data)
 {
-	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error closing fd:"RESET, STDOUT_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd("error closing fd:", STDERR_FILENO);
 	data->exit_status = 1;
 	return (1);
 }
 
 int	ft_error_executing(t_data *data)
 {
-	ft_putstr_fd(RED"minishell: "RESET, STDOUT_FILENO);
-	ft_putstr_fd(RED"error: cannot execute\n"RESET, STDOUT_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	perror(data->cmd->cmd_arg[0]);
 	data->exit_status = 1;
 	return (1);
 }
