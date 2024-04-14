@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/13 15:02:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 10:55:39 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,25 @@ int	ft_wait_children(t_cmd *cmds)
 	int		result;
 
 	result = 0;
-	wait_pid = 0;
 	tmp = cmds;
-	while (tmp && errno != ECHILD)
+	while (tmp)
 	{
 		wait_pid = waitpid(tmp->pid, &status, 0);
-		if (wait_pid == tmp->pid)
+		if (wait_pid == -1)
+		{
+			perror("waitpid");
+			break ;
+		}
+		if (WIFSIGNALED(status))
+			result = 128 + WTERMSIG(status);
+		else if (WIFEXITED(status))
+			result = WEXITSTATUS(status);
+		else
 			result = status;
+		cmds->data->exit_status = result;
 		tmp = tmp->next;
 	}
-	if (WIFSIGNALED(result))
-		status = 128 + WTERMSIG(result);
-	else if (WIFEXITED(result))
-		status = WEXITSTATUS(result);
-	else
-		status = result;
-	return (status);
+	return (result);
 }
 
 //Function to get the exit status of child process
