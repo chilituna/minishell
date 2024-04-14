@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/14 13:46:02 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 16:46:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,27 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 				data->exit_status = 126;
 				return (1);
 			}
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+				ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+				data->exit_status = 126;
+				return (1);
+			}
 		}
 		else if (S_ISDIR(path_stat.st_mode))
 		{
 			ft_putstr_fd("minishell: ", STDERR_FILENO);
 			ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
 			ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+			data->exit_status = 126;
+			return (1);
+		}
+		else if (access(cmds->cmd_arg[0], X_OK) == -1)
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
 			data->exit_status = 126;
 			return (1);
 		}
