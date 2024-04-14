@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/13 16:26:45 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 13:46:02 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,32 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	}
 	if (cmds->cmd_arg[0][0] == '/' || cmds->cmd_arg[0][0] == '.')
 	{
-		if (stat(cmds->cmd_arg[0], &path_stat) == 0)
+		if (stat(cmds->cmd_arg[0], &path_stat) == -1)
 		{
-			if (S_ISDIR(path_stat.st_mode))
+			if (errno == ENOENT)
 			{
 				ft_putstr_fd("minishell: ", STDERR_FILENO);
 				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-				ft_putstr_fd(": Is a directory\n"RESET, STDERR_FILENO);
-				data->exit_status = 126;
-				exit(126);
+				perror(": ");
+				data->exit_status = 127;
+				return (1);
 			}
+			else if (errno == EACCES)
+			{
+				ft_putstr_fd("minishell: ", STDERR_FILENO);
+				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+				ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
+				data->exit_status = 126;
+				return (1);
+			}
+		}
+		else if (S_ISDIR(path_stat.st_mode))
+		{
+			ft_putstr_fd("minishell: ", STDERR_FILENO);
+			ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
+			ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
+			data->exit_status = 126;
+			return (1);
 		}
 		cmds->path = ft_strdup(cmds->cmd_arg[0], data);
 		return (0);
@@ -90,7 +106,7 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	if (!cmd_path)
 	{
 		ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n"RESET, STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		data->exit_status = 127;
 		return (1);
 	}

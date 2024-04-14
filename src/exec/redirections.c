@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:34:50 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/13 21:05:20 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 13:28:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	ft_redirect_output(t_redir *redir, t_cmd *cmds)
 //iterate the corresponding redir list
 //for input the last redir struct will be checked
 //for output all redir structs will be checked
-int	ft_check_pipe_redirections(t_cmd *cmds)
+int	ft_handle_redirs(t_cmd *cmds)
 {
 	t_cmd	*tmp;
 	t_redir	*tmp_redir;

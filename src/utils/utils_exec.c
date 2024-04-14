@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/14 10:55:39 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:23:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,7 @@ int	ft_create_pipes_and_init(t_cmd *cmds)
 	int	j;
 
 	size = ft_list_size(cmds);
-	cmds->data->pipe_fd = malloc(sizeof(int *) * (size - 1));//outer array
-	if (!cmds->data->pipe_fd)
-		return (1);//ft_error_malloc?
+	cmds->data->pipe_fd = ft_malloc(sizeof(int *) * (size - 1), cmds->data);
 	j = 0;
 	while (j < size - 1)
 	{

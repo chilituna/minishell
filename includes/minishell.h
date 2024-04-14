@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 19:18:27 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 13:28:30 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,7 @@ void			ft_init_and_create_pipe(t_cmd *cmds);
 char			*ft_find_valid_path(char *cmd, char **path, t_data *data);
 
 //redirections
-int				ft_check_pipe_redirections(t_cmd *cmds);
+int				ft_handle_redirs(t_cmd *cmds);
 int				ft_redirect_input(t_redir *redir, t_cmd *cmds);
 int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);

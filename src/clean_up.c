@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   clean_up.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/11 23:27:08 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/14 14:33:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free_pipes(int **pipe_fd, t_cmd *cmds)
+{
+	int	i;
+	int	size;
+
+	size = ft_list_size(cmds);
+	i = 0;
+	while (i < size - 1)
+	{
+		free(pipe_fd[i]);
+		i++;
+	}
+	free(pipe_fd);
+}
 
 void	ft_free_data(t_data *data)
 {
@@ -18,6 +33,11 @@ void	ft_free_data(t_data *data)
 	{
 		free(data->prompt);
 		data->prompt = NULL;
+	}
+	if (data->pipe_fd != NULL)
+	{
+		ft_free_pipes(data->pipe_fd, data->cmd);
+		data->pipe_fd = NULL;
 	}
 	if (data->lexer)
 	{
@@ -34,9 +54,9 @@ void	ft_free_data(t_data *data)
 		ft_free_array(data->envp);
 		data->envp = NULL;
 	}
-	if (data->pipe_fd)
+	if (data->pipe_fd != NULL)
 	{
-		ft_free_fd(data->pipe_fd);
+		ft_free_pipes(data->pipe_fd, data->cmd);
 		data->pipe_fd = NULL;
 	}
 }

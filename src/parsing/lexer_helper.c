@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 11:31:34 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 14:51:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 			i++;
 	}
 	else if (str[i] == '|')
-	{
-		lexer->str = ft_substr(str, start, 1, lexer->data);
 		i++;
-	}
 	else if (str[i] == '>' || str[i] == '<')
 		i = ft_pick_redir(str, i, start, lexer);
 	else if (str[i] == '\'')

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:39:03 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/13 14:46:57 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 16:14:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 //of the first command in a pipeline
 void	ft_set_fd_first_command(t_data *data, int pos)
 {
-	//ft_redirect_input(cmd->redir, cmd);
-	//still need to check for input and output redirections and duplicate fd accordingly
 	if (dup2(data->pipe_fd[pos][WRITE_END], STDOUT_FILENO) == -1)
 		ft_error_dup(data);
 	// if (close(data->pipe_fd[pos][WRITE_END]) == -1)

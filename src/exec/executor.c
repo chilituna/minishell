@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 11:00:41 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 16:25:11 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_execute_single_command(t_cmd *cmds)
 			|| ft_strncmp(cmds->cmd_arg[0], "export", 6) == 0
 			|| ft_strncmp(cmds->cmd_arg[0], "unset", 5) == 0))
 	{
-		ft_check_pipe_redirections(cmds);
+		ft_handle_redirs(cmds);
 		cmds->builtin(cmds);
 	}
 	else
@@ -32,7 +32,7 @@ int	ft_execute_single_command(t_cmd *cmds)
 		pid = fork();
 		if (pid == 0)
 		{
-			if (ft_check_pipe_redirections(cmds) == 1)
+			if (ft_handle_redirs(cmds) == 1)
 				exit (cmds->data->exit_status);
 			if (cmds->builtin)
 			{
@@ -41,6 +41,8 @@ int	ft_execute_single_command(t_cmd *cmds)
 			}
 			else
 			{
+				if (!cmds->cmd_arg[0])
+					exit (0);
 				if (ft_find_cmd_path(cmds, cmds->data) == 1)
 					exit (cmds->data->exit_status);
 				cmds->data->envp = ft_convert_env_list_to_array(cmds->data->env, cmds);
@@ -63,13 +65,21 @@ void	ft_exec_cmd(t_cmd *cmds)
 	char	*path;
 	char	**env;
 
-	ft_find_cmd_path(cmds, cmds->data);
-	path = ft_strdup(cmds->path, cmds->data);
-	env = ft_convert_env_list_to_array(cmds->data->env, cmds);
-	execve(path, cmds->cmd_arg, env);
-	free(path);
-	ft_free_array(env);
-	ft_error_executing(cmds->data);
+	if (cmds->builtin)
+	{
+		cmds->builtin(cmds);
+		exit (cmds->data->exit_status);
+	}
+	else
+	{
+		ft_find_cmd_path(cmds, cmds->data);
+		path = ft_strdup(cmds->path, cmds->data);
+		env = ft_convert_env_list_to_array(cmds->data->env, cmds);
+		execve(path, cmds->cmd_arg, env);
+		free(path);
+		ft_free_array(env);
+		ft_error_executing(cmds->data);
+	}
 }
 
 //function to execute a child process
@@ -92,7 +102,7 @@ int	ft_execute_childrens(t_cmd *cmds)
 		else if (pid == 0)
 		{
 			ft_set_fd_for_pipes(tmp->data, i, size);
-			if (ft_check_pipe_redirections(tmp) == 1)
+			if (ft_handle_redirs(tmp) == 1)
 				exit (1);
 			ft_close_fds(cmds, tmp->data);
 			ft_exec_cmd(tmp);
