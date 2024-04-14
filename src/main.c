@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 15:41:45 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 22:26:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,34 +93,48 @@ int	main(int argc, char **argv, char **envp)
 	t_data	*data;
 
 	data = NULL;
-	if (argc != 1 || argv[1])
-		ft_error_minishell("usage: ./minishell");
+	// if (argc != 1 || argv[1])
+	// 	ft_error_minishell("usage: ./minishell");
 	data = malloc(sizeof(t_data));
 	if (!data)
 		ft_error_and_exit("malloc error", data);
 	ft_init_data(envp, data);
-	while (1)
+	if (argc > 1 && strcmp(argv[1], "-c") == 0 && argc >= 3)
 	{
-		ft_signals_interactive();
-		data->prompt = readline("minishell $ ");
-		if (!data->prompt)
-			ft_error_and_exit("Exiting minishell", data);
-		ft_signals_running();
-		if (data->prompt[0] == '\0')
-			continue ;
-			// return (0);
-		add_history(data->prompt);
+		data->prompt = ft_strdup(argv[2], data);
 		if (ft_check_quotes(data->prompt))
 		{
 			data->lexer = ft_lexer(data->prompt, data);
 			data->cmd = ft_parser(data->lexer, data);
 			if (!ft_check_cmds(data->cmd))
-				continue ;
-				// return (0);
+				return (data->exit_status);
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);
+		free(data);
+		return (data->exit_status);
 	}
-	free(data);
-	return (data->exit_status);
+	else
+	{
+		while (1)
+		{
+			ft_signals_interactive();
+			data->prompt = readline("minishell $ ");
+			if (!data->prompt)
+				ft_error_and_exit("Exiting minishell", data);
+			ft_signals_running();
+			if (data->prompt[0] == '\0')
+				continue ;
+			add_history(data->prompt);
+			if (ft_check_quotes(data->prompt))
+			{
+				data->lexer = ft_lexer(data->prompt, data);
+				data->cmd = ft_parser(data->lexer, data);
+				if (!ft_check_cmds(data->cmd))
+					continue ;
+				ft_execute_cmds(data->cmd);
+			}
+			ft_free_data(data);
+		}
+	}
 }

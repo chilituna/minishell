@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:34:50 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/13 19:19:25 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/13 21:05:20 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,16 @@ int	ft_check_outfile(t_redir *redir, t_cmd *cmds)
 	return (0);
 }
 
+//check input redirection:
+//if the file is not accessible, return 1
+//if the file is accessible, return 0
+int	ft_check_infile(t_redir *redir, t_cmd *cmds)
+{
+	if (access(redir->in, R_OK) == -1)
+		return (ft_error_opening(cmds->data, redir->in));
+	return (0);
+}
+
 int	ft_redirect_output(t_redir *redir, t_cmd *cmds)
 {
 	int	write_fd;
@@ -90,7 +100,11 @@ int	ft_check_pipe_redirections(t_cmd *cmds)
 	while (tmp_redir)
 	{
 		if (tmp_redir->in)
+		{
+			if (ft_check_infile(tmp_redir, tmp) == 1)
+				return (1);
 			last_i = tmp_redir;
+		}
 		if (tmp_redir->out)
 		{
 			if (ft_check_outfile(tmp_redir, tmp) == 1)
