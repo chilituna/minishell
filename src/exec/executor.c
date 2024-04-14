@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 16:44:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 11:00:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_execute_single_command(t_cmd *cmds)
 		if (pid == 0)
 		{
 			if (ft_check_pipe_redirections(cmds) == 1)
-				exit (1);
+				exit (cmds->data->exit_status);
 			if (cmds->builtin)
 			{
 				cmds->builtin(cmds);
@@ -42,7 +42,7 @@ int	ft_execute_single_command(t_cmd *cmds)
 			else
 			{
 				if (ft_find_cmd_path(cmds, cmds->data) == 1)
-					exit (1);
+					exit (cmds->data->exit_status);
 				cmds->data->envp = ft_convert_env_list_to_array(cmds->data->env, cmds);
 				execve(cmds->path, cmds->cmd_arg, cmds->data->envp);
 				ft_error_executing(cmds->data);

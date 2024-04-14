@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 18:53:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/14 11:31:34 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	int		i;
 
 	i = 0;
-	while (ft_isspace(str[i]))
+	while (str[i] != '\0' && ft_isspace(str[i]))
 		i++;
 	start = i;
 	if (lexer->prev && lexer->prev->token && (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
@@ -35,7 +35,7 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i += ft_quoted_string(str + i, '\'');
 		else if (str[i] == '\"')
 		i += ft_quoted_string(str + i, '\"');
-		while (!ft_isspace(str[i]) && str[i] != '\0' && str[i] != '|')
+		while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
 			i++;
 	}
 	else if (str[i] == '|')
@@ -51,11 +51,11 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i += ft_quoted_string(str + i, '\"');
 	else
 	{
-		while (!ft_isspace(str[i]) && str[i] != '\0' && str[i] != '|' && str[i] != '<' && str[i] != '>')
+		while (str[i] != '\0' && !ft_isspace(str[i]))
 			i++;
 	}
 	lexer->str = ft_substr(str, start, i - start, lexer->data);
-	while (ft_isspace(str[i]))
+	while (str[i] != '\0' && ft_isspace(str[i]))
 		i++;
 	return (str + i);
 }
@@ -78,10 +78,10 @@ int	ft_quoted_string(char *str, char c)
 
 	i = 0;
 	i++;
-	while (str[i] != c && str[i] != '\0')
+	while (str[i] != '\0' && str[i] != c)
 		i++;
-	while (!ft_isspace(str[i]) && str[i] != '\0')
-		i++;
-	i++;
+	if (str[i] != '\0' && str[i] != '|' && !ft_isspace(str[i]))
+        while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
+            i++;
 	return (i);
 }
