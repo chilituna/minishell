@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 19:05:41 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:40:45 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,10 @@ void			ft_signals_interactive(void);
 void			ft_signals_running(void);
 void			ft_new_prompt(int sig);
 void			ft_interrupt(int sig);
+//void			ft_reset_prompt(int signum);
+//void			ft_new_line(int signum);
+//void			ft_signals_interactive(void);
+//void			ft_signals_non_interactive(void);
 
 //error handling
 void			ft_error_and_exit(char *str, t_data *data);
