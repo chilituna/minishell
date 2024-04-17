@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 16:30:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:41:18 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,8 @@ void			ft_add_var_back(t_env *env, t_env *new_env);
 void			ft_delete_env_var(t_env **env, char *name);
 void			ft_update_env_var(char *var, char *new_value, t_data *data);
 char			*ft_getenv(char *var, t_data *data);
+t_env			*ft_find_env_var(t_env *env, char *name);
+void			ft_sort_env_list(t_env *env);
 //utils_lst
 t_env			*ft_lstnew(char *content, char *value);
 t_env			*ft_lstlast(t_env *lst);
@@ -274,7 +276,6 @@ int				ft_is_num(const char *str);
 int				ft_exit_code(char *str);
 int				ft_export(t_cmd *cmds);
 char			*ft_check_input(char *str, t_data *data);
-t_env			*ft_find_env_var(t_env *env, char *name);
 int				ft_print_export(t_cmd *cmds);
 int				ft_unset(t_cmd *cmds);
 

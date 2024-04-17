@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 17:26:09 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:29:05 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ void	ft_signals_running(void)
 	//sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-void heredoc_handler(int signal)
-{
-	if (signum == SIGINT)
-	{
-		
-	}
-}
+// void heredoc_handler(int signal)
+// {
+// 	if (signum == SIGINT)
+// 	{
+
+// 	}
+// }
 
 /*
 void	ft_reset_prompt(int signum)

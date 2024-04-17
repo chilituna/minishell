@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 17:20:19 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 17:22:24 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 19:40:20 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,49 @@ char	*ft_getenv(char *var, t_data *data)
 		tmp = tmp->next;
 	}
 	return (ft_strdup("", data));
+}
+
+//Function to find the node that contains the specified name
+// of the enviroment variable
+t_env	*ft_find_env_var(t_env *env, char *name)
+{
+	t_env	*tmp;
+
+	tmp = env;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->var, name, ft_strlen(name)) == 0)
+			return (tmp);
+		tmp = tmp->next;
+	}
+	return (NULL);
+}
+
+//function to sort the environment variables alphabetically
+void	ft_sort_env_list(t_env *env)
+{
+	t_env	*tmp;
+	char	*var;
+	char	*value;
+
+	tmp = env;
+	while (tmp)
+	{
+		while (tmp->next)
+		{
+			if (ft_strncmp(tmp->var, tmp->next->var,
+					ft_strlen(tmp->var)) > 0)
+			{
+				var = tmp->var;
+				value = tmp->value;
+				tmp->var = tmp->next->var;
+				tmp->value = tmp->next->value;
+				tmp->next->var = var;
+				tmp->next->value = value;
+				tmp = env;
+			}
+			else
+				tmp = tmp->next;
+		}
+	}
 }
