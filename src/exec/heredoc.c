@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/06 15:51:01 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:26:06 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ char	*ft_create_here_doc(t_data *data)
 	return (filename);
 }
 
+/*
+	What I would try: 
+	1. Replace STDIN_FILENO by a dup2 of STDIN_FILENO to a pipe
+	2. Try to replace gnl by readline 
+	3. Try a cobination of both */
+
 // create a temporary file to store the heredoc
 int	ft_heredoc(t_redir *redir, t_data *data)
 {
@@ -76,7 +82,10 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
-		line = get_next_line(STDIN_FILENO, data);
+		ft_signals_interactive();
+		line = readline(STDIN_FILENO);
+		//line = get_next_line(STDIN_FILENO, data);
+		ft_signals_running();
 		if (!ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))
 		{
 			free(line);

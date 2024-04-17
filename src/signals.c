@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/16 15:40:26 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:26:09 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_interrupt(int signal)
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	rl_redisplay();
+	// rl_redisplay();
 }
 
 // Signal handler for SIGINT (Ctrl-C)
@@ -44,14 +44,14 @@ void	ft_new_prompt(int signal)
 // ctrl-\ does nothing (SIGQUIT)
 void	ft_signals_interactive(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	//struct sigaction	sa_int;
+	//struct sigaction	sa_quit;
 
-	memset(&sa_int, 0, sizeof(sa_int));
+	//memset(&sa_int, 0, sizeof(sa_int));
 	signal(SIGINT, ft_new_prompt);
 	//sa_int.sa_handler = &ft_new_prompt;
 	//sigaction(SIGINT, &sa_int, NULL);
-	memset(&sa_quit, 0, sizeof(sa_quit));
+	//memset(&sa_quit, 0, sizeof(sa_quit));
 	signal(SIGQUIT, SIG_IGN);
 	//sa_quit.sa_handler = SIG_IGN;
 	//sigaction(SIGQUIT, &sa_quit, NULL);
@@ -65,17 +65,25 @@ void	ft_signals_interactive(void)
 // ctrl-\: Exits the shell abruptly by sending a SIGQUIT signal.
 void	ft_signals_running(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+	//struct sigaction	sa_int;
+	//struct sigaction	sa_quit;
 
-	memset(&sa_int, 0, sizeof(sa_int));
+	//memset(&sa_int, 0, sizeof(sa_int));
 	signal(SIGINT, ft_interrupt);
 	//sa_int.sa_handler = &ft_interrupt;
 	//sigaction(SIGINT, &sa_int, NULL);
-	memset(&sa_quit, 0, sizeof(sa_quit));
+	//memset(&sa_quit, 0, sizeof(sa_quit));
 	signal(SIGQUIT, ft_interrupt);
 	//sa_quit.sa_handler = &ft_interrupt;
 	//sigaction(SIGQUIT, &sa_quit, NULL);
+}
+
+void heredoc_handler(int signal)
+{
+	if (signum == SIGINT)
+	{
+		
+	}
 }
 
 /*
