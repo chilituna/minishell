@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:34:41 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/10 22:03:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 14:35:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_store_redirection(t_cmd *cmd, int i)
 		tmp->out = ft_strdup(cmd->tokens[i + 1], cmd->data);
 	if (ft_strncmp(cmd->tokens[i], "REDIR_APPEND", 12) == 0)
 		tmp->append = 1;
+	free(cmd->tokens[i + 1]);
+	free(cmd->tokens[i]);
 	cmd->tokens[i + 1] = ft_strdup("", cmd->data);
 	cmd->tokens[i] = ft_strdup("", cmd->data);
 	return (1);

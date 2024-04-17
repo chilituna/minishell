@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 19:11:02 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:41:37 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_execute_single_command(t_cmd *cmds)
 		if (pid == 0)
 		{
 			if (ft_handle_redirs(cmds) == 1)
-				exit (cmds->data->exit_status);
+				ft_exit_minishell(cmds->data);
 			ft_exec_cmd(cmds);
 		}
 		cmds->pid = pid;
@@ -51,14 +51,14 @@ void	ft_exec_cmd(t_cmd *cmds)
 	if (cmds->builtin)
 	{
 		cmds->builtin(cmds);
-		exit (cmds->data->exit_status);
+		ft_exit_minishell(cmds->data);
 	}
 	else
 	{
 		if (!cmds->cmd_arg[0])
-			exit (0);
+			ft_exit_minishell(cmds->data);
 		if (ft_find_cmd_path(cmds, cmds->data) == 1)
-			exit (cmds->data->exit_status);
+			ft_exit_minishell(cmds->data);
 		cmds->data->envp = ft_convert_env_list_to_array(cmds->data->env, cmds);
 		execve(cmds->path, cmds->cmd_arg, cmds->data->envp);
 		ft_error_executing(cmds->data);
@@ -86,7 +86,7 @@ int	ft_execute_children(t_cmd *cmds)
 		{
 			ft_set_fd_for_pipes(tmp->data, i, size);
 			if (ft_handle_redirs(tmp) == 1)
-				exit (1);
+				ft_exit_minishell(tmp->data);
 			ft_close_fds(cmds, tmp->data);
 			ft_exec_cmd(tmp);
 		}
