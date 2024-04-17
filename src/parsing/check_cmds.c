@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 11:41:41 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:31:09 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@
 // to the corresponding function
 // if there are no commands, return 0
 // expand environment variables in cmd_arg
-
-int	ft_print_error(char *error)
-{
-	printf(RED "%s\n" RESET, error);
-	return (0);
-}
+// remove empty strings from cmd_arg
+// remove quotes from cmd_arg
+// check for heredoc and store into temp file
 
 int	ft_check_cmds(t_cmd *cmd)
 {
@@ -49,12 +46,11 @@ int	ft_check_cmds(t_cmd *cmd)
 	return (1);
 }
 
-// remove any empty strings from cmd_arg
-void	ft_remove_empty(t_cmd *cmd)
+char	**ft_create_new_array(t_cmd *cmd)
 {
+	char	**new;
 	int		i;
 	int		j;
-	char	**new;
 
 	i = 0;
 	j = 0;
@@ -65,6 +61,17 @@ void	ft_remove_empty(t_cmd *cmd)
 		i++;
 	}
 	new = ft_malloc(sizeof(char *) * (j + 1), cmd->data);
+	return (new);
+}
+
+// remove any empty strings from cmd_arg
+void	ft_remove_empty(t_cmd *cmd)
+{
+	int		i;
+	int		j;
+	char	**new;
+
+	new = ft_create_new_array(cmd);
 	i = 0;
 	j = 0;
 	while (cmd->cmd_arg[i])

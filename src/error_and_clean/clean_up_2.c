@@ -1,65 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_up.c                                         :+:      :+:    :+:   */
+/*   clear_up_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/25 14:10:25 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 14:33:57 by aarponen         ###   ########.fr       */
+/*   Created: 2024/04/17 14:42:06 by aarponen          #+#    #+#             */
+/*   Updated: 2024/04/17 14:48:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	ft_free_pipes(int **pipe_fd, t_cmd *cmds)
-{
-	int	i;
-	int	size;
-
-	size = ft_list_size(cmds);
-	i = 0;
-	while (i < size - 1)
-	{
-		free(pipe_fd[i]);
-		i++;
-	}
-	free(pipe_fd);
-}
-
-void	ft_free_data(t_data *data)
-{
-	if (data->prompt)
-	{
-		free(data->prompt);
-		data->prompt = NULL;
-	}
-	if (data->pipe_fd != NULL)
-	{
-		ft_free_pipes(data->pipe_fd, data->cmd);
-		data->pipe_fd = NULL;
-	}
-	if (data->lexer)
-	{
-		ft_free_lexer(data->lexer);
-		data->lexer = NULL;
-	}
-	if (data->cmd)
-	{
-		ft_free_parser(data->cmd);
-		data->cmd = NULL;
-	}
-	if (data->envp)
-	{
-		ft_free_array(data->envp);
-		data->envp = NULL;
-	}
-	if (data->pipe_fd != NULL)
-	{
-		ft_free_pipes(data->pipe_fd, data->cmd);
-		data->pipe_fd = NULL;
-	}
-}
 
 void	ft_free_lexer(t_lexer *lexer)
 {
@@ -113,17 +64,17 @@ void	ft_free_redir(t_redir *redir)
 	}
 }
 
-//should only be used in case of exit or error
-void	ft_free_env(t_env *env)
+void	ft_free_pipes(int **pipe_fd, t_cmd *cmds)
 {
-	t_env	*tmp;
+	int	i;
+	int	size;
 
-	while (env)
+	size = ft_list_size(cmds);
+	i = 0;
+	while (i < size - 1)
 	{
-		tmp = env->next;
-		free(env->var);
-		free(env->value);
-		free(env);
-		env = tmp;
+		free(pipe_fd[i]);
+		i++;
 	}
+	free(pipe_fd);
 }

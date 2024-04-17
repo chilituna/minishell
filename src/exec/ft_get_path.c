@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/17 13:29:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:31:06 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ char	*ft_find_valid_path(char *cmd, char **path, t_data *data)
 //in the cmds->path field
 int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 {
-	struct stat	path_stat;
-
 	if (cmds->data->envp)
 		ft_free_array(cmds->data->envp);
 	cmds->data->envp = ft_extract_path(cmds);
@@ -75,52 +73,7 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 		ft_putstr_fd(RED"minishell: could not get env\n"RESET, STDERR_FILENO);
 	}
 	if (cmds->cmd_arg[0][0] == '/' || cmds->cmd_arg[0][0] == '.')
-	{
-		if (stat(cmds->cmd_arg[0], &path_stat) == -1)
-		{
-			if (errno == ENOENT)
-			{
-				ft_putstr_fd("minishell: ", STDERR_FILENO);
-				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-				perror(": ");
-				data->exit_status = 127;
-				return (1);
-			}
-			else if (errno == EACCES)
-			{
-				ft_putstr_fd("minishell: ", STDERR_FILENO);
-				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-				ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-				data->exit_status = 126;
-				return (1);
-			}
-			{
-				ft_putstr_fd("minishell: ", STDERR_FILENO);
-				ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-				ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-				data->exit_status = 126;
-				return (1);
-			}
-		}
-		else if (S_ISDIR(path_stat.st_mode))
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-			ft_putstr_fd(": Is a directory\n", STDERR_FILENO);
-			data->exit_status = 126;
-			return (1);
-		}
-		else if (access(cmds->cmd_arg[0], X_OK) == -1)
-		{
-			ft_putstr_fd("minishell: ", STDERR_FILENO);
-			ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
-			ft_putstr_fd(": Permission denied\n", STDERR_FILENO);
-			data->exit_status = 126;
-			return (1);
-		}
-		cmds->path = ft_strdup(cmds->cmd_arg[0], data);
-		return (0);
-	}
+		return (ft_check_ablosute_path(cmds, data));
 	cmds->path = ft_find_valid_path(cmds->cmd_arg[0], cmds->data->envp, data);
 	if (!cmds->path)
 	{
@@ -129,5 +82,24 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 		data->exit_status = 127;
 		return (1);
 	}
+	return (0);
+}
+
+int	ft_check_ablosute_path(t_cmd *cmds, t_data *data)
+{
+	struct stat	path_stat;
+
+	if (stat(cmds->cmd_arg[0], &path_stat) == -1)
+	{
+		if (errno == ENOENT)
+			return (ft_path_error_1(data, cmds->cmd_arg[0]));
+		else if (errno == EACCES)
+			return (ft_path_error_2(data, cmds->cmd_arg[0]));
+	}
+	else if (S_ISDIR(path_stat.st_mode))
+		return (ft_path_error_3(data, cmds->cmd_arg[0]));
+	else if (access(cmds->cmd_arg[0], X_OK) == -1)
+		return (ft_path_error_2(data, cmds->cmd_arg[0]));
+	cmds->path = ft_strdup(cmds->cmd_arg[0], data);
 	return (0);
 }

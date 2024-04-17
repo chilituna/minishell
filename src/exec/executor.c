@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 13:41:37 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:47:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,15 @@ void	ft_exec_cmd(t_cmd *cmds)
 	}
 }
 
+void	ft_execute_child(t_cmd *cmds, t_cmd *tmp, int i, int size)
+{
+	ft_set_fd_for_pipes(tmp->data, i, size);
+	if (ft_handle_redirs(tmp) == 1)
+		ft_exit_minishell(tmp->data);
+	ft_close_fds(cmds, tmp->data);
+	ft_exec_cmd(tmp);
+}
+
 //function to execute a child process
 //it will create child process and execute command
 int	ft_execute_children(t_cmd *cmds)
@@ -83,13 +92,7 @@ int	ft_execute_children(t_cmd *cmds)
 		if (pid == -1)
 			ft_error_forking(tmp->data);
 		else if (pid == 0)
-		{
-			ft_set_fd_for_pipes(tmp->data, i, size);
-			if (ft_handle_redirs(tmp) == 1)
-				ft_exit_minishell(tmp->data);
-			ft_close_fds(cmds, tmp->data);
-			ft_exec_cmd(tmp);
-		}
+			ft_execute_child(cmds, tmp, i, size);
 		if (tmp)
 			tmp->pid = pid;
 		i++;

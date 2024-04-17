@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/06 12:13:17 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:31:20 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ void	ft_exit_minishell(t_data *data)
 	exit_status = data->exit_status;
 	free(data);
 	exit(exit_status);
+}
+
+int	ft_print_error(char *error)
+{
+	printf(RED "%s\n" RESET, error);
+	return (0);
 }

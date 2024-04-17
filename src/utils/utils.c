@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:45:31 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/11 23:26:04 by luifer           ###   ########.fr       */
+/*   Updated: 2024/04/17 14:47:14 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,39 +35,4 @@ void	*ft_malloc(size_t size, t_data *data)
 	if (ptr == NULL)
 		ft_error_and_exit("malloc failed", data);
 	return (ptr);
-}
-
-// free the array of strings
-void	ft_free_array(char **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
-}
-
-// freeing the 3 strings from heredoc function
-void	ft_freeall_here(char *line, char *end_line, char *env_var)
-{
-	free(line);
-	free(end_line);
-	free(env_var);
-}
-
-void	ft_free_fd(int **arr)
-{
-	int	i;
-
-	i = 0;
-	while (arr[i])
-	{
-		free(arr[i]);
-		i++;
-	}
-	free(arr);
 }
