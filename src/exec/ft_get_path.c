@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/17 16:31:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:00:00 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,6 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	if (cmds->data->envp)
 		ft_free_array(cmds->data->envp);
 	cmds->data->envp = ft_extract_path(cmds);
-	if (!cmds->data->envp)
-	{
-		data->exit_status = 1;
-		ft_putstr_fd(RED"minishell: could not get env\n"RESET, STDERR_FILENO);
-	}
 	if (cmds->cmd_arg[0][0] == '/' || cmds->cmd_arg[0][0] == '.')
 		return (ft_check_ablosute_path(cmds, data));
 	cmds->path = ft_find_valid_path(cmds->cmd_arg[0], cmds->data->envp, data);

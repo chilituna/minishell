@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 17:27:56 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:39:10 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,11 @@ int	ft_quoted_redir(int i, char *str)
 int	ft_iterate_until_end(char *str, int i)
 {
 	while (str[i] != '\0' && !ft_isspace(str[i]))
+	{
 		i++;
+		if (str[i] == '\'' || str[i] == '\"')
+			i += ft_quoted_string(str + i, str[i]);
+	}
 	return (i);
 }
 

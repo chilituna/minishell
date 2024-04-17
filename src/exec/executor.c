@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 16:47:57 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 20:50:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ void	ft_exec_cmd(t_cmd *cmds)
 	else
 	{
 		if (!cmds->cmd_arg[0])
+		{
+			cmds->data->exit_status = 0;
 			ft_exit_minishell(cmds->data);
+		}
 		if (ft_find_cmd_path(cmds, cmds->data) == 1)
 			ft_exit_minishell(cmds->data);
 		cmds->data->envp = ft_convert_env_list_to_array(cmds->data->env, cmds);
