@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/13 18:03:42 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:49:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,42 +27,6 @@ void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd)
 	{
 		*arg = ft_update_str(*arg, start, *j, cmd->data);
 		(*j)--;
-	}
-}
-
-//remove quotes in case the file name has quotes:
-//iterate through the string until a quote is found
-//remove all the quotes of the same type
-void	ft_process_redir_quotes(char **str, t_cmd *cmd)
-{
-	int		j;
-	char	quote;
-	char	*beginnig;
-	char	*end;
-
-	j = 0;
-	quote = '\0';
-	while ((*str)[j])
-	{
-		if ((*str)[j] == '\'' || (*str)[j] == '\"')
-		{
-			quote = (*str)[j];
-			while ((*str)[j])
-			{
-				if ((*str)[j] == quote)
-				{
-					beginnig = ft_substr((*str), 0, j, cmd->data);
-					end = ft_substr((*str), j + 1, ft_strlen(*str) - j - 1, cmd->data);
-					free(*str);
-					*str = ft_strjoin(beginnig, end, cmd->data);
-					free(beginnig);
-					free(end);
-					j = 0;
-				}
-				j++;
-			}
-		}
-		j++;
 	}
 }
 
