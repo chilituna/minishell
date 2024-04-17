@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 14:51:41 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:58:54 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	if (lexer->prev && lexer->prev->token && (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
 	{
 		if (str[i] == '\'')
-		i += ft_quoted_string(str + i, '\'');
+			i += ft_quoted_string(str + i, '\'');
 		else if (str[i] == '\"')
-		i += ft_quoted_string(str + i, '\"');
+			i += ft_quoted_string(str + i, '\"');
 		while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
 			i++;
 	}
@@ -59,13 +59,10 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 
 int	ft_pick_redir(char *str, int i, int start, t_lexer *lexer)
 {
+	(void)start;
+	(void)lexer;
 	if (str[i + 1] == str[i])
-	{
-		lexer->str = ft_substr(str, start, 2, lexer->data);
 		i++;
-	}
-	else
-		lexer->str = ft_substr(str, start, 1, lexer->data);
 	return (i + 1);
 }
 
@@ -78,7 +75,9 @@ int	ft_quoted_string(char *str, char c)
 	while (str[i] != '\0' && str[i] != c)
 		i++;
 	if (str[i] != '\0' && str[i] != '|' && !ft_isspace(str[i]))
-        while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
-            i++;
+	{
+		while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
+			i++;
+	}
 	return (i);
 }
