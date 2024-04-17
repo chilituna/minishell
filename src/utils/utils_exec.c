@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/14 14:23:04 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 13:08:14 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 {
 	int		size;
 	char	**result;
+	char	*tmp_result;
 	t_env	*tmp;
 	int		i;
 
@@ -31,7 +32,9 @@ char	**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds)
 	tmp = env;
 	while (env)
 	{
-		result[i] = ft_strjoin(env->var, env->value, cmds->data);
+		tmp_result = ft_strjoin(env->var, "=", cmds->data);
+		result[i] = ft_strjoin(tmp_result, env->value, cmds->data);
+		free(tmp_result);
 		i++;
 		env = env->next;
 	}
