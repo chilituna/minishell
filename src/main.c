@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/16 15:41:01 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/17 15:41:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,11 @@ int	main(int argc, char **argv, char **envp)
 	if (!data)
 		ft_error_and_exit("malloc error", data);
 	ft_init_data(envp, data);
+	ft_minishell(data);
+}
+
+void	ft_minishell(t_data *data)
+{
 	while (1)
 	{
 		ft_signals_interactive();
@@ -101,34 +106,5 @@ int	main(int argc, char **argv, char **envp)
 			ft_execute_cmds(data->cmd);
 		}
 		ft_free_data(data);
-	}
-}
-
-void	ft_print_cmd(t_cmd *cmd)
-{
-	int		i;
-	t_redir	*tmp;
-
-	i = 0;
-	printf(BLUE1 "COMMAND: %d\n" RESET, i);
-	while (cmd->cmd_arg[i])
-	{
-		printf("%s\n", cmd->cmd_arg[i]);
-		i++;
-	}
-	tmp = cmd->redir;
-	while (tmp)
-	{
-		if (tmp->in)
-			printf("redir_in: %s\n", tmp->in);
-		if (tmp->out)
-			printf("redir_out: %s\n", tmp->out);
-		if (tmp->append)
-			printf("redir will be appended\n");
-		if (tmp->heredoc)
-			printf("heredoc\n");
-		if (tmp->delim)
-			printf("heredoc_delim: %s\n", tmp->delim);
-		tmp = tmp->next;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/16 15:40:45 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/17 16:30:10 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,11 +127,9 @@ typedef struct s_data
 
 //FUNCTIONS
 
-// just for testing
-void			ft_print_cmd(t_cmd *cmd);
-
 //start program, show prompt, loop (TLDR)
 int				main(int argc, char **argv, char **envp);
+void			ft_minishell(t_data *data);
 void			ft_print_banner(void);
 void			ft_init_data(char **envp, t_data *data);
 void			ft_copy_env(char **envp, t_data *data);
@@ -157,8 +155,11 @@ int				ft_error_executing(t_data *data);
 int				ft_error_cmd(t_data *data);
 int				ft_error_executing(t_data *data);
 int				ft_error_closing(t_data *data);
-int				ft_error_opening(t_data *data, char *file);
-int				ft_error_writing(t_data *data, char *file);
+int				ft_error_file(t_data *data, char *file);
+int				ft_print_error(char *error);
+int				ft_path_error_1(t_data *data, char *file);
+int				ft_path_error_2(t_data *data, char *file);
+int				ft_path_error_3(t_data *data, char *file);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
@@ -166,7 +167,9 @@ void			ft_free_lexer(t_lexer *lexer);
 void			ft_free_parser(t_cmd *cmd);
 void			ft_free_env(t_env *env);
 void			ft_free_redir(t_redir *redir);
-void			ft_free_fd(int **arr);
+void			ft_free_array(char **arr);
+void			ft_freeall_here(char *line, char *end_line, char *env_var);
+void			ft_free_pipes(int **pipe_fd, t_cmd *cmds);
 
 //check quotes
 int				ft_check_quotes(char *input);
@@ -183,8 +186,6 @@ void			ft_process_redir_quotes(char **str, t_cmd *cmd);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *str, int fd);
 void			*ft_malloc(size_t size, t_data *data);
-void			ft_free_array(char **arr);
-void			ft_freeall_here(char *line, char *end_line, char *env_var);
 //utils_str1
 size_t			ft_strlen(const char *str);
 int				ft_strncmp(const char *s1, const char *s2, unsigned int n);
@@ -201,7 +202,6 @@ int				ft_isspace(int c);
 int				ft_isalnum(int c);
 int				ft_all_capitals(char *name);
 int				ft_isalpha(int c);
-
 //utils_env
 t_env			*ft_search_env_var(t_env *env, char *name);
 t_env			*ft_create_env(char *name, char *value);
@@ -216,6 +216,11 @@ void			ft_lstadd_back(t_env **lst, t_env *new);
 char			*ft_check_input(char *str, t_data *data);
 int				ft_envlist_size(t_env	*list);
 int				ft_list_size(t_cmd *cmds);
+//utils_redir
+int				ft_check_infile(t_redir *redir, t_cmd *cmds);
+int				ft_check_outfile(t_redir *redir, t_cmd *cmds);
+int				ft_redirect_input(t_redir *redir, t_cmd *cmds);
+int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 //other utils
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
@@ -281,11 +286,10 @@ char			*ft_heredoc_expand(char *line, t_data *data);
 
 //execute
 int				ft_find_cmd_path(t_cmd *cmds, t_data *data);
-char			*ft_get_cmd_path(t_cmd *cmds, char *path, char *tmp);
+int				ft_check_ablosute_path(t_cmd *cmds, t_data *data);
 char			**ft_convert_env_list_to_array(t_env *env, t_cmd *cmds);
 int				ft_execute_single_command(t_cmd *cmds);
 int				ft_execute_cmds(t_cmd *cmds);
-int				ft_create_child_process(t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
 int				ft_wait_children(t_cmd *cmds);
 void			ft_close_fds(t_cmd *cmds, t_data *data);
@@ -303,6 +307,5 @@ int				ft_handle_redirs(t_cmd *cmds);
 int				ft_redirect_input(t_redir *redir, t_cmd *cmds);
 int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 void			ft_exec_cmd(t_cmd *cmds);
-void			ft_set_pipes(t_cmd *cmds);
 
 #endif
