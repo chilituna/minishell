@@ -6,11 +6,29 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 13:58:54 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 17:27:56 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_quoted_redir(int i, char *str)
+{
+	if (str[i] == '\'')
+		i += ft_quoted_string(str + i, '\'');
+	else if (str[i] == '\"')
+		i += ft_quoted_string(str + i, '\"');
+	while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
+		i++;
+	return (i);
+}
+
+int	ft_iterate_until_end(char *str, int i)
+{
+	while (str[i] != '\0' && !ft_isspace(str[i]))
+		i++;
+	return (i);
+}
 
 // break the input into strings:
 // skip whitespace
@@ -29,15 +47,9 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	while (str[i] != '\0' && ft_isspace(str[i]))
 		i++;
 	start = i;
-	if (lexer->prev && lexer->prev->token && (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
-	{
-		if (str[i] == '\'')
-			i += ft_quoted_string(str + i, '\'');
-		else if (str[i] == '\"')
-			i += ft_quoted_string(str + i, '\"');
-		while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
-			i++;
-	}
+	if (lexer->prev && lexer->prev->token
+		&& (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
+		i = ft_quoted_redir(i, str);
 	else if (str[i] == '|')
 		i++;
 	else if (str[i] == '>' || str[i] == '<')
@@ -47,10 +59,7 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	else if (str[i] == '\"')
 		i += ft_quoted_string(str + i, '\"');
 	else
-	{
-		while (str[i] != '\0' && !ft_isspace(str[i]))
-			i++;
-	}
+		i = ft_iterate_until_end(str, i);
 	lexer->str = ft_substr(str, start, i - start, lexer->data);
 	while (str[i] != '\0' && ft_isspace(str[i]))
 		i++;

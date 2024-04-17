@@ -6,7 +6,7 @@
 #    By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/04/17 16:11:52 by aarponen         ###   ########.fr        #
+#    Updated: 2024/04/17 17:49:50 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRC_DIR = src
 SRC_FILES = main.c signals.c banner.c \
 	parsing/parser.c parsing/lexer.c parsing/lexer_helper.c parsing/expander.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_redirs.c \
-	parsing/remove_quotes.c \
+	parsing/remove_quotes.c parsing/remove_quotes_redir.c \
 	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c utils/utils_env2.c \
 	utils/ft_split.c utils/get_next_line.c utils/ft_itoa.c \
 	utils/utils_lst.c utils/utils_check.c utils/utils_exec.c utils/utils_exec2.c \
