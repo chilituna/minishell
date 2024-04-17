@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 16:34:50 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/14 13:28:09 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:54:17 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	ft_redirect_input(t_redir *redir, t_cmd *cmds)
 			return (ft_error_dup(cmds->data));
 		if (close(open_fd) == -1)
 			return (ft_error_closing(cmds->data));
+		if (redir->heredoc)
+			unlink(redir->in);
 	}
 	return (0);
 }
@@ -95,7 +97,6 @@ int	ft_handle_redirs(t_cmd *cmds)
 	last_i = NULL;
 	last_o = NULL;
 	tmp = cmds;
-	ft_check_here_doc(tmp);
 	tmp_redir = tmp->redir;
 	while (tmp_redir)
 	{

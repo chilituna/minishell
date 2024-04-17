@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/14 13:37:54 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/17 11:41:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	ft_check_cmds(t_cmd *cmd)
 			ft_remove_empty(cmd);
 		if (cmd->cmd_arg[0])
 			ft_remove_quotes(cmd);
+		ft_check_here_doc(cmd);
 		cmd = cmd->next;
 	}
 	return (1);
