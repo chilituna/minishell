@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 15:31:20 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:05:32 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,13 @@ int	ft_print_error(char *error)
 {
 	printf(RED "%s\n" RESET, error);
 	return (0);
+}
+
+// error for heredoc signal: ctrl+D
+int	ft_heredoc_error(t_data *data)
+{
+	ft_putstr_fd(RED"minishell: warning:"RESET, STDOUT_FILENO);
+	ft_putstr_fd(RED"heredoc received end of file\n"RESET, STDOUT_FILENO);
+	data->exit_status = 1;
+	return (1);
 }

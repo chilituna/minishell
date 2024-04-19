@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 19:41:18 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:26:40 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int				ft_print_error(char *error);
 int				ft_path_error_1(t_data *data, char *file);
 int				ft_path_error_2(t_data *data, char *file);
 int				ft_path_error_3(t_data *data, char *file);
+int				ft_heredoc_error(t_data *data);
 
 //clean_up.c
 void			ft_free_data(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/17 17:26:06 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/19 17:13:38 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,11 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 		line = readline(STDIN_FILENO);
 		//line = get_next_line(STDIN_FILENO, data);
 		ft_signals_running();
+		if (!line)
+		{
+			ft_heredoc_error(data);
+			break ;
+		}
 		if (!ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))
 		{
 			free(line);
