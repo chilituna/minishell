@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 20:40:27 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:31:58 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,11 @@ void	ft_new_prompt(int signal)
 
 void	ft_heredoc_handler(int signal)
 {
-	ft_putchar_fd('\n', STDERR_FILENO);
-	exit(128 + signal);
+	(void)signal;
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	g_exit_status = 130;
 }
 
 // ctrl-C displays a new prompt on a new line (SIGINT)

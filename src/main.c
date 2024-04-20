@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 18:36:16 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:31:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,14 @@ void	ft_minishell(t_data *data)
 		{
 			data->lexer = ft_lexer(data->prompt, data);
 			data->cmd = ft_parser(data->lexer, data);
-			if (!ft_check_cmds(data->cmd))
+			if (!ft_check_cmds(data->cmd) || g_exit_status != 0)
 				continue ;
 			ft_execute_cmds(data->cmd);
+		}
+		if (g_exit_status != 0)
+		{
+			data->exit_status = g_exit_status;
+			g_exit_status = 0;
 		}
 		ft_free_data(data);
 	}
