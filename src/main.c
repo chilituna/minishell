@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:32:28 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:57:49 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->cmd = NULL;
 	data->prompt = NULL;
 	data->pipe_fd = NULL;
-	g_exit_status = 0;
+	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	data->envp = NULL;
 	// ft_print_banner();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:33:13 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:56:24 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ft_interrupt(int signal)
 	if (signal == SIGQUIT)
 	{
 		ft_putstr_fd(RED"Quit (core dumped)\n"RESET, STDERR_FILENO);
-		g_exit_status = 131;
+		g_exit_signals = 131;
 	}
 	if (signal == SIGINT)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		g_exit_status = 130;
+		g_exit_signals = 130;
 	}
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -42,7 +42,7 @@ void	ft_new_prompt(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_exit_status = 130;
+	g_exit_signals = 130;
 }
 
 void	ft_heredoc_handler(int signal)

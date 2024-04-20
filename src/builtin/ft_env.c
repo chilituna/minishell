@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:06:01 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:00:39 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,6 @@ int	ft_env(t_cmd *cmds)
 		}
 		tmp = tmp->next;
 	}
-	g_exit_status = 0;
+	cmds->data->exit_status = 0;
 	return (0);
 }

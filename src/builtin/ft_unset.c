@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:47:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:01:42 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	ft_unset(t_cmd *cmds)
 			i++;
 		}
 	}
-	g_exit_status = 0;
+	cmds->data->exit_status = 0;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 15:36:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:45:20 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:02:08 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	ft_exec_cmd(t_cmd *cmds)
 	{
 		if (!cmds->cmd_arg[0])
 		{
-			g_exit_status = 0;
+			cmds->data->exit_status = 0;
 			ft_exit_minishell(cmds->data);
 		}
 		if (ft_find_cmd_path(cmds, cmds->data) == 1)
@@ -121,6 +121,6 @@ int	ft_execute_cmds(t_cmd *cmds)
 		ft_create_pipes_and_init(cmds);
 		exit_code = ft_execute_children(cmds);
 	}
-	g_exit_status = exit_code;
+	cmds->data->exit_status = exit_code;
 	return (exit_code);
 }
