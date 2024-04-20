@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/10 13:58:29 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_change_dir(char *path, t_data *data)
 {
 	ft_update_pwd("OLDPWD", data);
 	if (!chdir(path) && ft_update_pwd("PWD", data))
-		data->exit_status = 0;
+		g_exit_status = 0;
 	else
 	{
 		if (access(path, F_OK) == -1)
@@ -53,7 +53,7 @@ int	ft_change_dir(char *path, t_data *data)
 			ft_putstr_fd(path, STDERR_FILENO);
 			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
 		}
-		data->exit_status = 1;
+		g_exit_status = 1;
 	}
 	return (1);
 }
@@ -80,7 +80,7 @@ int	ft_cd(t_cmd *cmds)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
-		cmds->data->exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	if (cmds->cmd_arg[1][0] == '/')

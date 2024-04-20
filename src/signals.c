@@ -3,25 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 19:29:05 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:33:13 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
 //interrupt the command and display a new prompt on a new line
 void	ft_interrupt(int signal)
 {
 	if (signal == SIGQUIT)
-		printf("Quit (core dumped)\n");
-	write(1, "\n", 1);
+	{
+		ft_putstr_fd(RED"Quit (core dumped)\n"RESET, STDERR_FILENO);
+		g_exit_status = 131;
+	}
+	if (signal == SIGINT)
+	{
+		ft_putchar_fd('\n', STDOUT_FILENO);
+		g_exit_status = 130;
+	}
 	rl_on_new_line();
 	rl_replace_line("", 0);
-	// rl_redisplay();
 }
 
 // Signal handler for SIGINT (Ctrl-C)
@@ -37,6 +42,18 @@ void	ft_new_prompt(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
+	g_exit_status = 130;
+}
+
+void	ft_heredoc_handler(int signal)
+{
+	if (signal == SIGINT)
+	{
+		ioctl(0, TIOCSTI, "\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
 }
 
 // ctrl-C displays a new prompt on a new line (SIGINT)
@@ -44,17 +61,8 @@ void	ft_new_prompt(int signal)
 // ctrl-\ does nothing (SIGQUIT)
 void	ft_signals_interactive(void)
 {
-	//struct sigaction	sa_int;
-	//struct sigaction	sa_quit;
-
-	//memset(&sa_int, 0, sizeof(sa_int));
 	signal(SIGINT, ft_new_prompt);
-	//sa_int.sa_handler = &ft_new_prompt;
-	//sigaction(SIGINT, &sa_int, NULL);
-	//memset(&sa_quit, 0, sizeof(sa_quit));
 	signal(SIGQUIT, SIG_IGN);
-	//sa_quit.sa_handler = SIG_IGN;
-	//sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
 // ctrl-C: Interrupts the current command and
@@ -65,57 +73,12 @@ void	ft_signals_interactive(void)
 // ctrl-\: Exits the shell abruptly by sending a SIGQUIT signal.
 void	ft_signals_running(void)
 {
-	//struct sigaction	sa_int;
-	//struct sigaction	sa_quit;
-
-	//memset(&sa_int, 0, sizeof(sa_int));
 	signal(SIGINT, ft_interrupt);
-	//sa_int.sa_handler = &ft_interrupt;
-	//sigaction(SIGINT, &sa_int, NULL);
-	//memset(&sa_quit, 0, sizeof(sa_quit));
 	signal(SIGQUIT, ft_interrupt);
-	//sa_quit.sa_handler = &ft_interrupt;
-	//sigaction(SIGQUIT, &sa_quit, NULL);
 }
 
-// void heredoc_handler(int signal)
-// {
-// 	if (signum == SIGINT)
-// 	{
-
-// 	}
-// }
-
-/*
-void	ft_reset_prompt(int signum)
+void	ft_signals_heredoc(void)
 {
-	(void)signum;
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	write(STDOUT_FILENO, "\n", 1);
-	rl_redisplay();
+	signal(SIGINT, ft_heredoc_handler);
 }
-
-void	ft_new_line(int signum)
-{
-	if (signum == SIGQUIT)
-		ft_putstr_fd(RED"Quit (core dumped)\n"RESET, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
-	rl_on_new_line();
-}
-
-void	ft_signals_interactive(void)
-{
-	signal(SIGINT, ft_reset_prompt);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-void	ft_signals_non_interactive(void)
-{
-	signal(SIGINT, ft_new_line);
-	signal(SIGQUIT, ft_new_line);
-}
-*/
-
-
 

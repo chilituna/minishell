@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 17:20:19 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 19:40:20 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*ft_getenv(char *var, t_data *data)
 
 	tmp = data->env;
 	if (ft_strncmp(var, "?", 1) == 0)
-		return (ft_itoa(data->exit_status));
+		return (ft_itoa(g_exit_status));
 	while (tmp)
 	{
 		j = ft_strlen(tmp->var);

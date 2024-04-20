@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/01 03:49:10 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/17 14:54:19 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_wait_children(t_cmd *cmds)
 			result = WEXITSTATUS(status);
 		else
 			result = status;
-		cmds->data->exit_status = result;
+		g_exit_status = result;
 		tmp = tmp->next;
 	}
 	return (result);

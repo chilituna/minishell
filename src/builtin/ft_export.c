@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/17 20:02:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_print_export(t_cmd *cmds)
 		write(STDOUT_FILENO, "\n", 1);
 		tmp = tmp->next;
 	}
-	cmds->data->exit_status = 0;
+	g_exit_status = 0;
 	return (0);
 }
 
@@ -115,11 +115,11 @@ int	ft_export(t_cmd *cmds)
 		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(cmds->cmd_arg[1], STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		cmds->data->exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	else
 		ft_export_env_var(name, cmds);
-	cmds->data->exit_status = 0;
+	g_exit_status = 0;
 	return (0);
 }

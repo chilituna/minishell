@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_get_path.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 19:53:45 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/17 21:00:00 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:42 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static char	**ft_extract_path(t_cmd *cmds)
 	tmp = ft_search_env_var(cmds->data->env, "PATH");
 	if (tmp == NULL)
 	{
-		cmds->data->exit_status = 1;
+		g_exit_status = 1;
 		return (NULL);
 	}
 	path = ft_split(tmp->value, ':');
@@ -74,7 +74,7 @@ int	ft_find_cmd_path(t_cmd *cmds, t_data *data)
 	{
 		ft_putstr_fd(cmds->cmd_arg[0], STDERR_FILENO);
 		ft_putstr_fd(": command not found\n", STDERR_FILENO);
-		data->exit_status = 127;
+		g_exit_status = 127;
 		return (1);
 	}
 	return (0);

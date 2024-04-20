@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/19 15:26:40 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:35:54 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 50
 # endif
+
+extern int	g_exit_status;
 
 //STRUCTS
 
@@ -137,6 +139,7 @@ void			ft_copy_env(char **envp, t_data *data);
 //signals
 void			ft_signals_interactive(void);
 void			ft_signals_running(void);
+void			ft_signals_heredoc(void);
 void			ft_new_prompt(int sig);
 void			ft_interrupt(int sig);
 //void			ft_reset_prompt(int signum);
@@ -148,11 +151,11 @@ void			ft_interrupt(int sig);
 void			ft_error_and_exit(char *str, t_data *data);
 void			ft_error_minishell(char *str);
 void			ft_exit_minishell(t_data *data);
-int				ft_error_forking(t_data *data);
-int				ft_error_piping(t_data *data);
-int				ft_error_dup(t_data *data);
+int				ft_error_forking(void);
+int				ft_error_piping(void);
+int				ft_error_dup(void);
 int				ft_error_executing(t_data *data);
-int				ft_error_cmd(t_data *data);
+int				ft_error_cmd(void);
 int				ft_error_executing(t_data *data);
 int				ft_error_closing(t_data *data);
 int				ft_error_file(t_data *data, char *file);
@@ -160,7 +163,7 @@ int				ft_print_error(char *error);
 int				ft_path_error_1(t_data *data, char *file);
 int				ft_path_error_2(t_data *data, char *file);
 int				ft_path_error_3(t_data *data, char *file);
-int				ft_heredoc_error(t_data *data);
+int				ft_heredoc_error(void);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
@@ -227,7 +230,6 @@ int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 //other utils
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
-char			*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer			*ft_lexer(char *str, t_data *data);

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 18:47:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/06 20:23:22 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	ft_unset(t_cmd *cmds)
 			i++;
 		}
 	}
-	cmds->data->exit_status = 0;
+	g_exit_status = 0;
 	return (0);
 }
