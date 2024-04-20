@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 18:27:04 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 20:40:52 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ void			ft_copy_env(char **envp, t_data *data);
 void			ft_signals_interactive(void);
 void			ft_signals_running(void);
 void			ft_signals_heredoc(void);
+void			ft_heredoc_handler(int signal);
 void			ft_new_prompt(int sig);
 void			ft_interrupt(int sig);
 //void			ft_reset_prompt(int signum);
