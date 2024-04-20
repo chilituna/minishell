@@ -6,7 +6,7 @@
 #    By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/18 15:53:58 by aarponen          #+#    #+#              #
-#    Updated: 2024/04/20 13:02:59 by aarponen         ###   ########.fr        #
+#    Updated: 2024/04/20 16:12:25 by aarponen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ SRC_FILES = main.c signals.c banner.c \
 	parsing/check_quotes.c parsing/check_cmds.c parsing/check_redirs.c \
 	parsing/remove_quotes.c parsing/remove_quotes_redir.c \
 	utils/utils.c utils/utils_str1.c utils/utils_str2.c utils/utils_env.c utils/utils_env2.c \
-	utils/ft_split.c utils/ft_itoa.c \
+	utils/ft_split.c utils/ft_itoa.c utils/get_next_line.c \
 	utils/utils_lst.c utils/utils_check.c utils/utils_exec.c utils/utils_exec2.c \
 	utils/utils_redir.c \
 	builtin/ft_echo.c builtin/ft_cd.c builtin/ft_pwd.c builtin/ft_exit.c builtin/ft_env.c \

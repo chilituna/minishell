@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:56:24 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:55:19 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ void	ft_interrupt(int signal)
 	if (signal == SIGQUIT)
 	{
 		ft_putstr_fd(RED"Quit (core dumped)\n"RESET, STDERR_FILENO);
-		g_exit_signals = 131;
+		// g_exit_signals = 131;
 	}
 	if (signal == SIGINT)
 	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		g_exit_signals = 130;
+		// g_exit_signals = 130;
 	}
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -42,14 +42,14 @@ void	ft_new_prompt(int signal)
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	g_exit_signals = 130;
+	// g_exit_signals = 130;
 }
 
 void	ft_heredoc_handler(int signal)
 {
 	if (signal == SIGINT)
 	{
-		ioctl(0, TIOCSTI, "\n");
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();

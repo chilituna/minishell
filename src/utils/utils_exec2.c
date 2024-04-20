@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 12:39:03 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/20 14:42:53 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:27:52 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 void	ft_set_fd_first_command(t_data *data, int pos)
 {
 	if (dup2(data->pipe_fd[pos][WRITE_END], STDOUT_FILENO) == -1)
-		ft_error_dup();
+		ft_error_dup(data);
 }
 
 //Function to set the file descriptors
@@ -26,9 +26,9 @@ void	ft_set_fd_first_command(t_data *data, int pos)
 void	ft_set_fd_middle_command(t_data *data, int pos)
 {
 	if (dup2(data->pipe_fd[pos - 1][READ_END], STDIN_FILENO) == -1)
-		ft_error_dup();
+		ft_error_dup(data);
 	if (dup2(data->pipe_fd[pos][WRITE_END], STDOUT_FILENO) == -1)
-		ft_error_dup();
+		ft_error_dup(data);
 }
 
 //function to set the file descriptors
@@ -36,7 +36,7 @@ void	ft_set_fd_middle_command(t_data *data, int pos)
 void	ft_set_fd_last_command(t_data *data, int pos)
 {
 	if (dup2(data->pipe_fd[pos - 1][READ_END], STDIN_FILENO) == -1)
-		ft_error_dup();
+		ft_error_dup(data);
 }
 
 //Function to create the pipes needed for the pipeline
@@ -85,7 +85,7 @@ void	ft_init_and_create_pipe(t_cmd *cmds)
 	while (i < size - 1)
 	{
 		if (pipe(cmds->data->pipe_fd[i]) == -1)
-			ft_error_piping();
+			ft_error_piping(cmds->data);
 		i++;
 	}
 }

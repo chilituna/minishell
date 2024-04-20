@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 15:06:16 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:12:10 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 #  define BUFFER_SIZE 50
 # endif
 
-extern int	g_exit_signals;
+// extern int g_exit_signals;
 
 //STRUCTS
 
@@ -230,6 +230,7 @@ int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
 //other utils
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
+char			*get_next_line(int fd, t_data *data);
 
 //lexer.c
 t_lexer			*ft_lexer(char *str, t_data *data);

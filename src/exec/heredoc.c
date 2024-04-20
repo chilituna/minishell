@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/20 15:03:51 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 16:18:48 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,11 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
 		ft_signals_interactive();
-		line = readline(STDIN_FILENO);
-		ft_signals_heredoc();
+		line = get_next_line(STDIN_FILENO, data);
+		ft_signals_running();
 		if (!line)
 		{
+			free(line);
 			ft_heredoc_error(data);
 			break ;
 		}
@@ -98,7 +99,6 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 		}
 		line = ft_heredoc_expand(line, data);
 		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
 		free(line);
 	}
 	redir->in = filename;
