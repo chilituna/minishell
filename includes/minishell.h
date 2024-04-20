@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:44:52 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:06:16 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 #  define BUFFER_SIZE 50
 # endif
 
-extern int	g_exit_status;
+extern int	g_exit_signals;
 
 //STRUCTS
 
@@ -151,11 +151,11 @@ void			ft_interrupt(int sig);
 void			ft_error_and_exit(char *str, t_data *data);
 void			ft_error_minishell(char *str);
 void			ft_exit_minishell(t_data *data);
-int				ft_error_forking(void);
-int				ft_error_piping(void);
-int				ft_error_dup(void);
+int				ft_error_forking(t_data *data);
+int				ft_error_piping(t_data *data);
+int				ft_error_dup(t_data *data);
 int				ft_error_executing(t_data *data);
-int				ft_error_cmd(void);
+int				ft_error_cmd(t_data *data);
 int				ft_error_executing(t_data *data);
 int				ft_error_closing(t_data *data);
 int				ft_error_file(t_data *data, char *file);
@@ -163,7 +163,7 @@ int				ft_print_error(char *error);
 int				ft_path_error_1(t_data *data, char *file);
 int				ft_path_error_2(t_data *data, char *file);
 int				ft_path_error_3(t_data *data, char *file);
-int				ft_heredoc_error(void);
+int				ft_heredoc_error(t_data *data);
 
 //clean_up.c
 void			ft_free_data(t_data *data);

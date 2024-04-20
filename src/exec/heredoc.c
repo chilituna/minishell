@@ -6,7 +6,7 @@
 /*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/20 14:45:58 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:03:51 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 		ft_signals_heredoc();
 		if (!line)
 		{
-			ft_heredoc_error();
+			ft_heredoc_error(data);
 			break ;
 		}
 		if (!ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))

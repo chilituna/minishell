@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/20 14:30:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 15:00:07 by lperez-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ int	ft_exit(t_cmd *cmds)
 		nbr = ft_exit_code(cmds->cmd_arg[1]);
 		if (nbr > 255)
 			nbr = nbr % 256;
-		g_exit_status = nbr;
+		cmds->data->exit_status = nbr;
 		ft_exit_minishell(cmds->data);
 	}
-	g_exit_status = nbr;
+	cmds->data->exit_status = nbr;
 	return (0);
 }
