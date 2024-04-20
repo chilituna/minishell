@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 16:12:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:27:04 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 	//stat, lstat, fstat, opendir, closedir
 # include <sys/stat.h> //open, stat, lstat, fstat
 # include <sys/wait.h> //wait, waitpid, wait3, wait4
-# include <fcntl.h> //open
+# include <fcntl.h>//open
 # include <signal.h> //signal, sigaction, sigemptyset, sigaddset, kill
 # include <string.h> //strerror
 # include <dirent.h> //opendir, readdir, closedir
@@ -49,7 +49,7 @@
 #  define BUFFER_SIZE 50
 # endif
 
-// extern int g_exit_signals;
+extern int				g_exit_status;
 
 //STRUCTS
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:57:49 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:12:49 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,13 @@ int	ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data)
 	int		new_index;
 
 	beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
-	exit_status = ft_itoa(data->exit_status);
+	if (g_exit_status)
+	{
+		exit_status = ft_itoa(g_exit_status);
+		g_exit_status = 0;
+	}
+	else
+		exit_status = ft_itoa(data->exit_status);
 	new_index = j + ft_strlen(exit_status);
 	end_tmp = ft_substr(cmd->cmd_arg[i], j + 2,
 			ft_strlen(cmd->cmd_arg[i]) - j - 2, data);
