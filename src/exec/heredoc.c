@@ -6,12 +6,11 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/20 16:18:48 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:23:28 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 int	ft_endofvar(char *line, int i)
 {
@@ -63,12 +62,6 @@ char	*ft_create_here_doc(t_data *data)
 	return (filename);
 }
 
-/*
-	What I would try:
-	1. Replace STDIN_FILENO by a dup2 of STDIN_FILENO to a pipe
-	2. Try to replace gnl by readline
-	3. Try a cobination of both */
-
 // create a temporary file to store the heredoc
 int	ft_heredoc(t_redir *redir, t_data *data)
 {
@@ -83,24 +76,15 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 	while (1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
-		ft_signals_interactive();
 		line = get_next_line(STDIN_FILENO, data);
-		ft_signals_running();
-		if (!line)
-		{
-			free(line);
-			ft_heredoc_error(data);
+		if (!line || !ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))
 			break ;
-		}
-		if (!ft_strncmp(line, redir->delim, ft_strlen(redir->delim)))
-		{
-			free(line);
-			break ;
-		}
 		line = ft_heredoc_expand(line, data);
 		ft_putstr_fd(line, fd);
 		free(line);
 	}
+	if (!line)
+		ft_heredoc_error(data);
 	redir->in = filename;
 	close(fd);
 	return (0);
@@ -118,7 +102,7 @@ void	ft_check_here_doc(t_cmd *cmd)
 		{
 			if (ft_heredoc(redir, cmd->data) == 1)
 			{
-				ft_putstr_fd("heredoc error ", STDIN_FILENO);
+				ft_putstr_fd(RED"heredoc error "RESET, STDIN_FILENO);
 				return ;
 			}
 		}

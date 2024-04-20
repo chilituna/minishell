@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 09:50:14 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 15:55:19 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:09:08 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,9 @@
 void	ft_interrupt(int signal)
 {
 	if (signal == SIGQUIT)
-	{
 		ft_putstr_fd(RED"Quit (core dumped)\n"RESET, STDERR_FILENO);
-		// g_exit_signals = 131;
-	}
 	if (signal == SIGINT)
-	{
 		ft_putchar_fd('\n', STDOUT_FILENO);
-		// g_exit_signals = 130;
-	}
 	rl_on_new_line();
 	rl_replace_line("", 0);
 }
@@ -37,12 +31,12 @@ void	ft_interrupt(int signal)
 // the prompt.
 void	ft_new_prompt(int signal)
 {
-	(void)signal;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
 	rl_on_new_line();
 	rl_redisplay();
-	// g_exit_signals = 130;
+	if (signal == SIGINT)
+		g_exit_status = 130;
 }
 
 void	ft_heredoc_handler(int signal)
@@ -76,9 +70,3 @@ void	ft_signals_running(void)
 	signal(SIGINT, ft_interrupt);
 	signal(SIGQUIT, ft_interrupt);
 }
-
-void	ft_signals_heredoc(void)
-{
-	signal(SIGINT, ft_heredoc_handler);
-}
-

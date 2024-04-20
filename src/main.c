@@ -6,13 +6,13 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 15:46:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:36:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// int		g_exit_signals;
+int	g_exit_status = 0;
 
 //initialize data struct
 void	ft_init_data(char **envp, t_data *data)
@@ -25,7 +25,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	data->envp = NULL;
-	// ft_print_banner();
+	ft_print_banner();
 }
 
 //create a linked list to store env variables

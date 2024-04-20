@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 15:04:41 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:37:35 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exit_minishell(t_data *data)
 		ft_free_data(data);
 	if (data->env)
 		ft_free_env(data->env);
-	exit_status = data->exit_status;
+	exit_status = g_exit_status;
 	free(data);
 	exit(exit_status);
 }
@@ -63,6 +63,6 @@ int	ft_heredoc_error(t_data *data)
 {
 	ft_putstr_fd(RED"minishell: warning: "RESET, STDOUT_FILENO);
 	ft_putstr_fd(RED"heredoc received end of file\n"RESET, STDOUT_FILENO);
-	data->exit_status = 0;
+	data->exit_status = 1;
 	return (1);
 }

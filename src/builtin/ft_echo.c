@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 14:12:37 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/02 16:29:11 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:19:59 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ void	ft_put_line(int n, char **str, int out)
 	}
 }
 
+int	ft_new_line(int out)
+{
+	ft_putchar_fd('\n', out);
+	return (EXIT_SUCCESS);
+}
+
 //-echo -n
 //init at 1 to skip program name
 //if there are no arguments to cd print a new line and return prompt to user
@@ -45,10 +51,7 @@ int	ft_echo(t_cmd *cmds)
 	i = 1;
 	flag = 1;
 	if (!(cmds->cmd_arg[1]))
-	{
-		write(1, "\n", 1);
-		return (0);
-	}
+		return (ft_new_line(STDOUT_FILENO));
 	if ((cmds->cmd_arg[1][0] == '-') && (cmds->cmd_arg[1][1] == 'n'))
 	{
 		j = 1;
@@ -62,5 +65,6 @@ int	ft_echo(t_cmd *cmds)
 		ft_put_line(i, cmds->cmd_arg, STDOUT_FILENO);
 	if (flag == 1)
 		ft_putchar_fd('\n', STDOUT_FILENO);
+	cmds->data->exit_status = 0;
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 10:44:57 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/20 15:00:07 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:45:07 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,14 +62,14 @@ int	ft_exit(t_cmd *cmds)
 	nbr = 0;
 	if (cmds->cmd_arg[1] && cmds->cmd_arg[2])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: exit: too many args\n"RESET, STDERR_FILENO);
 		nbr = 1;
 	}
 	else if (ft_is_num(cmds->cmd_arg[1]) == 0)
 	{
-		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(cmds->cmd_arg[1], STDERR_FILENO);
-		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n"RESET, STDERR_FILENO);
 		nbr = 2;
 	}
 	else
