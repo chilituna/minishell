@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 11:51:04 by lperez-h          #+#    #+#             */
-/*   Updated: 2024/04/20 14:59:37 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/20 18:42:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ int	ft_change_dir(char *path, t_data *data)
 	{
 		if (access(path, F_OK) == -1)
 		{
-			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(RED"minishell: cd: ", STDERR_FILENO);
 			ft_putstr_fd(path, STDERR_FILENO);
-			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n"RESET, STDERR_FILENO);
 		}
 		else if (access(path, R_OK | W_OK | X_OK) == -1)
 		{
-			ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+			ft_putstr_fd(RED"minishell: cd: ", STDERR_FILENO);
 			ft_putstr_fd(path, STDERR_FILENO);
-			ft_putstr_fd("Permission denied\n", STDERR_FILENO);
+			ft_putstr_fd("Permission denied\n"RESET, STDERR_FILENO);
 		}
 		data->exit_status = 1;
 	}
@@ -78,8 +78,8 @@ int	ft_cd(t_cmd *cmds)
 	}
 	if (cmds->cmd_arg[2])
 	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		ft_putstr_fd("too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd("too many arguments\n"RESET, STDERR_FILENO);
 		cmds->data->exit_status = 1;
 		return (1);
 	}
