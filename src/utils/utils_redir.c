@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redir.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:10:46 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 16:31:36 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/20 14:43:15 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_redirect_input(t_redir *redir, t_cmd *cmds)
 		if (open_fd == -1)
 			return (ft_error_file(cmds->data, redir->in));
 		if (dup2(open_fd, STDIN_FILENO) == -1)
-			return (ft_error_dup(cmds->data));
+			return (ft_error_dup());
 		if (close(open_fd) == -1)
 			return (ft_error_closing(cmds->data));
 		if (redir->heredoc)
@@ -75,7 +75,7 @@ int	ft_redirect_output(t_redir *redir, t_cmd *cmds)
 	if (write_fd == -1)
 		return (ft_error_file(cmds->data, redir->out));
 	if (dup2(write_fd, STDOUT_FILENO) == -1)
-		return (ft_error_dup(cmds->data));
+		return (ft_error_dup());
 	if (close(write_fd) == -1)
 		return (ft_error_closing(cmds->data));
 	return (0);
