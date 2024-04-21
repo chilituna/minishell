@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 16:59:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:15:33 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	data->envp = NULL;
-	// ft_print_banner();
+	ft_print_banner();
 }
 
 //if promt is only whitespace, return 1
@@ -96,24 +96,8 @@ void	ft_minishell(t_data *data)
 	}
 }
 
-void	ft_print_lexer(t_lexer *lexer)
-{
-	t_lexer	*tmp;
-
-	tmp = lexer;
-	while (tmp)
-	{
-		printf("index: %d\n", tmp->index);
-		printf("str: %s\n", tmp->str);
-		printf("token: %s\n", tmp->token);
-		tmp = tmp->next;
-	}
-}
-
 void	ft_parsing(t_data *data)
 {
 	data->lexer = ft_lexer(data->prompt, data);
-	// ft_print_lexer(data->lexer);
 	data->cmd = ft_parser(data->lexer, data);
 }
-

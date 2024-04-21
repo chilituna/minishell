@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 16:34:44 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:12:10 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 int	ft_quoted_redir(int i, char *str)
 {
 	if (str[i] == '\'')
-		i += ft_quoted_string(str + i, '\'');
+		i += ft_quoted_string(str + i);
 	else if (str[i] == '\"')
-		i += ft_quoted_string(str + i, '\"');
+		i += ft_quoted_string(str + i);
 	while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
 		i++;
 	return (i);
@@ -28,7 +28,7 @@ int	ft_iterate_until_end(char *str, int i)
 	while (str[i] != '\0' && !ft_isspace(str[i]))
 	{
 		if (str[i] == '\'' || str[i] == '\"')
-			i += ft_quoted_string(str + i, str[i]);
+			i += ft_quoted_string(str + i);
 		else
 			i++;
 	}
@@ -59,10 +59,6 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 		i++;
 	else if (str[i] == '>' || str[i] == '<')
 		i = ft_pick_redir(str, i, start, lexer);
-	else if (str[i] == '\'')
-		i += ft_quoted_string(str + i, '\'');
-	else if (str[i] == '\"')
-		i += ft_quoted_string(str + i, '\"');
 	else
 		i = ft_iterate_until_end(str, i);
 	lexer->str = ft_substr(str, start, i - start, lexer->data);
@@ -80,20 +76,19 @@ int	ft_pick_redir(char *str, int i, int start, t_lexer *lexer)
 	return (i + 1);
 }
 
-int	ft_quoted_string(char *str, char c)
+int	ft_quoted_string(char *str)
 {
 	int		i;
+	char	quote;
 
 	i = 0;
-	if (str[i] == c && str[i + 1] == c)
-		return (i + 2);
-	i++;
-	while (str[i] != '\0' && str[i] != c)
-		i++;
-	if (str[i] != '\0' && str[i] != '|' && !ft_isspace(str[i]))
+	while (str[i] == '\'' || str[i] == '\"')
 	{
-		while (str[i] != '\0' && !ft_isspace(str[i]) && str[i] != '|')
+		quote = str[i];
+		i++;
+		while (str[i] != '\0' && str[i] != quote)
 			i++;
+		i++;
 	}
 	return (i);
 }

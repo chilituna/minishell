@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 15:18:13 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 20:23:28 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,7 @@ t_lexer			*ft_lexer(char *str, t_data *data);
 t_lexer			*ft_init_lexer(int i, t_data *data);
 void			ft_tokenizer(t_lexer *lexer);
 char			*ft_pick_string(char *str, t_lexer *lexer);
-int				ft_quoted_string(char *str, char c);
+int				ft_quoted_string(char *str);
 int				ft_pick_redir(char *str, int i, int start, t_lexer *lexer);
 
 //parser.c

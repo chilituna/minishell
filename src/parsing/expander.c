@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 14:44:43 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:06:53 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,5 @@ int	ft_expand_env_var(t_cmd *cmd, int i, int j, t_data *data)
 	cmd->cmd_arg[i] = ft_strjoin(beginnig_tmp, end, data);
 	free(beginnig_tmp);
 	free(end);
-	return (k);
+	return (k - 1);
 }
