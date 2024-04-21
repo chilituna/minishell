@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_env2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/06 17:20:19 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 14:57:49 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:20:38 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,31 +53,62 @@ t_env	*ft_find_env_var(t_env *env, char *name)
 	return (NULL);
 }
 
+void	ft_swap_env(t_env *env1, t_env *env2)
+{
+	char	*var;
+	char	*value;
+
+	var = env1->var;
+	value = env1->value;
+	env1->var = env2->var;
+	env1->value = env2->value;
+	env2->var = var;
+	env2->value = value;
+}
+
 //function to sort the environment variables alphabetically
 void	ft_sort_env_list(t_env *env)
 {
 	t_env	*tmp;
-	char	*var;
+	size_t	len;
+	int		swapped;
+
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = 0;
+		tmp = env;
+		while (tmp && tmp->next)
+		{
+			len = ft_strlen(tmp->var);
+			if (ft_strlen (tmp->next->var) < len)
+				len = ft_strlen(tmp->next->var);
+			if (ft_strncmp(tmp->var, tmp->next->var, len) > 0)
+			{
+				ft_swap_env(tmp, tmp->next);
+				swapped = 1;
+			}
+			tmp = tmp->next;
+		}
+	}
+}
+
+//create a linked list to store env variables
+void	ft_copy_env(char **envp, t_data *data)
+{
+	int		i;
+	char	*name;
 	char	*value;
 
-	tmp = env;
-	while (tmp)
+	i = 0;
+	while (envp[i])
 	{
-		while (tmp->next)
-		{
-			if (ft_strncmp(tmp->var, tmp->next->var,
-					ft_strlen(tmp->var)) > 0)
-			{
-				var = tmp->var;
-				value = tmp->value;
-				tmp->var = tmp->next->var;
-				tmp->value = tmp->next->value;
-				tmp->next->var = var;
-				tmp->next->value = value;
-				tmp = env;
-			}
-			else
-				tmp = tmp->next;
-		}
+		name = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i], data);
+		value = ft_strdup(ft_strchr(envp[i], '=') + 1, data);
+		if (i == 0)
+			data->env = ft_create_env(name, value);
+		else
+			ft_add_var_back(data->env, ft_create_env(name, value));
+		i++;
 	}
 }

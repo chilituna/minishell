@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 20:40:52 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:18:13 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 #  define BUFFER_SIZE 50
 # endif
 
-extern int				g_exit_status;
+extern int				g_signal_nr;
 
 //STRUCTS
 
@@ -132,9 +132,11 @@ typedef struct s_data
 //start program, show prompt, loop (TLDR)
 int				main(int argc, char **argv, char **envp);
 void			ft_minishell(t_data *data);
+void			ft_parsing(t_data *data);
 void			ft_print_banner(void);
 void			ft_init_data(char **envp, t_data *data);
 void			ft_copy_env(char **envp, t_data *data);
+void			ft_print_exit(void);
 
 //signals
 void			ft_signals_interactive(void);
@@ -175,6 +177,7 @@ void			ft_free_redir(t_redir *redir);
 void			ft_free_array(char **arr);
 void			ft_freeall_here(char *line, char *end_line, char *env_var);
 void			ft_free_pipes(int **pipe_fd, t_cmd *cmds);
+void			ft_free_and_null(char *line, t_data *data);
 
 //check quotes
 int				ft_check_quotes(char *input);

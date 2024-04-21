@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/03 13:54:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 18:12:49 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:44:43 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ int	ft_expand_exit(t_cmd *cmd, int i, int j, t_data *data)
 	int		new_index;
 
 	beginnig_tmp = ft_substr(cmd->cmd_arg[i], 0, j, data);
-	if (g_exit_status)
+	if (g_signal_nr != -1)
 	{
-		exit_status = ft_itoa(g_exit_status);
-		g_exit_status = 0;
+		exit_status = ft_itoa(g_signal_nr + 128);
+		g_signal_nr = -1;
 	}
 	else
 		exit_status = ft_itoa(data->exit_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 17:23:00 by aarpo e           #+#    #+#             */
-/*   Updated: 2024/04/20 21:18:50 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:38:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,13 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 	int			fd;
 	char		*line;
 
+	line = NULL;
 	filename = ft_create_here_doc(data);
 	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 		return (1);
 	signal(SIGINT, ft_heredoc_handler);
-	while (g_exit_status == 0)
+	while (g_signal_nr == -1)
 	{
 		ft_putstr_fd("> ", STDERR_FILENO);
 		line = get_next_line(STDIN_FILENO, data);
@@ -82,10 +83,9 @@ int	ft_heredoc(t_redir *redir, t_data *data)
 			break ;
 		line = ft_heredoc_expand(line, data);
 		ft_putstr_fd(line, fd);
-		free(line);
+		ft_free_and_null(line, data);
 	}
-	if (!line)
-		ft_heredoc_error(data);
+	ft_free_and_null(line, data);
 	redir->in = filename;
 	close(fd);
 	return (0);

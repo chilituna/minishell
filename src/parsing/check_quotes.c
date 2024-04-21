@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:49 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/10 08:47:45 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 15:14:16 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/10 17:13:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 21:31:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:59:06 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	g_exit_status = 0;
+int	g_signal_nr = -1;
 
 //initialize data struct
 void	ft_init_data(char **envp, t_data *data)
@@ -25,27 +25,7 @@ void	ft_init_data(char **envp, t_data *data)
 	data->exit_status = 0;
 	ft_copy_env(envp, data);
 	data->envp = NULL;
-	ft_print_banner();
-}
-
-//create a linked list to store env variables
-void	ft_copy_env(char **envp, t_data *data)
-{
-	int		i;
-	char	*name;
-	char	*value;
-
-	i = 0;
-	while (envp[i])
-	{
-		name = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i], data);
-		value = ft_strdup(ft_strchr(envp[i], '=') + 1, data);
-		if (i == 0)
-			data->env = ft_create_env(name, value);
-		else
-			ft_add_var_back(data->env, ft_create_env(name, value));
-		i++;
-	}
+	// ft_print_banner();
 }
 
 //if promt is only whitespace, return 1
@@ -97,21 +77,43 @@ void	ft_minishell(t_data *data)
 			ft_error_and_exit("Exiting minishell", data);
 		ft_signals_running();
 		if (data->prompt[0] == '\0' || ft_whitespace(data->prompt))
+		{
+			free(data->prompt);
 			continue ;
+		}
 		add_history(data->prompt);
 		if (ft_check_quotes(data->prompt))
 		{
-			data->lexer = ft_lexer(data->prompt, data);
-			data->cmd = ft_parser(data->lexer, data);
-			if (!ft_check_cmds(data->cmd) || g_exit_status != 0)
+			ft_parsing(data);
+			if (!ft_check_cmds(data->cmd))
+			{
+				ft_free_data(data);
 				continue ;
+			}
 			ft_execute_cmds(data->cmd);
-		}
-		if (g_exit_status != 0)
-		{
-			data->exit_status = g_exit_status;
-			g_exit_status = 0;
 		}
 		ft_free_data(data);
 	}
 }
+
+void	ft_print_lexer(t_lexer *lexer)
+{
+	t_lexer	*tmp;
+
+	tmp = lexer;
+	while (tmp)
+	{
+		printf("index: %d\n", tmp->index);
+		printf("str: %s\n", tmp->str);
+		printf("token: %s\n", tmp->token);
+		tmp = tmp->next;
+	}
+}
+
+void	ft_parsing(t_data *data)
+{
+	data->lexer = ft_lexer(data->prompt, data);
+	// ft_print_lexer(data->lexer);
+	data->cmd = ft_parser(data->lexer, data);
+}
+

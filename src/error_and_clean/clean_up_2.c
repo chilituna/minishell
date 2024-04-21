@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_up_2.c                                       :+:      :+:    :+:   */
+/*   clean_up_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 14:42:06 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 14:48:31 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:38:41 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,13 @@ void	ft_free_pipes(int **pipe_fd, t_cmd *cmds)
 		i++;
 	}
 	free(pipe_fd);
+}
+
+void	ft_free_and_null(char *line, t_data *data)
+{
+	if (!line)
+		ft_heredoc_error(data);
+	if (line && g_signal_nr == -1)
+		free(line);
+	line = NULL;
 }

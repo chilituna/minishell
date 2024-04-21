@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 20:39:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:34:44 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,10 @@ int	ft_iterate_until_end(char *str, int i)
 {
 	while (str[i] != '\0' && !ft_isspace(str[i]))
 	{
-		i++;
 		if (str[i] == '\'' || str[i] == '\"')
 			i += ft_quoted_string(str + i, str[i]);
+		else
+			i++;
 	}
 	return (i);
 }
@@ -84,6 +85,8 @@ int	ft_quoted_string(char *str, char c)
 	int		i;
 
 	i = 0;
+	if (str[i] == c && str[i + 1] == c)
+		return (i + 2);
 	i++;
 	while (str[i] != '\0' && str[i] != c)
 		i++;

@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 10:51:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 18:24:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 14:59:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,22 @@
 // remove quotes from cmd_arg
 // check for heredoc and store into temp file
 
+int	ft_signal_check(t_cmd *cmd)
+{
+	if (g_signal_nr != -1)
+	{
+		cmd->data->exit_status = g_signal_nr + 128;
+		g_signal_nr = -1;
+		return (0);
+	}
+	return (1);
+}
+
 int	ft_check_cmds(t_cmd *cmd)
 {
 	while (cmd)
 	{
+		ft_signal_check(cmd);
 		cmd->cmd_arg = ft_check_redirections(cmd);
 		if (!cmd->cmd_arg)
 			return (ft_print_error("Syntax error: incorrect redirections"));
@@ -41,6 +53,8 @@ int	ft_check_cmds(t_cmd *cmd)
 		if (cmd->cmd_arg[0])
 			ft_remove_quotes(cmd);
 		ft_check_here_doc(cmd);
+		if (ft_signal_check(cmd) == 0)
+			return (0);
 		cmd = cmd->next;
 	}
 	return (1);

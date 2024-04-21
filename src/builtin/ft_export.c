@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lperez-h <lperez-h@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 22:51:42 by luifer            #+#    #+#             */
-/*   Updated: 2024/04/20 15:01:24 by lperez-h         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:17:29 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,10 @@ char	*ft_validate_name(char *name)
 	while (name[i] != '\0')
 	{
 		if (isalnum(name[i]) == 0 && name[i] != '_')
+		{
+			free(name);
 			return (NULL);
+		}
 		i++;
 	}
 	return (name);
@@ -94,7 +97,11 @@ void	ft_export_env_var(char *name, t_cmd *cmds)
 		ft_add_var_back(cmds->data->env, tmp);
 	}
 	else if (value)
+	{
 		ft_update_env_var(name, value, cmds->data);
+		free(name);
+		free(value);
+	}
 }
 
 //creation of new variables and assign of values. This is the actual function

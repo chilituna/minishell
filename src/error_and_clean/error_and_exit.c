@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/20 18:37:35 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 16:35:57 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 // if readline history exists, it is freed.
 void	ft_error_and_exit(char *str, t_data *data)
 {
+	int	exit_status;
+
 	if (isatty(STDIN_FILENO))
 		printf(BLUE1 "%s\n" RESET, str);
 	if (history_length > 0)
@@ -25,8 +27,13 @@ void	ft_error_and_exit(char *str, t_data *data)
 		ft_free_data(data);
 	if (data->env)
 		ft_free_env(data->env);
+	if (g_signal_nr == -1)
+		exit_status = data->exit_status;
+	else
+		exit_status = 128 + g_signal_nr;
 	free(data);
-	exit(1);
+	// ft_print_exit();
+	exit(exit_status);
 }
 
 // error for incorrect number of arguments when launching the program
@@ -47,7 +54,7 @@ void	ft_exit_minishell(t_data *data)
 		ft_free_data(data);
 	if (data->env)
 		ft_free_env(data->env);
-	exit_status = g_exit_status;
+	exit_status = data->exit_status;
 	free(data);
 	exit(exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_quotes_redir.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 17:48:46 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 17:50:40 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 13:17:03 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_process_redir_quotes(char **str, t_cmd *cmd)
 				j++;
 			}
 		}
-		j++;
+		if ((*str)[j])
+			j++;
 	}
 }
