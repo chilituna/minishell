@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/10 08:47:15 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 17:49:04 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:11:47 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_update_quotes(char **arg, int *j, char quote, t_cmd *cmd)
 	if ((*arg)[*j] == quote)
 	{
 		*arg = ft_update_str(*arg, start, *j, cmd->data);
-		(*j)--;
+		(*j) -= 2;
 	}
 }
 
@@ -37,26 +37,19 @@ void	ft_process_quotes(char **arg, t_cmd *cmd)
 {
 	int		j;
 	char	quote;
-	int		in_quote;
 
 	j = 0;
-	quote = '\0';
-	in_quote = 0;
 	while ((*arg)[j])
 	{
-		if (((*arg)[j] == '\'' || (*arg)[j] == '\"') && !in_quote)
+		if (((*arg)[j] == '\'' || (*arg)[j] == '\"'))
 		{
 			quote = (*arg)[j];
-			in_quote = 1;
 			ft_update_quotes(arg, &j, quote, cmd);
-			in_quote = 0;
-			if (j >= (int)ft_strlen(*arg))
-				break ;
-			j = 0;
 		}
-		else if ((*arg)[j] == quote && in_quote)
-			in_quote = 0;
-		j++;
+		if (j == -1)
+			j = 0;
+		else if ((*arg)[j])
+			j++;
 	}
 }
 

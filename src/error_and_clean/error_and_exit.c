@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:56:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 16:35:57 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 21:15:45 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_error_and_exit(char *str, t_data *data)
 	else
 		exit_status = 128 + g_signal_nr;
 	free(data);
-	// ft_print_exit();
+	ft_print_exit();
 	exit(exit_status);
 }
 
