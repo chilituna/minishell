@@ -6,7 +6,7 @@
 /*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 20:23:28 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/21 22:04:28 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ void			ft_print_exit(void);
 //signals
 void			ft_signals_interactive(void);
 void			ft_signals_running(void);
-void			ft_signals_heredoc(void);
 void			ft_heredoc_handler(int signal);
 void			ft_new_prompt(int sig);
 void			ft_interrupt(int sig);
@@ -231,6 +230,11 @@ int				ft_check_infile(t_redir *redir, t_cmd *cmds);
 int				ft_check_outfile(t_redir *redir, t_cmd *cmds);
 int				ft_redirect_input(t_redir *redir, t_cmd *cmds);
 int				ft_redirect_output(t_redir *redir, t_cmd *cmds);
+//utils_heredoc
+int				ft_endofvar(char *line, int i);
+int				ft_expand_env_var_here(char **line, int i, t_data *data);
+int				ft_expand_exit_here(char **line, int i, t_data *data);
+
 //other utils
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
