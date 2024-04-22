@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/18 15:08:57 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 22:04:28 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:15:37 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ int				ft_path_error_1(t_data *data, char *file);
 int				ft_path_error_2(t_data *data, char *file);
 int				ft_path_error_3(t_data *data, char *file);
 int				ft_heredoc_error(t_data *data);
+void			ft_error_exit(t_cmd *cmds);
 
 //clean_up.c
 void			ft_free_data(t_data *data);
@@ -202,7 +203,7 @@ char			*ft_substr(char const *s, unsigned int start, size_t len,
 					t_data *data);
 //utils_str2
 char			*ft_strjoin(const char *s1, const char *s2, t_data *data);
-int				ft_atoi(char *str);
+long			ft_atoi(char *str);
 unsigned int	ft_strlcpy(char *dst, const char *src, unsigned int size);
 //utils_check
 int				ft_isspace(int c);
