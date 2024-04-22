@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_str2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: luifer <luifer@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:14:00 by aarponen          #+#    #+#             */
-/*   Updated: 2024/03/20 14:29:34 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/22 16:37:30 by luifer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strjoin(const char *s1, const char *s2, t_data *data)
 	return (str);
 }
 
-int	ft_atoi(char *str)
+long	ft_atoi(char *str)
 {
 	int	res;
 	int	sign;
