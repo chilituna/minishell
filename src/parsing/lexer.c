@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 17:25:16 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/17 14:53:06 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:00:51 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ t_lexer	*ft_lexer(char *input, t_data *data)
 			new->prev = tmp;
 		}
 		input = ft_pick_string(input, new);
+		if (input == NULL)
+			return (NULL);
 		ft_tokenizer(new);
 		tmp = new;
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_helper.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarponen <aarponen@student.42berlin.de>    +#+  +:+       +#+        */
+/*   By: aarponen <aarponen@student.berlin42>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 16:23:53 by aarponen          #+#    #+#             */
-/*   Updated: 2024/04/21 21:12:10 by aarponen         ###   ########.fr       */
+/*   Updated: 2024/04/24 11:03:44 by aarponen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 int	ft_quoted_redir(int i, char *str)
 {
+	if (str[i] == '>' || str[i] == '<')
+	{
+		ft_print_error("Syntax error: incorrect redirections");
+		return (-1);
+	}
 	if (str[i] == '\'')
 		i += ft_quoted_string(str + i);
 	else if (str[i] == '\"')
@@ -54,7 +59,11 @@ char	*ft_pick_string(char *str, t_lexer *lexer)
 	start = i;
 	if (lexer->prev && lexer->prev->token
 		&& (!ft_strncmp(lexer->prev->token, "REDIR", 5)))
+	{
 		i = ft_quoted_redir(i, str);
+		if (i == -1)
+			return (NULL);
+	}
 	else if (str[i] == '|')
 		i++;
 	else if (str[i] == '>' || str[i] == '<')
